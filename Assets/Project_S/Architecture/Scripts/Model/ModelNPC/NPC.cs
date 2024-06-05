@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Assets.Project_S
+﻿namespace Assets.Project_S
 {
     public class NPC : Character
     {
