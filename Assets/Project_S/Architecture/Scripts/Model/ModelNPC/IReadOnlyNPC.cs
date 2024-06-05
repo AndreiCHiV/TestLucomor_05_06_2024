@@ -1,6 +1,6 @@
-﻿namespace Assets.Project_S.Architecture.Scripts.Model.ModelNPC
+﻿namespace Assets.Project_S
 {
-    public interface IReadOnlyNPC
+    public interface IReadOnlyNPC : IReadOnlyCharacter
     {
     }
 }

@@ -10,5 +10,6 @@ namespace Assets.Project_S
         string Name { get; }
         int MaxHealth { get; }
         int CurrentHelth { get; }
+
     }
 }

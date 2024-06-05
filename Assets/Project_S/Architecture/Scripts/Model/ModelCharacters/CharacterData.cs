@@ -7,6 +7,18 @@ namespace Assets.Project_S
     {
         public string name;
         public int maxHealth;
-        public int currenHealth;
+        public int currentHealth;
+    }
+
+    [Serializable]
+    public class PlayerCharacterData : CharacterData
+    {
+
+    }
+
+    [Serializable]
+    public class NPCCharacterData : CharacterData
+    {
+
     }
 }

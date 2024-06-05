@@ -1,6 +1,6 @@
 ﻿namespace Assets.Project_S
 {
-    public interface IReadOnlyPlayer
+    public interface IReadOnlyPlayer : IReadOnlyCharacter
     {
     }
 }
