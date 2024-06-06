@@ -37,7 +37,7 @@ namespace Assets.Project_S
                 }
             }
         }
-        public int CurrentHelth
+        public int CurrentHealth
         {
             get => _characterData.currentHealth;
             set
@@ -68,15 +68,15 @@ namespace Assets.Project_S
 
         public string TakeDamage(int damage)
         {
-            CurrentHelth -= damage;
+            CurrentHealth -= damage;
 
-            return $"The Character received the damage amount of {damage} units. The Health: {CurrentHelth}";
+            return $"The Character received the damage amount of {damage} units. The Health: {CurrentHealth}";
         }
         public string Treatment()
         {
-            CurrentHelth += 10;
+            CurrentHealth += 10;
 
-            return $"The character has been cured by 10 units.The Health: {CurrentHelth}";
+            return $"The character has been cured by 10 units.The Health: {CurrentHealth}";
         }
 
     }

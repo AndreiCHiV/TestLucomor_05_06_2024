@@ -10,7 +10,7 @@ namespace Assets.Project_S
         string Name { get; }
         string TagCharacter { get; }
         int MaxHealth { get; }
-        int CurrentHelth { get; }
+        int CurrentHealth { get; }
 
     }
 }
