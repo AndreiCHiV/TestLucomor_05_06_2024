@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Project_S
 {
-    public class Character
+    public abstract class Character : IReadOnlyCharacter
     {
         public event Action<int> MaxHealthChanged;
         public event Action<int> CurrentHealthChanged;
@@ -17,8 +17,13 @@ namespace Assets.Project_S
 
         public string Name
         {
-            get => _characterData.name;
-            set => _characterData.name = value;
+            get => _characterData.characterName;
+            set => _characterData.characterName = value;
+        }
+        public string TagCharacter
+        {
+            get => _characterData.characterTag;
+            set => _characterData.characterTag = value;
         }
         public int MaxHealth
         {
@@ -37,17 +42,17 @@ namespace Assets.Project_S
             get => _characterData.currentHealth;
             set
             {
-                if(_characterData.currentHealth != value)
+                if (_characterData.currentHealth != value)
                 {
                     _characterData.currentHealth = value;
                     CurrentHealthChanged?.Invoke(value);
                 }
-                else if (_characterData.maxHealth <= _characterData.currentHealth)
+                if (_characterData.maxHealth <= _characterData.currentHealth)
                 {
                     _characterData.currentHealth = _characterData.maxHealth;
                     CurrentHealthChanged?.Invoke(_characterData.maxHealth);
                 }
-                else if (_characterData.currentHealth <= 0)
+                if (_characterData.currentHealth <= 0)
                 {
                     _characterData.currentHealth = 0;
                     CharacterIsDead();
@@ -60,5 +65,19 @@ namespace Assets.Project_S
         {
             Debug.Log($"{Name} is dead!");
         }
+
+        public string TakeDamage(int damage)
+        {
+            CurrentHelth -= damage;
+
+            return $"The Character received the damage amount of {damage} units. The Health: {CurrentHelth}";
+        }
+        public string Treatment()
+        {
+            CurrentHelth += 10;
+
+            return $"The character has been cured by 10 units.The Health: {CurrentHelth}";
+        }
+
     }
 }

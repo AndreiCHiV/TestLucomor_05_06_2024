@@ -2,6 +2,11 @@
 {
     public class Player : Character, IReadOnlyPlayer
     {
-        public Player(CharacterData characterData) : base(characterData) { }
+        private PlayerCharacterData _playerCharacterData;
+
+        public Player(PlayerCharacterData characterData) : base(characterData) 
+        {
+            _playerCharacterData = (PlayerCharacterData)_characterData;
+        }
     }
 }

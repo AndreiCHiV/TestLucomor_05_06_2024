@@ -8,6 +8,7 @@ namespace Assets.Project_S
         event Action<int> CurrentHealthChanged;
 
         string Name { get; }
+        string TagCharacter { get; }
         int MaxHealth { get; }
         int CurrentHelth { get; }
 
