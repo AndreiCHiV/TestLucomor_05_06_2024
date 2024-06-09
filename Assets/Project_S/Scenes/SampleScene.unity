@@ -557,6 +557,7 @@ MonoBehaviour:
   _textName: {fileID: 1744116125}
   _textMaxHealth: {fileID: 948643682}
   _textCurrentHealth: {fileID: 1771478573}
+  _name: Cat
 --- !u!1 &1260202348
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,6 +787,7 @@ MonoBehaviour:
   _textName: {fileID: 2082899845}
   _textMaxHealth: {fileID: 1331351945}
   _textCurrentHealth: {fileID: 1768669976}
+  _name: Octi
 --- !u!1 &1331351943
 GameObject:
   m_ObjectHideFlags: 0
@@ -968,7 +970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1741df8f4701304ab99e42b1b3cf1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterView:
+  _characterViews:
   - {fileID: 978302092}
   - {fileID: 1264752742}
 --- !u!1 &1744116123

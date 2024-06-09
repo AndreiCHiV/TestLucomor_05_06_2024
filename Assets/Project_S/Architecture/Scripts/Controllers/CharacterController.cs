@@ -13,7 +13,7 @@ namespace Assets.Project_S
             character.MaxHealthChanged += ChangedMaxHealth;
             character.CurrentHealthChanged += ChangedCurrentHealth;
 
-            view.Name = character.Name;
+            view.CharacterName = character.Name;
             view.MaxHealth = character.MaxHealth;
             view.CurrentHealth = character.CurrentHealth;
 

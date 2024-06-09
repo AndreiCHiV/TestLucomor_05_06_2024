@@ -11,7 +11,11 @@ namespace Assets.Project_S
         [SerializeField] private TMP_Text _textMaxHealth;
         [SerializeField] private TMP_Text _textCurrentHealth;
 
-        public string Name
+        [SerializeField] private string _name;
+
+        public string Name => _name;
+
+        public string CharacterName
         {
             get => _textName.text;
             set => _textName.text = value;
@@ -28,6 +32,7 @@ namespace Assets.Project_S
             get => Convert.ToInt32(_textCurrentHealth);
             set => _textCurrentHealth.text = value.ToString();
         }
+
 
         private IReadOnlyCharacter _character;
 

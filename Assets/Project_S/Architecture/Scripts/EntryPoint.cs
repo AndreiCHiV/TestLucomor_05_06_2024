@@ -21,7 +21,7 @@ namespace Assets.Project_S
         {
             _charactersService = new CharactersService();
 
-            CharacterData characterDataCat = CreateTestCharacter(CAT, "Player", 120);
+            CharacterData characterDataCat = CreateTestCharacter(CAT, "Player", 150);
             _charactersService.RegisterCharacters(characterDataCat);
 
             CharacterData characterDataOcti = CreateTestCharacter(OCTI, "NPC", 100);

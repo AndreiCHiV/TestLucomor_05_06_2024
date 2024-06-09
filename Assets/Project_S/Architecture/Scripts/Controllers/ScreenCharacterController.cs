@@ -1,4 +1,6 @@
-﻿namespace Assets.Project_S
+﻿using UnityEngine;
+
+namespace Assets.Project_S
 {
     public class ScreenCharacterController
     {
@@ -11,6 +13,13 @@
         {
             _charactersService = charactersService;
             _view = view;
+
+            foreach (CharacterView characterView in _view.CharacterViews)
+            {
+                IReadOnlyCharacter character = _charactersService.GetCharacter(characterView.Name);
+                _currentCharacterController = new CharacterController(character, characterView);
+            }
+
         }
 
         public void ActiveCharacter(string characterName)
@@ -19,6 +28,7 @@
             CharacterView characterView = _view.GetCharacterView(characterName);
 
             _currentCharacterController = new CharacterController(character, characterView);
+            Debug.Log($"Active caracter: {characterView.CharacterName}");
         }
 
     }

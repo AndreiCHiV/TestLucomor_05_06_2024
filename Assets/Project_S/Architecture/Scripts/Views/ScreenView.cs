@@ -6,15 +6,16 @@ namespace Assets.Project_S
 {
     public class ScreenView : MonoBehaviour
     {
-        [SerializeField] private List<CharacterView> _characterView;
+        [SerializeField] private List<CharacterView> _characterViews;
 
+        public List<CharacterView> CharacterViews => _characterViews;
 
         public CharacterView GetCharacterView(string characterName)
         {
-            foreach (CharacterView characterView in _characterView)
+            foreach (CharacterView characterView in _characterViews)
             {
-                Debug.Log(characterView.Name);
-                if (characterName == characterView.Name)
+                
+                if (characterName == characterView.CharacterName)
                 {
                     return characterView;
                 }
