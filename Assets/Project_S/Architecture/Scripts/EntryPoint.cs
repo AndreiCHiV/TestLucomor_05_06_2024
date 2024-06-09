@@ -1,41 +1,63 @@
 ﻿using System;
 using UnityEngine;
 
+
 namespace Assets.Project_S
 {
     public class EntryPoint : MonoBehaviour
     {
-        [SerializeField] public CharacterView[] _charactersView;
+        [SerializeField] private ScreenView _screenView;
+
+        private const string CAT = "Cat";
+        private const string OCTI = "Octi";
+
         private CharactersService _charactersService;
+        private ScreenCharacterController _screenCharacterController;
+
+        private string _activeCharacter;
+
 
         private void Start()
         {
-            string cat = "Cat";
-            string octi = "Octi";
-
             _charactersService = new CharactersService();
 
-            CharacterData playerCharacterData = CreateTestCharacter(cat, "Player", 120);
-            CharacterData npcCharacterData = CreateTestCharacter(octi, "NPC", 100);
+            CharacterData characterDataCat = CreateTestCharacter(CAT, "Player", 120);
+            _charactersService.RegisterCharacters(characterDataCat);
 
-            Character player = _charactersService.RegisterCharacters(playerCharacterData);
-            Character npc = _charactersService.RegisterCharacters(npcCharacterData);
+            CharacterData characterDataOcti = CreateTestCharacter(OCTI, "NPC", 100);
+            _charactersService.RegisterCharacters(characterDataOcti);
 
+            _screenCharacterController = new ScreenCharacterController(_charactersService, _screenView);
 
+            _screenCharacterController.ActiveCharacter(CAT);
+            _activeCharacter = CAT;
 
-            _charactersView[0].Setup(player);
-            _charactersView[1].Setup(npc);
+        }
 
-            string message = _charactersService.TakeDamageCharacter(cat, 130);
-            Debug.Log(message);
-            message = _charactersService.TakeDamageCharacter(octi, 30);
-            Debug.Log(message);
-            message = _charactersService.TreatmentCharacter(cat);
-            Debug.Log(message);
-            message = _charactersService.TreatmentCharacter(octi);
-            Debug.Log(message);
-            _charactersView[0].Print();
-            _charactersView[1].Print();
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                _screenCharacterController.ActiveCharacter(CAT);
+                _activeCharacter = CAT;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                _screenCharacterController.ActiveCharacter(OCTI);
+                _activeCharacter = OCTI;
+            }
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                int damage = UnityEngine.Random.Range(0, 20);
+                string takeDamage = _charactersService.TakeDamageCharacter(_activeCharacter, damage);
+                Debug.Log(takeDamage);
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                string healthCharacter = _charactersService.TreatmentCharacter(_activeCharacter);
+                Debug.Log(healthCharacter);
+            }
 
         }
 
