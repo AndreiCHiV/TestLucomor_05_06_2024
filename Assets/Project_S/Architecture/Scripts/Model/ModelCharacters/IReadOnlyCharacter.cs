@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Assets.Project_S
 {
@@ -6,11 +7,13 @@ namespace Assets.Project_S
     {
         event Action<int> MaxHealthChanged;
         event Action<int> CurrentHealthChanged;
+        event Action<Vector2> PositionCharacterChanged;
 
         string Name { get; }
         string TagCharacter { get; }
         int MaxHealth { get; }
         int CurrentHealth { get; }
+        Vector2 PositionCharacter { get; }
 
     }
 }

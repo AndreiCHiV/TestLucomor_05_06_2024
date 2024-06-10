@@ -22,5 +22,12 @@ namespace Assets.Project_S
             }
             throw new Exception("The Character was not found!");
         }
+
+        public void MoveMentCharacter(string characterName, Vector2 characterInput)
+        {
+            CharacterView character = GetCharacterView(characterName);
+            character.Movement(characterInput);
+        }
+
     }
 }

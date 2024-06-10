@@ -47,17 +47,19 @@ namespace Assets.Project_S
                 _activeCharacter = OCTI;
             }
 
-            if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 int damage = UnityEngine.Random.Range(0, 20);
                 string takeDamage = _charactersService.TakeDamageCharacter(_activeCharacter, damage);
                 Debug.Log(takeDamage);
             }
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.R))
             {
                 string healthCharacter = _charactersService.TreatmentCharacter(_activeCharacter);
                 Debug.Log(healthCharacter);
             }
+
+
 
         }
 

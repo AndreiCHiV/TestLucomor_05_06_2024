@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Assets.Project_S
 {
@@ -10,12 +11,26 @@ namespace Assets.Project_S
         public int maxHealth;
         public int currentHealth;
 
+        public float positionCharacter_X;
+        public float positionCharacter_Y;
+
+
         public CharacterData(string name, string tag, int health)
         {
             characterName = name;
             characterTag = tag;
             maxHealth = health;
             currentHealth = health;
+        }
+
+        public Vector2 PositionCharacterData
+        {
+            get => new Vector2(positionCharacter_X, positionCharacter_Y);
+            set
+            {
+                positionCharacter_X = value.x;
+                positionCharacter_Y = value.y;
+            }
         }
     }
 

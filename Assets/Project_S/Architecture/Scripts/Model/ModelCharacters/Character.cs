@@ -7,6 +7,7 @@ namespace Assets.Project_S
     {
         public event Action<int> MaxHealthChanged;
         public event Action<int> CurrentHealthChanged;
+        public event Action<Vector2> PositionCharacterChanged;
 
         protected CharacterData _characterData;
 
@@ -24,6 +25,19 @@ namespace Assets.Project_S
         {
             get => _characterData.characterTag;
             set => _characterData.characterTag = value;
+        }
+
+        public Vector2 PositionCharacter
+        {
+            get => _characterData.PositionCharacterData;
+            set
+            {
+                if (_characterData.PositionCharacterData != value)
+                {
+                    _characterData.PositionCharacterData = value;
+                    PositionCharacterChanged?.Invoke(_characterData.PositionCharacterData);
+                }
+            }
         }
         public int MaxHealth
         {
