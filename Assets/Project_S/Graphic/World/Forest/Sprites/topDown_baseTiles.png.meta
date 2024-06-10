@@ -5003,7 +5003,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: topDown_baseTiles_233
+      name: Breeze_1
       rect:
         serializedVersion: 2
         x: 80
@@ -12982,6 +12982,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: topDown_baseTiles_66
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 864
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f66f07549c14674980c19c76f87698a
+      internalID: 1599326116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Breeze_2
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 848
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 372e0aed762aecf4ebc20210c2c86fff
+      internalID: 1766225754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -12993,6 +13035,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Breeze_1: -427039507
+      Breeze_2: 1766225754
       Grass_Base: 921257062
       Ripples_on_the_water_0: -84943482
       Ripples_on_the_water_1: 454146529
@@ -13149,7 +13193,6 @@ TextureImporter:
       topDown_baseTiles_230: -1985435881
       topDown_baseTiles_231: 987950428
       topDown_baseTiles_232: 635492064
-      topDown_baseTiles_233: -427039507
       topDown_baseTiles_239: 1359405664
       topDown_baseTiles_24: -336908643
       topDown_baseTiles_240: -664575163
@@ -13570,6 +13613,7 @@ TextureImporter:
       topDown_baseTiles_63: -1959824491
       topDown_baseTiles_64: 1903077096
       topDown_baseTiles_65: -162599388
+      topDown_baseTiles_66: 1599326116
       topDown_baseTiles_67: -1176610632
       topDown_baseTiles_68: 1146334979
       topDown_baseTiles_69: 1527953169
