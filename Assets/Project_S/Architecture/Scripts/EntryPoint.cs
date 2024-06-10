@@ -21,10 +21,10 @@ namespace Assets.Project_S
         {
             _charactersService = new CharactersService();
 
-            CharacterData characterDataCat = CreateTestCharacter(CAT, "Player", 150);
+            CharacterData characterDataCat = CreateTestCharacter(CAT, "Player", 240);
             _charactersService.RegisterCharacters(characterDataCat);
 
-            CharacterData characterDataOcti = CreateTestCharacter(OCTI, "NPC", 100);
+            CharacterData characterDataOcti = CreateTestCharacter(OCTI, "NPC", 90);
             _charactersService.RegisterCharacters(characterDataOcti);
 
             _screenCharacterController = new ScreenCharacterController(_charactersService, _screenView);
