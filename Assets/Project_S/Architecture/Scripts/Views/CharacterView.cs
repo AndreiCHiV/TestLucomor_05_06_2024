@@ -61,10 +61,6 @@ namespace Assets.Project_S
                 Vector3 targetPos = transform.position;
                 targetPos.x += input.x;
                 targetPos.y += input.y;
-
-                Debug.Log(targetPos.x);
-                Debug.Log(targetPos.y);
-
                 StartCoroutine(Move(targetPos));
             }
         }

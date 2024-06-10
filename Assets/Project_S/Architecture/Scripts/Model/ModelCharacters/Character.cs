@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Assets.Project_S
@@ -21,13 +22,14 @@ namespace Assets.Project_S
             get => _characterData.characterName;
             set => _characterData.characterName = value;
         }
+
         public string TagCharacter
         {
             get => _characterData.characterTag;
             set => _characterData.characterTag = value;
         }
 
-        public Vector2 PositionCharacter
+        public Vector3 PositionCharacter
         {
             get => _characterData.PositionCharacterData;
             set
@@ -38,6 +40,11 @@ namespace Assets.Project_S
                     PositionCharacterChanged?.Invoke(_characterData.PositionCharacterData);
                 }
             }
+        }
+
+        public bool IsMoving
+        {
+            get => _characterData.isMoving;
         }
         public int MaxHealth
         {
@@ -86,12 +93,30 @@ namespace Assets.Project_S
 
             return $"The Character received the damage amount of {damage} units. The Health: {CurrentHealth}";
         }
+
         public string Treatment()
         {
             CurrentHealth += 10;
 
             return $"The character has been cured by 10 units.The Health: {CurrentHealth}";
         }
+
+        //public IEnumerator Movement(Vector3 targetPos)
+        //{
+        //    Debug.Log(targetPos);
+
+        //    _characterData.isMoving = true;
+        //    while ((targetPos - PositionCharacter).sqrMagnitude > Mathf.Epsilon)
+        //    {
+        //        PositionCharacter = Vector3.MoveTowards(PositionCharacter, targetPos, _characterData.moveSpeed * Time.deltaTime);
+        //        Debug.Log(PositionCharacter);
+
+        //        yield return null;
+        //    }
+
+        //    PositionCharacter = targetPos;
+        //    _characterData.isMoving = false;
+        //}
 
     }
 }

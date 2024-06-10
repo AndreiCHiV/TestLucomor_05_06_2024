@@ -15,7 +15,7 @@ namespace Assets.Project_S
         private ScreenCharacterController _screenCharacterController;
 
         private string _activeCharacter;
-        private Vector2 _input;
+        private Vector3 _input;
 
 
         private void Start()
@@ -60,12 +60,9 @@ namespace Assets.Project_S
                 Debug.Log(healthCharacter);
             }
 
-            if (!_screenView.GetCharacterView(_activeCharacter).IsMoving)
+            if (!_charactersService.GetIsMoving(_activeCharacter))
             {
-                _input.x = Input.GetAxisRaw("Horizontal");
-                _input.y = Input.GetAxisRaw("Vertical");
-
-                _screenView.MoveMentCharacter(_activeCharacter, _input);
+                _charactersService.MovementCharacter(_activeCharacter);
             }
         }
 

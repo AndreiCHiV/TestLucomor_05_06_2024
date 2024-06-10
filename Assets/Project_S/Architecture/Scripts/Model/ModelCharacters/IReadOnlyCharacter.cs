@@ -13,7 +13,7 @@ namespace Assets.Project_S
         string TagCharacter { get; }
         int MaxHealth { get; }
         int CurrentHealth { get; }
-        Vector2 PositionCharacter { get; }
+        Vector3 PositionCharacter { get; }
 
     }
 }
