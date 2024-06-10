@@ -8,13 +8,14 @@ namespace Assets.Project_S
     {
         [SerializeField] private ScreenView _screenView;
 
-        private const string CAT = "Cat";
-        private const string OCTI = "Octi";
+        private const string CAT = "Lisa";
+        private const string OCTI = "Wise";
 
         private CharactersService _charactersService;
         private ScreenCharacterController _screenCharacterController;
 
         private string _activeCharacter;
+        private Vector2 _input;
 
 
         private void Start()
@@ -59,8 +60,13 @@ namespace Assets.Project_S
                 Debug.Log(healthCharacter);
             }
 
+            if (!_screenView.GetCharacterView(_activeCharacter).IsMoving)
+            {
+                _input.x = Input.GetAxisRaw("Horizontal");
+                _input.y = Input.GetAxisRaw("Vertical");
 
-
+                _screenView.MoveMentCharacter(_activeCharacter, _input);
+            }
         }
 
         private CharacterData CreateTestCharacter(string name, string tag, int health)

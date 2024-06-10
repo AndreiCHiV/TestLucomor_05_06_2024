@@ -14,8 +14,7 @@ namespace Assets.Project_S
         {
             foreach (CharacterView characterView in _characterViews)
             {
-                
-                if (characterName == characterView.CharacterName)
+                if (characterName == characterView.Name)
                 {
                     return characterView;
                 }
@@ -26,6 +25,7 @@ namespace Assets.Project_S
         public void MoveMentCharacter(string characterName, Vector2 characterInput)
         {
             CharacterView character = GetCharacterView(characterName);
+            
             character.Movement(characterInput);
         }
 

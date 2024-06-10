@@ -53,19 +53,19 @@ namespace Assets.Project_S
 
         public void Movement(Vector2 input)
         {
-            if (!IsMoving)
+            if (input.x != 0)
+                input.y = 0;
+
+            if (input != Vector2.zero)
             {
-                if (input.x != 0) 
-                    input.y = 0;
+                Vector3 targetPos = transform.position;
+                targetPos.x += input.x;
+                targetPos.y += input.y;
 
-                if (InputPosition != Vector2.zero)
-                {
-                    Vector3 targetPos = transform.position;
-                    targetPos.x += input.x;
-                    targetPos.y += input.y;
+                Debug.Log(targetPos.x);
+                Debug.Log(targetPos.y);
 
-                    StartCoroutine(Move(targetPos));
-                }
+                StartCoroutine(Move(targetPos));
             }
         }
 
@@ -74,7 +74,7 @@ namespace Assets.Project_S
             _isMoving = true;
             while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
             {
-                transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed*Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
                 yield return null;
             }
 

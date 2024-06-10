@@ -14,6 +14,7 @@ namespace Assets.Project_S
         public float positionCharacter_X;
         public float positionCharacter_Y;
 
+        private Vector2 _positionCharacter = new Vector2();
 
         public CharacterData(string name, string tag, int health)
         {
@@ -25,7 +26,11 @@ namespace Assets.Project_S
 
         public Vector2 PositionCharacterData
         {
-            get => new Vector2(positionCharacter_X, positionCharacter_Y);
+            get
+            {
+                _positionCharacter.Set(positionCharacter_X, positionCharacter_Y);
+                return _positionCharacter;
+            }
             set
             {
                 positionCharacter_X = value.x;
