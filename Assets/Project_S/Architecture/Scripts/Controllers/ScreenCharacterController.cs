@@ -14,11 +14,11 @@ namespace Assets.Project_S
             _charactersService = charactersService;
             _view = view;
 
-            foreach (CharacterView characterView in _view.CharacterViews)
-            {
-                IReadOnlyCharacter character = _charactersService.GetCharacter(characterView.Name);
-                _currentCharacterController = new CharacterController(character, characterView);
-            }
+            //foreach (CharacterView characterView in _view.CharacterViews)
+            //{
+            //    IReadOnlyCharacter character = _charactersService.GetCharacter(characterView.Name);
+            //    _currentCharacterController = new CharacterController(character, characterView);
+            //}
 
         }
 

@@ -60,10 +60,22 @@ namespace Assets.Project_S
                 Debug.Log(healthCharacter);
             }
 
-            if (!_charactersService.GetIsMoving(_activeCharacter))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                _charactersService.MovementCharacter(_activeCharacter);
+                _charactersService.SetPositionCharacter(_activeCharacter, new Vector3(3.5f, 4, 0));
             }
+
+
+            if (!_screenView.GetCharacterView(_activeCharacter).IsMoving)
+            {
+                _input.x = Input.GetAxisRaw("Horizontal");
+                _input.y = Input.GetAxisRaw("Vertical");
+                if (_input != Vector3.zero)
+                {
+                    _screenView.GetCharacterView(_activeCharacter).Movement(_input);
+                }
+            }
+
         }
 
         private CharacterData CreateTestCharacter(string name, string tag, int health)
@@ -85,5 +97,6 @@ namespace Assets.Project_S
 
             return characterData;
         }
+
     }
 }

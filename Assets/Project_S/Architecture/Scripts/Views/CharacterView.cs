@@ -7,6 +7,7 @@ namespace Assets.Project_S
 {
     public class CharacterView : MonoBehaviour
     {
+        public event Action<Vector3> PositionCharacterChanged;
 
         [SerializeField] private TMP_Text _textName;
         [SerializeField] private TMP_Text _textMaxHealth;
@@ -39,17 +40,27 @@ namespace Assets.Project_S
             set => _textCurrentHealth.text = value.ToString();
         }
 
-        public Vector2 InputPosition
+        public Vector3 CharacterPositionView
         {
-            get => _input;
-            set => _input = value;
+            get => transform.position;
+            set
+            {
+                if (transform.position != value)
+                {
+                    transform.position = value;
+                }
+            }
         }
 
+
+
+        
         public bool IsMoving
         {
             get => _isMoving;
             set => _isMoving = value;
         }
+
 
         public void Movement(Vector2 input)
         {
@@ -62,6 +73,7 @@ namespace Assets.Project_S
                 targetPos.x += input.x;
                 targetPos.y += input.y;
                 StartCoroutine(Move(targetPos));
+                PositionCharacterChanged?.Invoke(transform.position);
             }
         }
 

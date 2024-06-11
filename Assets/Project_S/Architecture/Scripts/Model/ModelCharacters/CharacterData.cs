@@ -8,14 +8,13 @@ namespace Assets.Project_S
     {
         public string characterName;
         public string characterTag;
+
         public int maxHealth;
         public int currentHealth;
 
         public float positionCharacter_X;
         public float positionCharacter_Y;
         public float positionCharacter_Z;
-
-        private Vector3 _positionCharacter = new Vector3();
 
         public CharacterData(string name, string tag, int health)
         {
@@ -25,20 +24,7 @@ namespace Assets.Project_S
             currentHealth = health;
         }
 
-        public Vector3 PositionCharacterData
-        {
-            get
-            {
-                _positionCharacter.Set(positionCharacter_X, positionCharacter_Y, positionCharacter_Z);
-                return _positionCharacter;
-            }
-            set
-            {
-                positionCharacter_X = value.x;
-                positionCharacter_Y = value.y;
-                positionCharacter_Z = value.z;
-            }
-        }
+        
     }
 
     [Serializable]

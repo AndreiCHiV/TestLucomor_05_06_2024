@@ -9,7 +9,6 @@ namespace Assets.Project_S
     {
 
         private readonly Dictionary<string, Character> _charactersMap = new Dictionary<string, Character>();
-        //private Vector3 _input;
 
         public Character RegisterCharacters(CharacterData characterData)
         {
@@ -44,25 +43,19 @@ namespace Assets.Project_S
             return character.Treatment();
         }
 
-        //public IEnumerator MovementCharacter(string characterName)
-        //{
-        //    _input.x = Input.GetAxisRaw("Horizontal");
-        //    _input.y = Input.GetAxisRaw("Vertical");
-        //    Character character = _charactersMap[characterName];
-            
-        //    return character.Movement(_input);
-        //}
-
-
         public IReadOnlyCharacter GetCharacter(string characterName)
         {
             return _charactersMap[characterName];
         }
-
-        //public bool GetIsMoving(string characterName)
-        //{
-        //    Character character = _charactersMap[characterName];
-        //    return character.IsMoving;
-        //}
+        public Vector3 GetPositinoCharacter(string characterName)
+        {
+            Character character = _charactersMap[characterName];
+            return character.PositionCharacter;
+        }
+        public void SetPositionCharacter(string characterName, Vector3 positionCharacter)
+        {
+            Character character = _charactersMap[characterName];
+            character.SetPositionCharacter(positionCharacter);
+        }
     }
 }

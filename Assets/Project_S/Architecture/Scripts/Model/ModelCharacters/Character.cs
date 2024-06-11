@@ -8,9 +8,10 @@ namespace Assets.Project_S
     {
         public event Action<int> MaxHealthChanged;
         public event Action<int> CurrentHealthChanged;
-        public event Action<Vector2> PositionCharacterChanged;
+        public event Action<Vector3> PositionCharacterChanged;
 
         protected CharacterData _characterData;
+        protected Vector3 _positionCharacter;
 
         public Character(CharacterData characterData)
         {
@@ -31,21 +32,24 @@ namespace Assets.Project_S
 
         public Vector3 PositionCharacter
         {
-            get => _characterData.PositionCharacterData;
+            get => _positionCharacter;
             set
             {
-                if (_characterData.PositionCharacterData != value)
+                if (_positionCharacter != value)
                 {
-                    _characterData.PositionCharacterData = value;
-                    PositionCharacterChanged?.Invoke(_characterData.PositionCharacterData);
+                    _positionCharacter = value;
+
+                    _characterData.positionCharacter_X = value.x;
+                    _characterData.positionCharacter_Y = value.y;
+                    _characterData.positionCharacter_Z = value.z;
+
+                    Debug.Log(_positionCharacter);
+
+                    PositionCharacterChanged?.Invoke(_positionCharacter);
                 }
             }
         }
 
-        public bool IsMoving
-        {
-            get => _characterData.isMoving;
-        }
         public int MaxHealth
         {
             get => _characterData.maxHealth;
@@ -58,6 +62,8 @@ namespace Assets.Project_S
                 }
             }
         }
+
+
         public int CurrentHealth
         {
             get => _characterData.currentHealth;
@@ -87,6 +93,18 @@ namespace Assets.Project_S
             Debug.Log($"{Name} is dead!");
         }
 
+
+
+        public void SetPositionCharacter(Vector3 positionCharacter)
+        {
+            PositionCharacter = positionCharacter;
+        }
+
+
+
+
+
+
         public string TakeDamage(int damage)
         {
             CurrentHealth -= damage;
@@ -100,23 +118,5 @@ namespace Assets.Project_S
 
             return $"The character has been cured by 10 units.The Health: {CurrentHealth}";
         }
-
-        //public IEnumerator Movement(Vector3 targetPos)
-        //{
-        //    Debug.Log(targetPos);
-
-        //    _characterData.isMoving = true;
-        //    while ((targetPos - PositionCharacter).sqrMagnitude > Mathf.Epsilon)
-        //    {
-        //        PositionCharacter = Vector3.MoveTowards(PositionCharacter, targetPos, _characterData.moveSpeed * Time.deltaTime);
-        //        Debug.Log(PositionCharacter);
-
-        //        yield return null;
-        //    }
-
-        //    PositionCharacter = targetPos;
-        //    _characterData.isMoving = false;
-        //}
-
     }
 }
