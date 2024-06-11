@@ -60,12 +60,6 @@ namespace Assets.Project_S
                 Debug.Log(healthCharacter);
             }
 
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                _charactersService.SetPositionCharacter(_activeCharacter, new Vector3(3.5f, 4, 0));
-            }
-
-
             if (!_screenView.GetCharacterView(_activeCharacter).IsMoving)
             {
                 _input.x = Input.GetAxisRaw("Horizontal");
@@ -76,6 +70,12 @@ namespace Assets.Project_S
                 }
 
                 _screenView.GetCharacterView(_activeCharacter).GetAnimation().SetBool("isMoving", _screenView.GetCharacterView(_activeCharacter).IsMoving);
+            }
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                Debug.Log(_activeCharacter);
+                _screenView.GetCharacterView(_activeCharacter).Interact();
             }
         }
 

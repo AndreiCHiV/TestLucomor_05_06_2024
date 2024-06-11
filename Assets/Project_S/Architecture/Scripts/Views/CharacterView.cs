@@ -16,6 +16,10 @@ namespace Assets.Project_S
         [SerializeField] private string _name;
         [SerializeField] private Animator _animator;
 
+        [SerializeField] private LayerMask _solidObjectsLayer;
+        [SerializeField] private LayerMask _interactableLayer;
+        [SerializeField] private LayerMask _interactablePlayerLayer;
+
         public float moveSpeed;
 
         private bool _isMoving;
@@ -79,7 +83,12 @@ namespace Assets.Project_S
                 Vector3 targetPos = transform.position;
                 targetPos.x += input.x;
                 targetPos.y += input.y;
-                StartCoroutine(Move(targetPos));
+
+                if (IsWalkable(targetPos))
+                {
+                    StartCoroutine(Move(targetPos));
+                }
+
                 PositionCharacterChanged?.Invoke(transform.position);
             }
         }
@@ -97,6 +106,28 @@ namespace Assets.Project_S
             transform.position = targetPos;
 
             _isMoving = false;
+        }
+
+        public void Interact()
+        {
+            Vector3 facingDir = new Vector3(_animator.GetFloat("moveX"), _animator.GetFloat("moveY"));
+            Vector3 interactPos = transform.position + facingDir;
+
+            Debug.DrawLine(transform.position, interactPos, Color.red, 1f);
+
+            if (Physics2D.OverlapCircle(interactPos, 0.2f, _interactableLayer | _interactablePlayerLayer) != null)
+            {
+                Debug.Log("there is an Object here!");
+            }
+        }
+
+        private bool IsWalkable(Vector3 targetPos)
+        {
+            if (Physics2D.OverlapCircle(targetPos, 0.2f, _solidObjectsLayer | _interactableLayer | _interactablePlayerLayer) != null)
+            {
+                return false;
+            }
+            return true;
         }
 
 
