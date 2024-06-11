@@ -14,11 +14,12 @@ namespace Assets.Project_S
         [SerializeField] private TMP_Text _textCurrentHealth;
 
         [SerializeField] private string _name;
+        [SerializeField] private Animator _animator;
 
         public float moveSpeed;
 
         private bool _isMoving;
-        private Vector2 _input;
+
 
         public string Name => _name;
 
@@ -52,23 +53,29 @@ namespace Assets.Project_S
             }
         }
 
-
-
-        
         public bool IsMoving
         {
             get => _isMoving;
             set => _isMoving = value;
         }
 
+        public Animator GetAnimation()
+        {
+            return _animator;
+        }
 
         public void Movement(Vector2 input)
         {
+
             if (input.x != 0)
                 input.y = 0;
 
             if (input != Vector2.zero)
             {
+
+                _animator.SetFloat("moveX", input.x);
+                _animator.SetFloat("moveY", input.y);
+
                 Vector3 targetPos = transform.position;
                 targetPos.x += input.x;
                 targetPos.y += input.y;
@@ -80,6 +87,7 @@ namespace Assets.Project_S
         private IEnumerator Move(Vector3 targetPos)
         {
             _isMoving = true;
+
             while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
@@ -87,6 +95,7 @@ namespace Assets.Project_S
             }
 
             transform.position = targetPos;
+
             _isMoving = false;
         }
 
@@ -107,7 +116,5 @@ namespace Assets.Project_S
 
             Debug.Log($"Name character: {name}, maxHP: {maxHP}, HP: {HP}!");
         }
-
-
     }
 }

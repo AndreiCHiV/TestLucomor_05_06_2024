@@ -74,8 +74,9 @@ namespace Assets.Project_S
                 {
                     _screenView.GetCharacterView(_activeCharacter).Movement(_input);
                 }
-            }
 
+                _screenView.GetCharacterView(_activeCharacter).GetAnimation().SetBool("isMoving", _screenView.GetCharacterView(_activeCharacter).IsMoving);
+            }
         }
 
         private CharacterData CreateTestCharacter(string name, string tag, int health)
