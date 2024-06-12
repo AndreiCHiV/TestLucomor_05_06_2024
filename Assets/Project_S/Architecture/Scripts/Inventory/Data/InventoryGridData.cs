@@ -7,6 +7,7 @@ namespace Assets.Project_S
     public class InventoryGridData
     {
         public string owner;
+        public float maxWeigthInventory;
         public List<InventorySlotData> slots;
     }
 }

@@ -2,7 +2,7 @@
 {
     public class QuestInventorySlot : InventorySlot
     {
-        public QuestInventorySlot(InventorySlotData slotData) : base(slotData)
+        public QuestInventorySlot(QuestInventorySlotData slotData) : base(slotData)
         {
         }
     }

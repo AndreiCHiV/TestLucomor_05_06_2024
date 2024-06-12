@@ -17,4 +17,28 @@ namespace Assets.Project_S
             itemWeigth = weigth;
         }
     }
+
+    [Serializable]
+    public class QuestInventoryData : InventorySlotData
+    {
+        public QuestInventoryData(string name, int amount, float weigth) : base(name, amount, weigth)
+        {
+            itemId = 1;
+        }
+    }
+
+    public class ArmorInventorySlotData : InventorySlotData
+    {
+        public ArmorInventorySlotData(string name, int amount, float weigth) : base(name, amount, weigth)
+        {
+            itemId = 2;
+        }
+    }
+    public class HealthInventorySlotData : InventorySlotData
+    {
+        public HealthInventorySlotData(string name, int amount, float weigth) : base(name, amount, weigth)
+        {
+            itemId = 3;
+        }
+    }
 }
