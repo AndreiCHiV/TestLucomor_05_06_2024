@@ -49,7 +49,7 @@ namespace Assets.Project_S
                 if (_slotData.itemAmount != value)
                 {
                     _slotData.itemAmount = value;
-                    ItemWeigthChanged?.Invoke(value);
+                    ItemAmountChanged?.Invoke(value);
                 }
             }
         }
@@ -67,16 +67,9 @@ namespace Assets.Project_S
             }
         }
 
-
-        public void AddWeigthItems(float itemWeight)
+        public InventorySlotData GetSlotData()
         {
-            Weigth += itemWeight;
+            return _slotData;
         }
-        
-        public void AddAmountItems(int itemAmount)
-        {
-            Amount += itemAmount;
-        }
-
     }
 }

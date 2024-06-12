@@ -17,5 +17,15 @@ namespace Assets.Project_S
                 new HealthInventorySlotData("Herb", 0, 0.1f),
             };
         }
+
+        public bool KeyContainsInList(string key)
+        {
+            foreach (InventorySlotData keyList in itemsData)
+            {
+                if (keyList.itemName == key)
+                    return true;
+            }
+            return false;
+        }
     }
 }

@@ -17,6 +17,10 @@ namespace Assets.Project_S
         private string _activeCharacter;
         private Vector3 _input;
 
+        private InventoryService _inventoryService;
+
+
+
 
         private void Start()
         {
@@ -32,6 +36,15 @@ namespace Assets.Project_S
 
             _screenCharacterController.ActiveCharacter(CAT);
             _activeCharacter = CAT;
+
+            _inventoryService = new InventoryService();
+            InventoryGridData inventroyLisa = CreateTestInventory(CAT, 12);
+            _inventoryService.RegisterInventory(inventroyLisa);
+
+
+            InventoryGridData inventoryOcti = CreateTestInventory(OCTI, 10);
+            _inventoryService.RegisterInventory(inventoryOcti);
+
 
         }
 
@@ -59,6 +72,50 @@ namespace Assets.Project_S
                 string healthCharacter = _charactersService.TreatmentCharacter(_activeCharacter);
                 Debug.Log(healthCharacter);
             }
+
+
+
+
+
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                _inventoryService.AddItems(CAT, "Key", 2);
+                int amount = _inventoryService.GetInventoy(CAT).GetInventorySlot("Key").Amount;
+                Debug.Log(amount);
+
+                _inventoryService.AddItems(OCTI, "Knife", 5);
+                amount = _inventoryService.GetInventoy(OCTI).GetInventorySlot("Knife").Amount;
+                Debug.Log(amount);
+            }
+
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                _inventoryService.RemoveItems(CAT, "Key", 1);
+                _inventoryService.RemoveItems(OCTI, "Knife", 2);
+
+                try
+                {
+                    int amount = _inventoryService.GetInventoy(CAT).GetInventorySlot("Key").Amount;
+                    Debug.Log(amount);
+                    amount = _inventoryService.GetInventoy(OCTI).GetInventorySlot("Knife").Amount;
+                    Debug.Log(amount);
+
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.Message);
+                }
+
+            }
+
+
+
+
+
+
+
+
+
 
             if (!_screenView.GetCharacterView(_activeCharacter).IsMoving)
             {
@@ -97,6 +154,17 @@ namespace Assets.Project_S
             }
 
             return characterData;
+        }
+
+        private InventoryGridData CreateTestInventory(string name, float maxWeigth)
+        {
+            InventoryGridData inventoryData = new InventoryGridData()
+            {
+                owner = name,
+                maxWeigthInventory = maxWeigth
+            };
+
+            return inventoryData;
         }
 
     }
