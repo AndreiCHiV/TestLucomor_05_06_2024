@@ -43,7 +43,7 @@ namespace Assets.Project_S
                     _characterData.positionCharacter_Y = value.y;
                     _characterData.positionCharacter_Z = value.z;
 
-                    Debug.Log(_positionCharacter);
+                    //Debug.Log(_positionCharacter);
 
                     PositionCharacterChanged?.Invoke(_positionCharacter);
                 }

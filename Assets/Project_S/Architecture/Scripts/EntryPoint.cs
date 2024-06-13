@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -6,7 +7,8 @@ namespace Assets.Project_S
 {
     public class EntryPoint : MonoBehaviour
     {
-        [SerializeField] private ScreenCharacterView _screenView;
+        [SerializeField] private ScreenCharacterView _screenCharacterView;
+        [SerializeField] private ScreenInventoryView _screenInventoryView;
 
         private const string CAT = "Lisa";
         private const string OCTI = "Wise";
@@ -18,6 +20,7 @@ namespace Assets.Project_S
         private Vector3 _input;
 
         private InventoryService _inventoryService;
+        private ScreenInventoryController _screenInventoryController;
 
 
 
@@ -25,6 +28,9 @@ namespace Assets.Project_S
         private void Start()
         {
             _charactersService = new CharactersService();
+            _inventoryService = new InventoryService();
+
+
 
             CharacterData characterDataCat = CreateTestCharacter(CAT, "Player", 150);
             _charactersService.RegisterCharacters(characterDataCat);
@@ -32,20 +38,20 @@ namespace Assets.Project_S
             CharacterData characterDataOcti = CreateTestCharacter(OCTI, "NPC", 100);
             _charactersService.RegisterCharacters(characterDataOcti);
 
-            _screenCharacterController = new ScreenCharacterController(_charactersService, _screenView);
+            _screenCharacterController = new ScreenCharacterController(_charactersService, _screenCharacterView);
 
             _screenCharacterController.ActiveCharacter(CAT);
             _activeCharacter = CAT;
 
-            _inventoryService = new InventoryService();
             InventoryGridData inventroyLisa = CreateTestInventory(CAT, 12);
             _inventoryService.RegisterInventory(inventroyLisa);
-
 
             InventoryGridData inventoryOcti = CreateTestInventory(OCTI, 10);
             _inventoryService.RegisterInventory(inventoryOcti);
 
+            _screenInventoryController = new ScreenInventoryController(_inventoryService, _screenInventoryView);
 
+            _screenInventoryController.OpenInventory(CAT);
         }
 
         private void Update()
@@ -53,11 +59,13 @@ namespace Assets.Project_S
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 _screenCharacterController.ActiveCharacter(CAT);
+                _screenInventoryController.OpenInventory(CAT);
                 _activeCharacter = CAT;
             }
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 _screenCharacterController.ActiveCharacter(OCTI);
+                _screenInventoryController.OpenInventory(OCTI);
                 _activeCharacter = OCTI;
             }
 
@@ -80,12 +88,12 @@ namespace Assets.Project_S
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 _inventoryService.AddItems(CAT, "Key", 2);
-                int amount = _inventoryService.GetInventoy(CAT).GetInventorySlot("Key").Amount;
-                Debug.Log(amount);
+                //int amount = _inventoryService.GetInventoy(CAT).GetInventorySlot("Key").Amount;
+                //Debug.Log(amount);
 
                 _inventoryService.AddItems(OCTI, "Knife", 5);
-                amount = _inventoryService.GetInventoy(OCTI).GetInventorySlot("Knife").Amount;
-                Debug.Log(amount);
+                //amount = _inventoryService.GetInventoy(OCTI).GetInventorySlot("Knife").Amount;
+                //Debug.Log(amount);
             }
 
             if (Input.GetKeyDown(KeyCode.X))
@@ -117,22 +125,22 @@ namespace Assets.Project_S
 
 
 
-            if (!_screenView.GetCharacterView(_activeCharacter).IsMoving)
+            if (!_screenCharacterView.GetCharacterView(_activeCharacter).IsMoving)
             {
                 _input.x = Input.GetAxisRaw("Horizontal");
                 _input.y = Input.GetAxisRaw("Vertical");
                 if (_input != Vector3.zero)
                 {
-                    _screenView.GetCharacterView(_activeCharacter).Movement(_input);
+                    _screenCharacterView.GetCharacterView(_activeCharacter).Movement(_input);
                 }
 
-                _screenView.GetCharacterView(_activeCharacter).GetAnimation().SetBool("isMoving", _screenView.GetCharacterView(_activeCharacter).IsMoving);
+                _screenCharacterView.GetCharacterView(_activeCharacter).GetAnimation().SetBool("isMoving", _screenCharacterView.GetCharacterView(_activeCharacter).IsMoving);
             }
 
             if (Input.GetKeyDown(KeyCode.F))
             {
                 Debug.Log(_activeCharacter);
-                _screenView.GetCharacterView(_activeCharacter).Interact();
+                _screenCharacterView.GetCharacterView(_activeCharacter).Interact();
             }
         }
 

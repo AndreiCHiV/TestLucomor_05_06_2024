@@ -8,6 +8,7 @@ namespace Assets.Project_S
         event Action<float> MaxWeigthInventoryChanged;
         event Action<IReadOnlyInventorySlot> AddInventorySlotChanged;
         event Action<string> RemoveInventorySlotChanged;
+        event Action<string> OwnerChanged;
 
         string Owner { get; }
         float MaxWeigthInventory { get; }

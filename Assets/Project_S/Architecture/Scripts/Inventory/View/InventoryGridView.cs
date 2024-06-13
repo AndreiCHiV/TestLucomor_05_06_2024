@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -6,27 +7,63 @@ namespace Assets.Project_S
 {
     public class InventoryGridView : MonoBehaviour
     {
+        [SerializeField] private GameObject _inventorySlot;
+
         [SerializeField] private List<InventorySlotView> _slots = new List<InventorySlotView>();
         [SerializeField] private TMP_Text _maxWeigthInventory;
 
-        private void AddInventorySlotView(IReadOnlyInventorySlot slot)
-        {
-            InventorySlotView slotView = new InventorySlotView(slot.Name, slot.Amount, slot.Weigth);
-            _slots.Add(slotView);
-        }
-
+        public List<InventorySlotView> Slots => _slots;
         public float MaxWeigthInventory
         {
             get => float.Parse(_maxWeigthInventory.text);
             set => _maxWeigthInventory.text = value.ToString();
         }
 
+        public bool FindSlotNameInventoryGridView(string nameSlot)
+        {
+            foreach (InventorySlotView slot in _slots)
+            {
+                if (slot.ItemName == nameSlot)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public InventorySlotView GetSlotNameInventoryGridView(string nameSlot)
+        {
+            foreach (InventorySlotView slotView in _slots)
+            {
+                if (slotView.ItemName == nameSlot)
+                {
+                    return slotView;
+                }
+            }
+
+            return null;
+        }
+
+        private void AddInventorySlotView(IReadOnlyInventorySlot slot)
+        {
+            GameObject slotObject = Instantiate(_inventorySlot);
+            slotObject.transform.SetParent(GameObject.FindGameObjectWithTag("Inventory").transform,false);
+            InventorySlotView inventorySlot = slotObject.GetComponent<InventorySlotView>();
+            
+            inventorySlot.ItemName = slot.Name;
+            inventorySlot.ItemAmount = slot.Amount;
+            inventorySlot.ItemWeight = slot.Weigth;
+
+            _slots.Add(inventorySlot);
+        }
+
+
         public void InitializeInventoryGridView(IReadOnlyInventoryGrid grid)
         {
             foreach (IReadOnlyInventorySlot slot in grid.GetInventorySlots())
             {
+                Debug.Log(slot.Amount);
                 AddInventorySlotView(slot);
-                //создание префаба inventory slot view;
             }
 
         }
@@ -44,9 +81,6 @@ namespace Assets.Project_S
             }
 
             AddInventorySlotView(slot);
-            //Создание префаба inventory slot view;
-
-
         }
 
         public void RemoveInventorySlotView(string slotName)

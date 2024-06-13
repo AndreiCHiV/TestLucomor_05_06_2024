@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Assets.Project_S
 {
@@ -16,7 +17,6 @@ namespace Assets.Project_S
             view.ItemName = slot.Name;
             view.ItemAmount = slot.Amount;
             view.ItemWeight = slot.Weigth;
-
         }
 
         private void ChangedItemWeight(float value)

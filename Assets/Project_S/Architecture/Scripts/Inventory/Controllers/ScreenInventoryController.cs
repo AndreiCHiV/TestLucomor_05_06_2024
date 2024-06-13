@@ -1,4 +1,6 @@
-﻿namespace Assets.Project_S
+﻿using UnityEngine;
+
+namespace Assets.Project_S
 {
     public class ScreenInventoryController
     {
@@ -18,7 +20,8 @@
             IReadOnlyInventoryGrid inventoryGrid = _service.GetInventoy(owner);
             InventoryGridView inventoryView = _view.InventoryGridView;
 
-            _inventoryGridController = new InventoryGridController(inventoryGrid,inventoryView);
+            _inventoryGridController = new InventoryGridController(inventoryGrid, inventoryView);
+            Debug.Log(_inventoryGridController);
         }
 
     }

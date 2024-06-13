@@ -9,6 +9,7 @@ namespace Assets.Project_S
         public event Action<float> MaxWeigthInventoryChanged;
         public event Action<IReadOnlyInventorySlot> AddInventorySlotChanged;
         public event Action<string> RemoveInventorySlotChanged;
+        public event Action<string> OwnerChanged;
 
         private InventoryGridData _inventoryGridData;
 
@@ -27,6 +28,11 @@ namespace Assets.Project_S
         public string Owner
         {
             get => _inventoryGridData.owner;
+            set
+            {
+                _inventoryGridData.owner = value;
+                OwnerChanged?.Invoke(value);
+            }
         }
 
         public float MaxWeigthInventory
@@ -63,6 +69,7 @@ namespace Assets.Project_S
             {
                 _slotsMap[slotData.itemName] = new HealthInventorySlot(healthItemData);
             }
+            AddInventorySlotChanged?.Invoke(_slotsMap[slotData.itemName]);
         }
 
         private void RegistrationInventorySlot(InventorySlotData slotData)
@@ -78,6 +85,7 @@ namespace Assets.Project_S
             if (slotData is QuestInventorySlotData)
             {
                 inventorySlotData = new QuestInventorySlotData(slotData.itemName, slotData.itemAmount, slotData.itemWeigth);
+
             }
             else if (slotData is ArmorInventorySlotData)
             {
@@ -90,6 +98,7 @@ namespace Assets.Project_S
             else
                 throw new Exception("No the type!");
 
+
             return inventorySlotData;
         }
 
@@ -101,6 +110,7 @@ namespace Assets.Project_S
                 throw new Exception($"Item name: {itemName} not found in DataBase!");
             }
 
+
             if (!_slotsMap.ContainsKey(itemName))
             {
                 foreach (InventorySlotData slotData in _datamap.itemsData)
@@ -109,13 +119,12 @@ namespace Assets.Project_S
                     {
                         InventorySlotData inventorySlotData = CreateNewSlotType(slotData);
                         RegistrationInventorySlot(inventorySlotData);
-                        AddInventorySlotChanged?.Invoke((IReadOnlyInventorySlot)inventorySlotData);
                     }
                 }
             }
-
+            
             _slotsMap[itemName].Amount += amount;
-            _slotsMap[itemName].Weigth += _datamap.GetWeightKey(itemName);
+            _slotsMap[itemName].Weigth += _datamap.GetWeightKey(itemName) * amount;
         }
 
         public void RemoveItems(string itemName, int amount)
@@ -127,7 +136,7 @@ namespace Assets.Project_S
             }
 
             int currentAmount = _slotsMap[itemName].Amount - amount;
-            float currentWeight = _slotsMap[itemName].Weigth - _datamap.GetWeightKey(itemName);
+            float currentWeight = _slotsMap[itemName].Weigth - _datamap.GetWeightKey(itemName) * amount;
 
             if (currentAmount == 0)
             {
@@ -160,9 +169,20 @@ namespace Assets.Project_S
         {
             List<IReadOnlyInventorySlot> slots = new List<IReadOnlyInventorySlot>();
 
-            foreach (IReadOnlyInventorySlot slot in _inventoryGridData.slots)
+            foreach (InventorySlotData slotData in _inventoryGridData.slots)
             {
-                slots.Add(slot);
+                if (slotData is QuestInventorySlotData questItemData)
+                {
+                    slots.Add(new QuestInventorySlot(questItemData));
+                }
+                else if (slotData is ArmorInventorySlotData armorItemData)
+                {
+                    slots.Add(new ArmorInventorySlot(armorItemData));
+                }
+                else if (slotData is HealthInventorySlotData healthItemData)
+                {
+                    slots.Add(new HealthInventorySlot(healthItemData));
+                }
             }
 
             return slots;
