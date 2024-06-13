@@ -21,12 +21,8 @@ namespace Assets.Project_S
         public InventoryGrid(InventoryGridData inventoryGridData)
         {
             _inventoryGridData = inventoryGridData;
-            if (_inventoryGridData.slots == null)
-            {
-                _inventoryGridData.slots = new List<InventorySlotData>();
-            }
-            else
-                RegistrationInventorySlots(_inventoryGridData.slots);
+            _inventoryGridData.slots = new List<InventorySlotData>();
+            InitializationInventorySlots(_inventoryGridData.slots);
         }
 
 
@@ -55,7 +51,7 @@ namespace Assets.Project_S
                 }
             }
         }
-        private void RegistrationInventorySlots(List<InventorySlotData> slots)
+        private void InitializationInventorySlots(List<InventorySlotData> slots)
         {
             foreach (InventorySlotData slotData in slots)
             {
@@ -68,12 +64,10 @@ namespace Assets.Project_S
             if (slotData is QuestInventorySlotData questItemData)
             {
                 _slotsMap[slotData.itemName] = new QuestInventorySlot(questItemData);
-                Debug.Log(_slotsMap["Key"].Name);
             }
             else if (slotData is ArmorInventorySlotData armorItemData)
             {
                 _slotsMap[slotData.itemName] = new ArmorInventorySlot(armorItemData);
-                Debug.Log(_slotsMap["Knife"].Name);
             }
             else if (slotData is HealthInventorySlotData healthItemData)
             {
@@ -93,7 +87,6 @@ namespace Assets.Project_S
 
             if (slotData is QuestInventorySlotData)
             {
-
                 inventorySlotData = new QuestInventorySlotData(slotData.itemName, slotData.itemAmount, slotData.itemWeigth);
             }
             else if (slotData is ArmorInventorySlotData)
@@ -131,7 +124,6 @@ namespace Assets.Project_S
                 }
             }
 
-
             _slotsMap[itemName].Amount += amount;
         }
 
@@ -150,13 +142,16 @@ namespace Assets.Project_S
                 RemoveInventorySlot?.Invoke(_slotsMap[itemName].Name);
                 _slotsMap.Remove(itemName);
 
-                foreach (InventorySlotData slot in _inventoryGridData.slots)//проверка потом на удаление
+
+                for (int i = 0; i < _inventoryGridData.slots.Count; i++)
                 {
-                    if (slot.itemName == null)
+                    if (_inventoryGridData.slots[i].itemName == itemName)
                     {
-                        Debug.Log($"Slot {itemName} remove!");
+                        _inventoryGridData.slots[i] = null;
+                        Debug.Log($"Slot {itemName} removed!");
                     }
                 }
+
                 return;
             }
             else if (currentAmount < 0)

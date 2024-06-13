@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Assets.Project_S
 {
-    interface IReadOnlyInventoryGrid
+    public interface IReadOnlyInventoryGrid
     {
         event Action<string> ItemOwnerChanged;
         event Action<float> MaxWeigthInventoryChanged;

@@ -6,7 +6,7 @@ namespace Assets.Project_S
 {
     public class EntryPoint : MonoBehaviour
     {
-        [SerializeField] private ScreenView _screenView;
+        [SerializeField] private ScreenCharacterView _screenView;
 
         private const string CAT = "Lisa";
         private const string OCTI = "Wise";

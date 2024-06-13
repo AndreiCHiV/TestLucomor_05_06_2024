@@ -24,7 +24,7 @@ namespace Assets.Project_S
             inventory.RemoveItems(name, amount);
         }
 
-        public InventoryGrid GetInventoy(string owner)
+        public IReadOnlyInventoryGrid GetInventoy(string owner)
         {
             return _inventoriesMap[owner];
         }

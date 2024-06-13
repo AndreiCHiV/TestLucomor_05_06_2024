@@ -5,11 +5,11 @@ namespace Assets.Project_S
     public class ScreenCharacterController
     {
         private readonly CharactersService _charactersService;
-        private readonly ScreenView _view;
+        private readonly ScreenCharacterView _view;
 
         private CharacterController _currentCharacterController;
 
-        public ScreenCharacterController(CharactersService charactersService, ScreenView view)
+        public ScreenCharacterController(CharactersService charactersService, ScreenCharacterView view)
         {
             _charactersService = charactersService;
             _view = view;

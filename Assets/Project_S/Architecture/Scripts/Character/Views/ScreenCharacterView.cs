@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Project_S
 {
-    public class ScreenView : MonoBehaviour
+    public class ScreenCharacterView : MonoBehaviour
     {
         [SerializeField] private List<CharacterView> _characterViews;
 
