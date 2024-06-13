@@ -2,7 +2,7 @@
 
 namespace Assets.Project_S
 {
-    public interface IReadOnlySlot
+    public interface IReadOnlyInventorySlot
     {
         event Action<string> ItemNameChanged;
         event Action<int> ItemIdChanged;

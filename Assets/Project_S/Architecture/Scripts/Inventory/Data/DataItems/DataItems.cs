@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Assets.Project_S
 {
@@ -26,6 +27,18 @@ namespace Assets.Project_S
                     return true;
             }
             return false;
+        }
+
+        internal float GetWeightKey(string itemName)
+        {
+            foreach (InventorySlotData slotData in itemsData)
+            {
+                if (slotData.itemName == itemName)
+                {
+                    return slotData.itemWeigth;
+                }
+            }
+            return 0;
         }
     }
 }

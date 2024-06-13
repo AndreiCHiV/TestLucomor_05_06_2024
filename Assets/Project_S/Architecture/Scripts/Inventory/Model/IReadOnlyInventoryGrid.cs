@@ -5,14 +5,15 @@ namespace Assets.Project_S
 {
     public interface IReadOnlyInventoryGrid
     {
-        event Action<string> ItemOwnerChanged;
         event Action<float> MaxWeigthInventoryChanged;
-        event Action<InventorySlotData> AddInventorySlot;
-        event Action<string> RemoveInventorySlot;
+        event Action<IReadOnlyInventorySlot> AddInventorySlotChanged;
+        event Action<string> RemoveInventorySlotChanged;
 
         string Owner { get; }
         float MaxWeigthInventory { get; }
 
-        List<IReadOnlySlot> GetInventorySlots();
+        List<IReadOnlyInventorySlot> GetInventorySlots();
+        IReadOnlyInventorySlot GetInventorySlot(string itemName);
+
     }
 }

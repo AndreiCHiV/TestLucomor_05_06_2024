@@ -6,10 +6,9 @@ namespace Assets.Project_S
 {
     public class InventoryGrid : IReadOnlyInventoryGrid
     {
-        public event Action<string> ItemOwnerChanged;
         public event Action<float> MaxWeigthInventoryChanged;
-        public event Action<InventorySlotData> AddInventorySlot;
-        public event Action<string> RemoveInventorySlot;
+        public event Action<IReadOnlyInventorySlot> AddInventorySlotChanged;
+        public event Action<string> RemoveInventorySlotChanged;
 
         private InventoryGridData _inventoryGridData;
 
@@ -21,7 +20,6 @@ namespace Assets.Project_S
         public InventoryGrid(InventoryGridData inventoryGridData)
         {
             _inventoryGridData = inventoryGridData;
-            _inventoryGridData.slots = new List<InventorySlotData>();
             InitializationInventorySlots(_inventoryGridData.slots);
         }
 
@@ -29,14 +27,6 @@ namespace Assets.Project_S
         public string Owner
         {
             get => _inventoryGridData.owner;
-            set
-            {
-                if (_inventoryGridData.owner != value)
-                {
-                    _inventoryGridData.owner = value;
-                    ItemOwnerChanged?.Invoke(value);
-                }
-            }
         }
 
         public float MaxWeigthInventory
@@ -119,12 +109,13 @@ namespace Assets.Project_S
                     {
                         InventorySlotData inventorySlotData = CreateNewSlotType(slotData);
                         RegistrationInventorySlot(inventorySlotData);
-                        AddInventorySlot?.Invoke(inventorySlotData);
+                        AddInventorySlotChanged?.Invoke((IReadOnlyInventorySlot)inventorySlotData);
                     }
                 }
             }
 
             _slotsMap[itemName].Amount += amount;
+            _slotsMap[itemName].Weigth += _datamap.GetWeightKey(itemName);
         }
 
         public void RemoveItems(string itemName, int amount)
@@ -136,10 +127,11 @@ namespace Assets.Project_S
             }
 
             int currentAmount = _slotsMap[itemName].Amount - amount;
+            float currentWeight = _slotsMap[itemName].Weigth - _datamap.GetWeightKey(itemName);
 
             if (currentAmount == 0)
             {
-                RemoveInventorySlot?.Invoke(_slotsMap[itemName].Name);
+                RemoveInventorySlotChanged?.Invoke(_slotsMap[itemName].Name);
                 _slotsMap.Remove(itemName);
 
 
@@ -161,13 +153,14 @@ namespace Assets.Project_S
             }
 
             _slotsMap[itemName].Amount = currentAmount;
+            _slotsMap[itemName].Weigth = currentWeight;
         }
 
-        public List<IReadOnlySlot> GetInventorySlots()
+        public List<IReadOnlyInventorySlot> GetInventorySlots()
         {
-            List<IReadOnlySlot> slots = new List<IReadOnlySlot>();
+            List<IReadOnlyInventorySlot> slots = new List<IReadOnlyInventorySlot>();
 
-            foreach (IReadOnlySlot slot in _inventoryGridData.slots)
+            foreach (IReadOnlyInventorySlot slot in _inventoryGridData.slots)
             {
                 slots.Add(slot);
             }
@@ -175,7 +168,7 @@ namespace Assets.Project_S
             return slots;
         }
 
-        public InventorySlot GetInventorySlot(string itemName)
+        public IReadOnlyInventorySlot GetInventorySlot(string itemName)
         {
             if (!_slotsMap.ContainsKey(itemName))
             {

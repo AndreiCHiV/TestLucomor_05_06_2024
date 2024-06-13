@@ -8,7 +8,14 @@ namespace Assets.Project_S
     {
         [SerializeField] private TMP_Text _itemName;
         [SerializeField] private TMP_Text _itemAmount;
-        [SerializeField] private TMP_Text _itmeWeight;
+        [SerializeField] private TMP_Text _itmeWeigth;
+
+        public InventorySlotView(string name,int amount,float weigth)
+        {
+            _itemName.text = name;
+            _itemAmount.text = amount.ToString();
+            _itmeWeigth.text = weigth.ToString();
+        }
 
         public string ItemName
         {
@@ -22,10 +29,10 @@ namespace Assets.Project_S
             set => _itemAmount.text = value.ToString();
         }
 
-        public int ItemWeight
+        public float ItemWeight
         {
-            get => Convert.ToInt32(_itmeWeight.text);
-            set => _itmeWeight.text = value.ToString();
+            get => float.Parse(_itmeWeigth.text);
+            set => _itmeWeigth.text = value.ToString();
         }
     }
 }

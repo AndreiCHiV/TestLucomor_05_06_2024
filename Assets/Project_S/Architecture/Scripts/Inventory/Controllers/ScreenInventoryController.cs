@@ -5,6 +5,8 @@
         private InventoryService _service;
         private ScreenInventoryView _view;
 
+        private InventoryGridController _inventoryGridController;
+
         public ScreenInventoryController(InventoryService service, ScreenInventoryView view)
         {
             _view = view;
@@ -14,7 +16,9 @@
         public void OpenInventory(string owner)
         {
             IReadOnlyInventoryGrid inventoryGrid = _service.GetInventoy(owner);
-            ScreenInventoryView inventoryView = _view.InventoryView;
+            InventoryGridView inventoryView = _view.InventoryGridView;
+
+            _inventoryGridController = new InventoryGridController(inventoryGrid,inventoryView);
         }
 
     }

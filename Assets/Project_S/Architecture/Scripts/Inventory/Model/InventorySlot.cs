@@ -2,7 +2,7 @@
 
 namespace Assets.Project_S
 {
-    public abstract class InventorySlot : IReadOnlySlot
+    public abstract class InventorySlot : IReadOnlyInventorySlot
     {
         public event Action<string> ItemNameChanged;
         public event Action<int> ItemIdChanged;

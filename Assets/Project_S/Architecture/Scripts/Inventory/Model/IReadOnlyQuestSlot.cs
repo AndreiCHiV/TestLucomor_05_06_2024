@@ -1,6 +1,6 @@
 ﻿namespace Assets.Project_S
 {
-    public interface IReadOnlyQuestSlot : IReadOnlySlot
+    public interface IReadOnlyQuestSlot : IReadOnlyInventorySlot
     {
     }
 }

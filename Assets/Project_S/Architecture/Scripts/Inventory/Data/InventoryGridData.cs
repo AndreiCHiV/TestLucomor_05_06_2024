@@ -9,5 +9,12 @@ namespace Assets.Project_S
         public string owner;
         public float maxWeigthInventory;
         public List<InventorySlotData> slots;
+
+        public InventoryGridData()
+        {
+            slots = new List<InventorySlotData>();
+        }
+
+
     }
 }
