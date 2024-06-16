@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 namespace Assets.Project_S
@@ -6,49 +8,49 @@ namespace Assets.Project_S
     public class InventoryGridController
     {
         private InventoryGridView _view;
+        private List<InventorySlotController> _inventorySlotControllers = new List<InventorySlotController>();
 
         public InventoryGridController(IReadOnlyInventoryGrid grid, InventoryGridView view)
         {
+            view.RemoveAllSlots();
+
             _view = view;
 
-            grid.MaxWeigthInventoryChanged += ChangedMaxWeigthInventory;
             grid.AddInventorySlotChanged += ChangedAddInventorySlot;
             grid.RemoveInventorySlotChanged += ChangedRemoveInventorySlot;
-            grid.OwnerChanged += ChangedOwner;
 
             view.MaxWeigthInventory = grid.MaxWeigthInventory;
+            view.OwnerInventory = grid.Owner;
 
-            Debug.Log(grid.GetInventorySlots());
-
-            foreach (IReadOnlyInventorySlot slot in grid.GetInventorySlots())
+            if (grid.IsEmpty)
             {
-                Debug.Log(slot.Name);
-                if (view.FindSlotNameInventoryGridView(slot.Name))
+                foreach (IReadOnlyInventorySlot slot in grid.GetSlots())
                 {
-                    new InventorySlotController(slot, view.GetSlotNameInventoryGridView(slot.Name));
+                    InventorySlotView slotView = AddInventorySlot(slot);
+                    _inventorySlotControllers.Add(new InventorySlotController(slot, slotView));
                 }
             }
-
-            view.InitializeInventoryGridView(grid);
         }
 
-        private void ChangedOwner(string value)
+        private InventorySlotView AddInventorySlot(IReadOnlyInventorySlot value)
+        {
+            InventorySlotView slotView = _view.AddInventorySlotView();           
+
+            return slotView;
+        }
+
+        private InventorySlotView ChangedAddInventorySlot(IReadOnlyInventorySlot value)
+        {
+            InventorySlotView slotView = _view.AddInventorySlotView();
+
+            _inventorySlotControllers.Add(new InventorySlotController(value, slotView));
+
+            return slotView;
+        }
+
+        private void ChangedRemoveInventorySlot(string value)
         {
             
-        }
-
-        private void ChangedAddInventorySlot(IReadOnlyInventorySlot slot)
-        {
-            _view.AddInventoryItemsView(slot);
-        }
-        private void ChangedRemoveInventorySlot(string itemName)
-        {
-            _view.RemoveInventorySlotView(itemName);
-        }
-
-        private void ChangedMaxWeigthInventory(float value)
-        {
-            _view.MaxWeigthInventory = value;
         }
 
     }

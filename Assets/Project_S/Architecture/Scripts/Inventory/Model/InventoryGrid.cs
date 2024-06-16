@@ -6,14 +6,15 @@ namespace Assets.Project_S
 {
     public class InventoryGrid : IReadOnlyInventoryGrid
     {
-        public event Action<float> MaxWeigthInventoryChanged;
-        public event Action<IReadOnlyInventorySlot> AddInventorySlotChanged;
+
+        public event Func<IReadOnlyInventorySlot, InventorySlotView> AddInventorySlotChanged;
         public event Action<string> RemoveInventorySlotChanged;
-        public event Action<string> OwnerChanged;
+
 
         private InventoryGridData _inventoryGridData;
 
-        private Dictionary<string, InventorySlot> _slotsMap = new Dictionary<string, InventorySlot>();
+
+        private List<InventorySlot> _slotsMap = new List<InventorySlot>();
 
         private DataItems _datamap = new DataItems();// на удаление будет браться из базы
 
@@ -21,61 +22,67 @@ namespace Assets.Project_S
         public InventoryGrid(InventoryGridData inventoryGridData)
         {
             _inventoryGridData = inventoryGridData;
-            InitializationInventorySlots(_inventoryGridData.slots);
-        }
 
-
-        public string Owner
-        {
-            get => _inventoryGridData.owner;
-            set
+            if (!_inventoryGridData.IsEmpty)
             {
-                _inventoryGridData.owner = value;
-                OwnerChanged?.Invoke(value);
+                _inventoryGridData.slots = new List<InventorySlotData>();
             }
-        }
-
-        public float MaxWeigthInventory
-        {
-            get => _inventoryGridData.maxWeigthInventory;
-            set
+            else
             {
-                if (_inventoryGridData.maxWeigthInventory != value)
+                foreach (InventorySlotData slotData in inventoryGridData.slots)
                 {
-                    _inventoryGridData.maxWeigthInventory = value;
-                    MaxWeigthInventoryChanged?.Invoke(value);
+                    CreateNewSlot(slotData);
                 }
             }
         }
-        private void InitializationInventorySlots(List<InventorySlotData> slots)
+
+        public string Owner => _inventoryGridData.owner;
+
+        public float MaxWeigthInventory => _inventoryGridData.maxWeigthInventory;
+
+        public bool IsEmpty
         {
-            foreach (InventorySlotData slotData in slots)
-            {
-                RegistrationInventory(slotData);
-            }
+            get => _inventoryGridData.IsEmpty;
+            set => _inventoryGridData.IsEmpty = value;
         }
 
-        private void RegistrationInventory(InventorySlotData slotData)
+
+
+
+        private bool IsSlotinInventoryGrid(string name)
         {
-            if (slotData is QuestInventorySlotData questItemData)
+            foreach (InventorySlot slot in _slotsMap)
             {
-                _slotsMap[slotData.itemName] = new QuestInventorySlot(questItemData);
+                if (slot.Name == name)
+                {
+                    return true;
+                }
             }
-            else if (slotData is ArmorInventorySlotData armorItemData)
-            {
-                _slotsMap[slotData.itemName] = new ArmorInventorySlot(armorItemData);
-            }
-            else if (slotData is HealthInventorySlotData healthItemData)
-            {
-                _slotsMap[slotData.itemName] = new HealthInventorySlot(healthItemData);
-            }
-            AddInventorySlotChanged?.Invoke(_slotsMap[slotData.itemName]);
+            return false;
         }
 
-        private void RegistrationInventorySlot(InventorySlotData slotData)
+        private void CreateNewSlot(InventorySlotData slotData)
         {
-            _inventoryGridData.slots.Add(slotData);
-            RegistrationInventory(slotData);
+            InventorySlot slot;
+
+            if (slotData is QuestInventorySlotData)
+            {
+                slot = new QuestInventorySlot((QuestInventorySlotData)slotData);
+            }
+            else if (slotData is ArmorInventorySlotData)
+            {
+                slot = new ArmorInventorySlot((ArmorInventorySlotData)slotData);
+            }
+            else if (slotData is HealthInventorySlotData)
+            {
+                slot = new HealthInventorySlot((HealthInventorySlotData)slotData);
+            }
+            else
+            {
+                throw new Exception("No the type!");
+            }
+            _slotsMap.Add(slot);
+            AddInventorySlotChanged?.Invoke(slot);
         }
 
         private InventorySlotData CreateNewSlotType(InventorySlotData slotData)
@@ -98,91 +105,37 @@ namespace Assets.Project_S
             else
                 throw new Exception("No the type!");
 
+            Debug.Log($"Create empty slot {inventorySlotData.itemName}");
 
             return inventorySlotData;
         }
 
-        public void AddItems(string itemName, int amount)
-        {
-
-            if (!_datamap.KeyContainsInList(itemName))
-            {
-                throw new Exception($"Item name: {itemName} not found in DataBase!");
-            }
-
-
-            if (!_slotsMap.ContainsKey(itemName))
-            {
-                foreach (InventorySlotData slotData in _datamap.itemsData)
-                {
-                    if (slotData.itemName == itemName)
-                    {
-                        InventorySlotData inventorySlotData = CreateNewSlotType(slotData);
-                        RegistrationInventorySlot(inventorySlotData);
-                    }
-                }
-            }
-            
-            _slotsMap[itemName].Amount += amount;
-            _slotsMap[itemName].Weigth += _datamap.GetWeightKey(itemName) * amount;
-        }
-
-        public void RemoveItems(string itemName, int amount)
-        {
-            if (!_slotsMap.ContainsKey(itemName))
-            {
-                Debug.Log($"The Item {itemName} not found in Inventary");
-                return;
-            }
-
-            int currentAmount = _slotsMap[itemName].Amount - amount;
-            float currentWeight = _slotsMap[itemName].Weigth - _datamap.GetWeightKey(itemName) * amount;
-
-            if (currentAmount == 0)
-            {
-                RemoveInventorySlotChanged?.Invoke(_slotsMap[itemName].Name);
-                _slotsMap.Remove(itemName);
-
-
-                for (int i = 0; i < _inventoryGridData.slots.Count; i++)
-                {
-                    if (_inventoryGridData.slots[i].itemName == itemName)
-                    {
-                        _inventoryGridData.slots[i] = null;
-                        Debug.Log($"Slot {itemName} removed!");
-                    }
-                }
-
-                return;
-            }
-            else if (currentAmount < 0)
-            {
-                Debug.Log("There ara not enough items!");
-                return;
-            }
-
-            _slotsMap[itemName].Amount = currentAmount;
-            _slotsMap[itemName].Weigth = currentWeight;
-        }
-
-        public List<IReadOnlyInventorySlot> GetInventorySlots()
+        public List<IReadOnlyInventorySlot> GetSlots()
         {
             List<IReadOnlyInventorySlot> slots = new List<IReadOnlyInventorySlot>();
 
-            foreach (InventorySlotData slotData in _inventoryGridData.slots)
+            foreach (InventorySlot slot in _slotsMap)
             {
-                if (slotData is QuestInventorySlotData questItemData)
+                IReadOnlyInventorySlot slotIReadOnly;
+
+                if (slot is QuestInventorySlot)
                 {
-                    slots.Add(new QuestInventorySlot(questItemData));
+                    slotIReadOnly = (QuestInventorySlot)slot;
                 }
-                else if (slotData is ArmorInventorySlotData armorItemData)
+                else if (slot is ArmorInventorySlot)
                 {
-                    slots.Add(new ArmorInventorySlot(armorItemData));
+                    slotIReadOnly = (ArmorInventorySlot)slot;
                 }
-                else if (slotData is HealthInventorySlotData healthItemData)
+                else if (slot is HealthInventorySlot)
                 {
-                    slots.Add(new HealthInventorySlot(healthItemData));
+                    slotIReadOnly = (HealthInventorySlot)slot;
                 }
+                else
+                {
+                    throw new Exception("No the type!");
+                }
+
+                slots.Add(slotIReadOnly);
             }
 
             return slots;
@@ -190,12 +143,167 @@ namespace Assets.Project_S
 
         public IReadOnlyInventorySlot GetInventorySlot(string itemName)
         {
-            if (!_slotsMap.ContainsKey(itemName))
+            foreach (IReadOnlyInventorySlot slot in _slotsMap)
             {
-                throw new Exception($"The Item {itemName} not found in Inventary");
+                if (slot.Name == itemName)
+                {
+                    return slot;
+                }
             }
-            else
-                return _slotsMap[itemName];
+            throw new Exception("No the slot!");
         }
+
+
+        public void CreateNewSlotView(string name)
+        {
+            InventorySlotData slotData;
+
+            foreach (InventorySlotData slotDataMap in _datamap.itemsData)
+            {
+                if (slotDataMap.itemName == name)
+                {
+                    slotData = CreateNewSlotType(slotDataMap);
+                    CreateNewSlot(slotData);
+                    return;
+                }
+            }
+        }
+
+
+        public void AddItems(string itemName, int amount)
+        {
+            if (!_datamap.KeyContainsInList(itemName))
+            {
+                throw new Exception($"Item name: {itemName} not found in DataBase!");
+            }
+
+            if (!IsEmpty)
+            {
+                IsEmpty = true;
+            }
+
+            if (!IsSlotinInventoryGrid(itemName))
+            {
+                CreateNewSlotView(itemName);
+            }
+
+            foreach (InventorySlot slot in _slotsMap)
+            {
+                if (slot.Name == itemName)
+                {
+                    slot.Amount += amount;
+                    slot.Weigth += _datamap.GetWeightKey(itemName) * amount;
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //private void RegistrationInventory(InventorySlotData slotData)
+        //{
+        //    if (slotData is QuestInventorySlotData questItemData)
+        //    {
+        //        _slotsMap[slotData.itemName] = new QuestInventorySlot(questItemData);
+        //    }
+        //    else if (slotData is ArmorInventorySlotData armorItemData)
+        //    {
+        //        _slotsMap[slotData.itemName] = new ArmorInventorySlot(armorItemData);
+        //    }
+        //    else if (slotData is HealthInventorySlotData healthItemData)
+        //    {
+        //        _slotsMap[slotData.itemName] = new HealthInventorySlot(healthItemData);
+        //    }
+        //    AddInventorySlotChanged?.Invoke(_slotsMap[slotData.itemName]);
+        //}
+
+        //private void RegistrationInventorySlot(InventorySlotData slotData)
+        //{
+        //    _inventoryGridData.slots.Add(slotData);
+        //    RegistrationInventory(slotData);
+        //}
+
+
+
+
+        //public void RemoveItems(string itemName, int amount)
+        //{
+        //    if (!_slotsMap.ContainsKey(itemName))
+        //    {
+        //        Debug.Log($"The Item {itemName} not found in Inventary");
+        //        return;
+        //    }
+
+        //    int currentAmount = _slotsMap[itemName].Amount - amount;
+        //    float currentWeight = _slotsMap[itemName].Weigth - _datamap.GetWeightKey(itemName) * amount;
+
+        //    if (currentAmount == 0)
+        //    {
+        //        RemoveInventorySlotChanged?.Invoke(_slotsMap[itemName].Name);
+        //        _slotsMap.Remove(itemName);
+
+
+        //        for (int i = 0; i < _inventoryGridData.slots.Count; i++)
+        //        {
+        //            if (_inventoryGridData.slots[i].itemName == itemName)
+        //            {
+        //                _inventoryGridData.slots[i] = null;
+        //                Debug.Log($"Slot {itemName} removed!");
+        //            }
+        //        }
+
+        //        return;
+        //    }
+        //    else if (currentAmount < 0)
+        //    {
+        //        Debug.Log("There ara not enough items!");
+        //        return;
+        //    }
+
+        //    _slotsMap[itemName].Amount = currentAmount;
+        //    _slotsMap[itemName].Weigth = currentWeight;
+        //}
+
+        //public List<IReadOnlyInventorySlot> GetInventorySlots()
+        //{
+        //    List<IReadOnlyInventorySlot> slots = new List<IReadOnlyInventorySlot>();
+
+        //    foreach (InventorySlotData slotData in _inventoryGridData.slots)
+        //    {
+        //        if (slotData is QuestInventorySlotData questItemData)
+        //        {
+        //            slots.Add(new QuestInventorySlot(questItemData));
+        //        }
+        //        else if (slotData is ArmorInventorySlotData armorItemData)
+        //        {
+        //            slots.Add(new ArmorInventorySlot(armorItemData));
+        //        }
+        //        else if (slotData is HealthInventorySlotData healthItemData)
+        //        {
+        //            slots.Add(new HealthInventorySlot(healthItemData));
+        //        }
+        //    }
+
+        //    return slots;
+        //}
+
     }
 }

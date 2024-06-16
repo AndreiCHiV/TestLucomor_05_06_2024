@@ -19,9 +19,9 @@ namespace Assets.Project_S
     }
 
     [Serializable]
-    public class QuestInventoryData : InventorySlotData
+    public class QuestInventorySlotData : InventorySlotData
     {
-        public QuestInventoryData(string name, int amount, float weigth) : base(name, amount, weigth)
+        public QuestInventorySlotData(string name, int amount, float weigth) : base(name, amount, weigth)
         {
             itemId = 1;
         }

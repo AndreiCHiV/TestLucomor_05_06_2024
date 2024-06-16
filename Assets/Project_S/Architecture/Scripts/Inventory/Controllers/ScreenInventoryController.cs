@@ -21,7 +21,6 @@ namespace Assets.Project_S
             InventoryGridView inventoryView = _view.InventoryGridView;
 
             _inventoryGridController = new InventoryGridController(inventoryGrid, inventoryView);
-            Debug.Log(_inventoryGridController);
         }
 
     }

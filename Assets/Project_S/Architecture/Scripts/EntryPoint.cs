@@ -23,14 +23,17 @@ namespace Assets.Project_S
         private ScreenInventoryController _screenInventoryController;
 
 
-
+        private void Awake()
+        {
+            
+        }
 
         private void Start()
         {
             _charactersService = new CharactersService();
             _inventoryService = new InventoryService();
 
-
+             
 
             CharacterData characterDataCat = CreateTestCharacter(CAT, "Player", 150);
             _charactersService.RegisterCharacters(characterDataCat);
@@ -38,19 +41,17 @@ namespace Assets.Project_S
             CharacterData characterDataOcti = CreateTestCharacter(OCTI, "NPC", 100);
             _charactersService.RegisterCharacters(characterDataOcti);
 
-            _screenCharacterController = new ScreenCharacterController(_charactersService, _screenCharacterView);
-
-            _screenCharacterController.ActiveCharacter(CAT);
-            _activeCharacter = CAT;
-
             InventoryGridData inventroyLisa = CreateTestInventory(CAT, 12);
             _inventoryService.RegisterInventory(inventroyLisa);
 
             InventoryGridData inventoryOcti = CreateTestInventory(OCTI, 10);
             _inventoryService.RegisterInventory(inventoryOcti);
 
+            _screenCharacterController = new ScreenCharacterController(_charactersService, _screenCharacterView);
             _screenInventoryController = new ScreenInventoryController(_inventoryService, _screenInventoryView);
 
+            _activeCharacter = CAT;
+            _screenCharacterController.ActiveCharacter(CAT);
             _screenInventoryController.OpenInventory(CAT);
         }
 
@@ -69,6 +70,23 @@ namespace Assets.Project_S
                 _activeCharacter = OCTI;
             }
 
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                _inventoryService.AddItems(CAT, "Key", 1);
+            }
+
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                _inventoryService.AddItems(OCTI, "Hart", 1);
+            }
+
+
+
+
+
+
+
+
             if (Input.GetKeyDown(KeyCode.E))
             {
                 int damage = UnityEngine.Random.Range(0, 20);
@@ -80,50 +98,6 @@ namespace Assets.Project_S
                 string healthCharacter = _charactersService.TreatmentCharacter(_activeCharacter);
                 Debug.Log(healthCharacter);
             }
-
-
-
-
-
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                _inventoryService.AddItems(CAT, "Key", 2);
-                //int amount = _inventoryService.GetInventoy(CAT).GetInventorySlot("Key").Amount;
-                //Debug.Log(amount);
-
-                _inventoryService.AddItems(OCTI, "Knife", 5);
-                //amount = _inventoryService.GetInventoy(OCTI).GetInventorySlot("Knife").Amount;
-                //Debug.Log(amount);
-            }
-
-            if (Input.GetKeyDown(KeyCode.X))
-            {
-                _inventoryService.RemoveItems(CAT, "Key", 1);
-                _inventoryService.RemoveItems(OCTI, "Knife", 2);
-
-                try
-                {
-                    int amount = _inventoryService.GetInventoy(CAT).GetInventorySlot("Key").Amount;
-                    Debug.Log(amount);
-                    amount = _inventoryService.GetInventoy(OCTI).GetInventorySlot("Knife").Amount;
-                    Debug.Log(amount);
-
-                }
-                catch (Exception ex)
-                {
-                    Debug.Log(ex.Message);
-                }
-
-            }
-
-
-
-
-
-
-
-
-
 
             if (!_screenCharacterView.GetCharacterView(_activeCharacter).IsMoving)
             {
@@ -169,7 +143,14 @@ namespace Assets.Project_S
             InventoryGridData inventoryData = new InventoryGridData()
             {
                 owner = name,
-                maxWeigthInventory = maxWeigth
+                maxWeigthInventory = maxWeigth,
+                IsEmpty = true,
+                slots = new List<InventorySlotData>()
+                {
+                    new QuestInventorySlotData("Key", 1, 0.1f),
+                    new ArmorInventorySlotData("Sword", 1, 6f),
+                    new HealthInventorySlotData("Herb", 1, 0.1f),
+                }
             };
 
             return inventoryData;

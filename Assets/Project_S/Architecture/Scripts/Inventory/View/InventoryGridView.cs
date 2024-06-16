@@ -11,90 +11,42 @@ namespace Assets.Project_S
 
         [SerializeField] private List<InventorySlotView> _slots = new List<InventorySlotView>();
         [SerializeField] private TMP_Text _maxWeigthInventory;
+        [SerializeField] private TMP_Text _ownerInventroy;
 
         public List<InventorySlotView> Slots => _slots;
+
         public float MaxWeigthInventory
         {
             get => float.Parse(_maxWeigthInventory.text);
             set => _maxWeigthInventory.text = value.ToString();
         }
 
-        public bool FindSlotNameInventoryGridView(string nameSlot)
+        public string OwnerInventory
         {
-            foreach (InventorySlotView slot in _slots)
-            {
-                if (slot.ItemName == nameSlot)
-                {
-                    return true;
-                }
-            }
-            return false;
+            get => _ownerInventroy.text;
+            set => _ownerInventroy.text = value;
+
         }
 
-        public InventorySlotView GetSlotNameInventoryGridView(string nameSlot)
-        {
-            foreach (InventorySlotView slotView in _slots)
-            {
-                if (slotView.ItemName == nameSlot)
-                {
-                    return slotView;
-                }
-            }
-
-            return null;
-        }
-
-        private void AddInventorySlotView(IReadOnlyInventorySlot slot)
+        public InventorySlotView AddInventorySlotView()
         {
             GameObject slotObject = Instantiate(_inventorySlot);
-            slotObject.transform.SetParent(GameObject.FindGameObjectWithTag("Inventory").transform,false);
+            slotObject.transform.SetParent(GameObject.FindGameObjectWithTag("Inventory").transform, false);
             InventorySlotView inventorySlot = slotObject.GetComponent<InventorySlotView>();
-            
-            inventorySlot.ItemName = slot.Name;
-            inventorySlot.ItemAmount = slot.Amount;
-            inventorySlot.ItemWeight = slot.Weigth;
 
-            _slots.Add(inventorySlot);
+            Slots.Add(inventorySlot);
+
+            return inventorySlot;
         }
 
 
-        public void InitializeInventoryGridView(IReadOnlyInventoryGrid grid)
-        {
-            foreach (IReadOnlyInventorySlot slot in grid.GetInventorySlots())
-            {
-                Debug.Log(slot.Amount);
-                AddInventorySlotView(slot);
-            }
-
-        }
-
-        public void AddInventoryItemsView(IReadOnlyInventorySlot slot)
+        public void RemoveAllSlots()
         {
             foreach (InventorySlotView slotView in _slots)
             {
-                if (slotView.ItemName == slot.Name)
-                {
-                    slotView.ItemAmount = slot.Amount;
-                    slotView.ItemWeight = slot.Weigth;
-                    return;
-                }
+                Destroy(slotView.gameObject);
             }
-
-            AddInventorySlotView(slot);
+            _slots.Clear();
         }
-
-        public void RemoveInventorySlotView(string slotName)
-        {
-            foreach (InventorySlotView slotView in _slots)
-            {
-                if (slotView.ItemName == slotName)
-                {
-                    //Удаление префаба inventory slot c именем slotName;
-                    return;
-                }
-            }
-            Debug.Log($"Slot {slotName} not founde");
-        }
-
     }
 }

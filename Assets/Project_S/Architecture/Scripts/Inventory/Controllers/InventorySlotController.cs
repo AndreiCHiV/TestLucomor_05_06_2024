@@ -27,11 +27,13 @@ namespace Assets.Project_S
         private void ChangedItemAmount(int value)
         {
             _view.ItemAmount = value;
+            Debug.Log(value);
         }
 
         private void ChangedItemName(string value)
         {
             _view.ItemName = value;
+            Debug.Log(value);
         }
     }
 }

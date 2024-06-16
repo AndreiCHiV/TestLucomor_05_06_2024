@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Project_S
 {
@@ -21,7 +22,7 @@ namespace Assets.Project_S
         public void RemoveItems(string owner, string name, int amount)
         {
             InventoryGrid inventory = _inventoriesMap[owner];
-            inventory.RemoveItems(name, amount);
+            //inventory.RemoveItems(name, amount);
         }
 
         public IReadOnlyInventoryGrid GetInventoy(string owner)
