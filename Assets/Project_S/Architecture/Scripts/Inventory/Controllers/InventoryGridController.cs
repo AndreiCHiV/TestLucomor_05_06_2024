@@ -44,7 +44,7 @@ namespace Assets.Project_S
 
         private void ChangedRemoveInventorySlot(string value)
         {
-
+            _view.RemoveSlot(value);
         }
 
         public void Dispose()

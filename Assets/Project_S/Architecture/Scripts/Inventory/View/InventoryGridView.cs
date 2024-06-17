@@ -45,5 +45,18 @@ namespace Assets.Project_S
             }
             _slots.Clear();
         }
+
+        internal void RemoveSlot(string value)
+        {
+            foreach (InventorySlotView slot in _slots)
+            {
+                if (slot.ItemName == value)
+                {
+                    Destroy(slot.gameObject);                    
+                    _slots.Remove(slot);
+                    return;
+                }
+            }
+        }
     }
 }

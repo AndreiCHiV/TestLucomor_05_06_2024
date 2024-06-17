@@ -22,12 +22,6 @@ namespace Assets.Project_S
         private InventoryService _inventoryService;
         private ScreenInventoryController _screenInventoryController;
 
-
-        private void Awake()
-        {
-            
-        }
-
         private void Start()
         {
             _charactersService = new CharactersService();
@@ -87,19 +81,23 @@ namespace Assets.Project_S
 
             if (Input.GetKeyDown(KeyCode.X))
             {
-                _inventoryService.AddItems(CAT, "Hart", 1);
+                _inventoryService.RemoveItems(CAT, "Key", 1);
             }
 
             if (Input.GetKeyDown(KeyCode.C))
             {
-                _inventoryService.AddItems(CAT, "Knife", 1);
+                _inventoryService.RemoveItems(OCTI, "Hart", 1);
             }
 
             if (Input.GetKeyDown(KeyCode.V))
             {
-                _inventoryService.AddItems(OCTI, "Knife", 1);
+                _inventoryService.RemoveItems(CAT, "Knife", 1);
             }
 
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                _inventoryService.RemoveItems(OCTI, "Knife", 1);
+            }
 
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -134,6 +132,12 @@ namespace Assets.Project_S
                 string healthCharacter = _charactersService.TreatmentCharacter(_activeCharacter);
                 Debug.Log(healthCharacter);
             }
+
+
+
+
+
+
 
             if (!_screenCharacterView.GetCharacterView(_activeCharacter).IsMoving)
             {

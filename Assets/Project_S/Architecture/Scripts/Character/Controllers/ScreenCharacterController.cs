@@ -27,8 +27,8 @@ namespace Assets.Project_S
             if (_currentCharacterController != null)
             {
                 _currentCharacterController.Dispose();
-
             }
+
             IReadOnlyCharacter character = _charactersService.GetCharacter(characterName);
             CharacterView characterView = _view.GetCharacterView(characterName);
 
