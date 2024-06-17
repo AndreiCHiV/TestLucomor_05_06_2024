@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Project_S
 {
-    public class CharacterController
+    public class CharacterController : IDisposable
     {
         private CharacterView _view;
         IReadOnlyCharacter _character;
@@ -31,7 +31,7 @@ namespace Assets.Project_S
         }
 
         private void ChangedPositionCharacter(Vector3 value)
-        {            
+        {
             _view.CharacterPositionView = value;
         }
 
@@ -43,6 +43,15 @@ namespace Assets.Project_S
         private void ChangedMaxHealth(int value)
         {
             _view.MaxHealth = value;
+        }
+
+        public void Dispose()
+        {
+            _character.MaxHealthChanged -= ChangedMaxHealth;
+            _character.CurrentHealthChanged -= ChangedCurrentHealth;
+            _character.PositionCharacterChanged -= ChangedPositionCharacter;
+
+            _view.PositionCharacterChanged -= ChangedPositionCharacterView;
         }
     }
 }

@@ -5,16 +5,16 @@ using UnityEngine;
 
 namespace Assets.Project_S
 {
-    public class InventoryGridController
+    public class InventoryGridController : IDisposable
     {
         private InventoryGridView _view;
-        private List<InventorySlotController> _inventorySlotControllers = new List<InventorySlotController>();
+        IReadOnlyInventoryGrid _grid;
+        private readonly List<InventorySlotController> _inventorySlotControllers = new List<InventorySlotController>();
 
         public InventoryGridController(IReadOnlyInventoryGrid grid, InventoryGridView view)
         {
-            view.RemoveAllSlots();
-
             _view = view;
+            _grid = grid;
 
             grid.AddInventorySlotChanged += ChangedAddInventorySlot;
             grid.RemoveInventorySlotChanged += ChangedRemoveInventorySlot;
@@ -24,34 +24,33 @@ namespace Assets.Project_S
 
             if (grid.IsEmpty)
             {
+                view.RemoveAllSlots();
                 foreach (IReadOnlyInventorySlot slot in grid.GetSlots())
                 {
-                    InventorySlotView slotView = AddInventorySlot(slot);
-                    _inventorySlotControllers.Add(new InventorySlotController(slot, slotView));
+                    ChangedAddInventorySlot(slot);
                 }
             }
+
         }
 
-        private InventorySlotView AddInventorySlot(IReadOnlyInventorySlot value)
-        {
-            InventorySlotView slotView = _view.AddInventorySlotView();           
-
-            return slotView;
-        }
-
-        private InventorySlotView ChangedAddInventorySlot(IReadOnlyInventorySlot value)
+        private void ChangedAddInventorySlot(IReadOnlyInventorySlot value)
         {
             InventorySlotView slotView = _view.AddInventorySlotView();
 
             _inventorySlotControllers.Add(new InventorySlotController(value, slotView));
 
-            return slotView;
+            _view.Slots.Add(slotView);
         }
 
         private void ChangedRemoveInventorySlot(string value)
         {
-            
+
         }
 
+        public void Dispose()
+        {
+            _grid.AddInventorySlotChanged -= ChangedAddInventorySlot;
+            _grid.RemoveInventorySlotChanged -= ChangedRemoveInventorySlot;
+        }
     }
 }

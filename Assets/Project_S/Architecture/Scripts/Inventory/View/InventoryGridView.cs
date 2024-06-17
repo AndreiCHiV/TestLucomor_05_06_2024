@@ -34,17 +34,14 @@ namespace Assets.Project_S
             slotObject.transform.SetParent(GameObject.FindGameObjectWithTag("Inventory").transform, false);
             InventorySlotView inventorySlot = slotObject.GetComponent<InventorySlotView>();
 
-            Slots.Add(inventorySlot);
-
             return inventorySlot;
         }
 
-
         public void RemoveAllSlots()
         {
-            foreach (InventorySlotView slotView in _slots)
+            foreach (InventorySlotView slot in _slots)
             {
-                Destroy(slotView.gameObject);
+                Destroy(slot.gameObject);
             }
             _slots.Clear();
         }

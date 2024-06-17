@@ -29,7 +29,7 @@ namespace Assets.Project_S
             set => _itemAmount.text = value.ToString();
         }
 
-        public float ItemWeight
+        public float ItemWeigth
         {
             get => float.Parse(_itmeWeigth.text);
             set => _itmeWeigth.text = value.ToString();

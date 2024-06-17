@@ -51,34 +51,70 @@ namespace Assets.Project_S
             _screenInventoryController = new ScreenInventoryController(_inventoryService, _screenInventoryView);
 
             _activeCharacter = CAT;
-            _screenCharacterController.ActiveCharacter(CAT);
-            _screenInventoryController.OpenInventory(CAT);
+            _screenCharacterController.ActiveCharacter(_activeCharacter);
+            _screenInventoryController.OpenInventory(_activeCharacter);
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                _screenCharacterController.ActiveCharacter(CAT);
-                _screenInventoryController.OpenInventory(CAT);
-                _activeCharacter = CAT;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                _screenCharacterController.ActiveCharacter(OCTI);
-                _screenInventoryController.OpenInventory(OCTI);
-                _activeCharacter = OCTI;
-            }
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 _inventoryService.AddItems(CAT, "Key", 1);
+                _inventoryService.AddItems(OCTI, "Hart", 1);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                IReadOnlyInventoryGrid inventoryCAT = _inventoryService.GetInventoy(CAT);
+                IReadOnlyInventoryGrid inventoryOCTI = _inventoryService.GetInventoy(OCTI);
+                List<IReadOnlyInventorySlot> list_C = inventoryCAT.GetSlots();
+                List<IReadOnlyInventorySlot> list_O = inventoryOCTI.GetSlots();
+
+                foreach (var item in list_C)
+                {
+                    Debug.Log(item.Name);
+                    Debug.Log(item.Amount);
+                    Debug.Log(item.Weigth);
+                }
+                foreach (var item in list_O)
+                {
+                    Debug.Log(item.Name);
+                    Debug.Log(item.Amount);
+                    Debug.Log(item.Weigth);
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.X))
             {
-                _inventoryService.AddItems(OCTI, "Hart", 1);
+                _inventoryService.AddItems(CAT, "Hart", 1);
             }
+
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                _inventoryService.AddItems(CAT, "Knife", 1);
+            }
+
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                _inventoryService.AddItems(OCTI, "Knife", 1);
+            }
+
+
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                _activeCharacter = CAT;
+                _screenCharacterController.ActiveCharacter(_activeCharacter);
+                _screenInventoryController.OpenInventory(_activeCharacter);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                _activeCharacter = OCTI;
+                _screenCharacterController.ActiveCharacter(_activeCharacter);
+                _screenInventoryController.OpenInventory(_activeCharacter);
+            }
+
 
 
 
@@ -143,14 +179,7 @@ namespace Assets.Project_S
             InventoryGridData inventoryData = new InventoryGridData()
             {
                 owner = name,
-                maxWeigthInventory = maxWeigth,
-                IsEmpty = true,
-                slots = new List<InventorySlotData>()
-                {
-                    new QuestInventorySlotData("Key", 1, 0.1f),
-                    new ArmorInventorySlotData("Sword", 1, 6f),
-                    new HealthInventorySlotData("Herb", 1, 0.1f),
-                }
+                maxWeigthInventory = maxWeigth
             };
 
             return inventoryData;

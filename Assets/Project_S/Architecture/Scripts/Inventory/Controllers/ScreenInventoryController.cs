@@ -4,8 +4,8 @@ namespace Assets.Project_S
 {
     public class ScreenInventoryController
     {
-        private InventoryService _service;
-        private ScreenInventoryView _view;
+        private readonly InventoryService _service;
+        private readonly ScreenInventoryView _view;
 
         private InventoryGridController _inventoryGridController;
 
@@ -17,11 +17,18 @@ namespace Assets.Project_S
 
         public void OpenInventory(string owner)
         {
+            if (_inventoryGridController != null)
+            {
+                _inventoryGridController.Dispose();
+            }
+
             IReadOnlyInventoryGrid inventoryGrid = _service.GetInventoy(owner);
             InventoryGridView inventoryView = _view.InventoryGridView;
 
             _inventoryGridController = new InventoryGridController(inventoryGrid, inventoryView);
+
         }
+
 
     }
 }

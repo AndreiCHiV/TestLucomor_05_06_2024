@@ -5,7 +5,7 @@ namespace Assets.Project_S
 {
     public interface IReadOnlyInventoryGrid
     {
-        event Func<IReadOnlyInventorySlot, InventorySlotView> AddInventorySlotChanged;
+        event Action<IReadOnlyInventorySlot> AddInventorySlotChanged;
         event Action<string> RemoveInventorySlotChanged;
         
 

@@ -16,24 +16,22 @@ namespace Assets.Project_S
 
             view.ItemName = slot.Name;
             view.ItemAmount = slot.Amount;
-            view.ItemWeight = slot.Weigth;
+            view.ItemWeigth = slot.Weigth;
         }
 
         private void ChangedItemWeight(float value)
         {
-            _view.ItemWeight = value;
+            _view.ItemWeigth = value;
         }
 
         private void ChangedItemAmount(int value)
         {
             _view.ItemAmount = value;
-            Debug.Log(value);
         }
 
         private void ChangedItemName(string value)
         {
             _view.ItemName = value;
-            Debug.Log(value);
         }
     }
 }

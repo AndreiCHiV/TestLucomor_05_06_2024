@@ -7,7 +7,7 @@ namespace Assets.Project_S
     public class InventoryGrid : IReadOnlyInventoryGrid
     {
 
-        public event Func<IReadOnlyInventorySlot, InventorySlotView> AddInventorySlotChanged;
+        public event Action<IReadOnlyInventorySlot> AddInventorySlotChanged;
         public event Action<string> RemoveInventorySlotChanged;
 
 
@@ -45,8 +45,6 @@ namespace Assets.Project_S
             get => _inventoryGridData.IsEmpty;
             set => _inventoryGridData.IsEmpty = value;
         }
-
-
 
 
         private bool IsSlotinInventoryGrid(string name)
@@ -104,8 +102,7 @@ namespace Assets.Project_S
             }
             else
                 throw new Exception("No the type!");
-
-            Debug.Log($"Create empty slot {inventorySlotData.itemName}");
+            
 
             return inventorySlotData;
         }
