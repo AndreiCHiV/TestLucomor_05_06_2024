@@ -29,10 +29,10 @@ namespace Assets.Project_S
 
              
 
-            CharacterData characterDataCat = CreateTestCharacter(CAT, "Player", 150);
+            CharacterData characterDataCat = CreateTestCharacter(CAT, "Player", 240);
             _charactersService.RegisterCharacters(characterDataCat);
 
-            CharacterData characterDataOcti = CreateTestCharacter(OCTI, "NPC", 100);
+            CharacterData characterDataOcti = CreateTestCharacter(OCTI, "NPC", 90);
             _charactersService.RegisterCharacters(characterDataOcti);
 
             InventoryGridData inventroyLisa = CreateTestInventory(CAT, 12);
