@@ -29,8 +29,8 @@ namespace Assets.Project_S
                     throw new ArgumentException("Неправельное оформление тега! Срочно исправить!");
                 }
 
-                string key = keyTag[0];
-                string value = keyTag[1];
+                string key = keyTag[0].Trim();
+                string value = keyTag[1].Trim();
 
                 _tags.GetValue(key).Calling(value);
             }

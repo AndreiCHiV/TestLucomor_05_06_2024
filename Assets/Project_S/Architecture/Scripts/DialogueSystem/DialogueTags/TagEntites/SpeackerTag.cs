@@ -1,10 +1,13 @@
-﻿namespace Assets.Project_S
+﻿using UnityEngine;
+
+namespace Assets.Project_S
 {
-    public class SpeackerTag : ITag
+    public class SpeackerTag : MonoBehaviour, ITag
     {
         public void Calling(string value)
         {
-            throw new System.NotImplementedException();
+            var dialogueWindow = GetComponent<DialogueWindow>();
+            dialogueWindow.SetName(value);
         }
     }
 }
