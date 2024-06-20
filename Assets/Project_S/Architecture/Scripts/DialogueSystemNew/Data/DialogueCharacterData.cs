@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Assets.Project_S
 {
+    [Serializable]
     public class DialogueCharacterData
     {
-        public TextAsset _inkJSON;
-        public int dataDialogueID;
+        public string owner;
+        public List<DialogueData> dialogueDatas;
     }
 }

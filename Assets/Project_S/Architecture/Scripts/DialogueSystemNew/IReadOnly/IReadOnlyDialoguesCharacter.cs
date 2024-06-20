@@ -2,11 +2,8 @@
 
 namespace Assets.Project_S
 {
-    public interface IReadOnlyDialoguesCharacter
+    public interface IReadOnlyDialogueCharacter
     {
-        event Action<int> AddDialogueChanged;
-        event Action<int> RemoveDialogueChanged;
-
-        string GetDialogueStory(int dataDialogueID);
+        IReadOnlyDialogue GetDialogueStory(int dataDialogueID);
     }
 }
