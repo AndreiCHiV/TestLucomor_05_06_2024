@@ -7,6 +7,7 @@ namespace Assets.Project_S
     {
         private readonly DialogueCharacterData _dialogueData;
         private List<Dialogue> _dialogues = new List<Dialogue>();
+        private float _coolDown = 1f;
 
         public DialoguesCharacter(DialogueCharacterData dialogueData)
         {
@@ -20,6 +21,19 @@ namespace Assets.Project_S
             set => _dialogueData.owner = value;
         }
 
+        public float CoolDown
+        {
+            get => _coolDown;
+            set
+            {
+                _coolDown = value;
+
+                if (value >= 21f || value <= 0f)
+                {
+                    _coolDown = 1f;
+                }
+            }
+        }
         private void InitializeDialogueCharacter()
         {
             foreach (DialogueData dialogueData in _dialogueData.dialogueDatas)

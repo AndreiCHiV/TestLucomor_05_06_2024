@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Project_S
 {
-    public class DialogueController : MonoBehaviour, IDialogueController
+    public class DialogueController : MonoBehaviour
     {
         private DialogueWindow _dialogueWindows;
         private DialogueTag _dialogueTag;
