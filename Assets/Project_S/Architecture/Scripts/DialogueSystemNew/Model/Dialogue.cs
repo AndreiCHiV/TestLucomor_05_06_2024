@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Assets.Project_S
 {
@@ -16,9 +17,9 @@ namespace Assets.Project_S
             get => _data.dataDialogueID;
         }
 
-        public DialogueData GetDialogue()
+        public TextAsset GetDialogue()
         {
-            return _data;
+            return _data.inkJSON;
         }
     }
 }

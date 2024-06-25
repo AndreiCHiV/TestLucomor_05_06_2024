@@ -6,7 +6,7 @@ namespace Assets.Project_S
     [Serializable]
     public class DialogueData
     {
-        public TextAsset _inkJSON;
+        public TextAsset inkJSON;
         public int dataDialogueID;
     }
 }

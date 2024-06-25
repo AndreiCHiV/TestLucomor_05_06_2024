@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Assets.Project_S
 {
-    public class ImageCharacterView:MonoBehaviour
+    public class ImageCharacterView : MonoBehaviour
     {
         [SerializeField] private Image _imageCharacter;
 

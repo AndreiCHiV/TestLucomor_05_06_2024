@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Project_S
 {
-    public class Tags:MonoBehaviour
+    public class Tags : MonoBehaviour
     {
         private readonly Dictionary<string, ITag> _map = new Dictionary<string, ITag>();
 

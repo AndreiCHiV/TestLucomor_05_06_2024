@@ -2,10 +2,16 @@
 {
     public class DialogueCharacterController
     {
-        private DialogueCharacterView _view;
-        public DialogueCharacterController(IReadOnlyDialogueCharacter data, DialogueCharacterView view)
+        private ScreenDialogueCharacterView _view;
+        public DialogueCharacterController(IReadOnlyDialogueCharacter data, ScreenDialogueCharacterView view)
         {
             _view = view;
+
+            view.Init();
+
+            IReadOnlyDialogue dialogue = data.GetDialogueStory(1);
+
+            view.EnterDialogueMode(dialogue.GetDialogue());
         }
     }
 }

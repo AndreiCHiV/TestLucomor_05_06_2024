@@ -9,23 +9,27 @@ namespace Assets.Project_S
     {
         [SerializeField] private ScreenCharacterView _screenCharacterView;
         [SerializeField] private ScreenInventoryView _screenInventoryView;
+        [SerializeField] private ScreenDialogueCharacterView _screenDialogueCharacterView;
 
         private const string CAT = "Lisa";
         private const string OCTI = "Wise";
 
-        private CharactersService _charactersService;
         private ScreenCharacterController _screenCharacterController;
+        private ScreenInventoryController _screenInventoryController;
+        private ScreenDialogueCharacterController _creenDialogueCharacterController;
 
         private string _activeCharacter;
         private Vector3 _input;
 
+        private CharactersService _charactersService;
         private InventoryService _inventoryService;
-        private ScreenInventoryController _screenInventoryController;
+        private DialogueCharacterService _dialogueCharacterService;
 
         private void Start()
         {
             _charactersService = new CharactersService();
             _inventoryService = new InventoryService();
+            _dialogueCharacterService = new DialogueCharacterService();
 
              
 
@@ -41,6 +45,11 @@ namespace Assets.Project_S
             InventoryGridData inventoryOcti = CreateTestInventory(OCTI, 10);
             _inventoryService.RegisterInventory(inventoryOcti);
 
+
+
+            //DialogueData dialogueDataOcti = 
+
+
             _screenCharacterController = new ScreenCharacterController(_charactersService, _screenCharacterView);
             _screenInventoryController = new ScreenInventoryController(_inventoryService, _screenInventoryView);
 
@@ -51,55 +60,6 @@ namespace Assets.Project_S
 
         private void Update()
         {
-
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                _inventoryService.AddItems(CAT, "Key", 1);
-                _inventoryService.AddItems(OCTI, "Hart", 1);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                IReadOnlyInventoryGrid inventoryCAT = _inventoryService.GetInventoy(CAT);
-                IReadOnlyInventoryGrid inventoryOCTI = _inventoryService.GetInventoy(OCTI);
-                List<IReadOnlyInventorySlot> list_C = inventoryCAT.GetSlots();
-                List<IReadOnlyInventorySlot> list_O = inventoryOCTI.GetSlots();
-
-                foreach (var item in list_C)
-                {
-                    Debug.Log(item.Name);
-                    Debug.Log(item.Amount);
-                    Debug.Log(item.Weigth);
-                }
-                foreach (var item in list_O)
-                {
-                    Debug.Log(item.Name);
-                    Debug.Log(item.Amount);
-                    Debug.Log(item.Weigth);
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.X))
-            {
-                _inventoryService.RemoveItems(CAT, "Key", 1);
-            }
-
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                _inventoryService.RemoveItems(OCTI, "Hart", 1);
-            }
-
-            if (Input.GetKeyDown(KeyCode.V))
-            {
-                _inventoryService.RemoveItems(CAT, "Knife", 1);
-            }
-
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                _inventoryService.RemoveItems(OCTI, "Knife", 1);
-            }
-
-
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 _activeCharacter = CAT;
@@ -112,31 +72,6 @@ namespace Assets.Project_S
                 _screenCharacterController.ActiveCharacter(_activeCharacter);
                 _screenInventoryController.OpenInventory(_activeCharacter);
             }
-
-
-
-
-
-
-
-
-
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                int damage = UnityEngine.Random.Range(0, 20);
-                string takeDamage = _charactersService.TakeDamageCharacter(_activeCharacter, damage);
-                Debug.Log(takeDamage);
-            }
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                string healthCharacter = _charactersService.TreatmentCharacter(_activeCharacter);
-                Debug.Log(healthCharacter);
-            }
-
-
-
-
-
 
 
             if (!_screenCharacterView.GetCharacterView(_activeCharacter).IsMoving)
@@ -153,9 +88,74 @@ namespace Assets.Project_S
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-                Debug.Log(_activeCharacter);
                 _screenCharacterView.GetCharacterView(_activeCharacter).Interact();
             }
+
+
+
+
+
+            //if (Input.GetKeyDown(KeyCode.Q))
+            //{
+            //    IReadOnlyInventoryGrid inventoryCAT = _inventoryService.GetInventoy(CAT);
+            //    IReadOnlyInventoryGrid inventoryOCTI = _inventoryService.GetInventoy(OCTI);
+            //    List<IReadOnlyInventorySlot> list_C = inventoryCAT.GetSlots();
+            //    List<IReadOnlyInventorySlot> list_O = inventoryOCTI.GetSlots();
+
+            //    foreach (var item in list_C)
+            //    {
+            //        Debug.Log(item.Name);
+            //        Debug.Log(item.Amount);
+            //        Debug.Log(item.Weigth);
+            //    }
+            //    foreach (var item in list_O)
+            //    {
+            //        Debug.Log(item.Name);
+            //        Debug.Log(item.Amount);
+            //        Debug.Log(item.Weigth);
+            //    }
+            //}
+
+            //if (Input.GetKeyDown(KeyCode.E))
+            //{
+            //    int damage = UnityEngine.Random.Range(0, 20);
+            //    string takeDamage = _charactersService.TakeDamageCharacter(_activeCharacter, damage);
+            //    Debug.Log(takeDamage);
+            //}
+            //if (Input.GetKeyDown(KeyCode.R))
+            //{
+            //    string healthCharacter = _charactersService.TreatmentCharacter(_activeCharacter);
+            //    Debug.Log(healthCharacter);
+            //}
+
+            //if (Input.GetKeyDown(KeyCode.Z))
+            //{
+            //    _inventoryService.AddItems(CAT, "Key", 1);
+            //    _inventoryService.AddItems(OCTI, "Hart", 1);
+            //}
+
+
+
+            //if (Input.GetKeyDown(KeyCode.X))
+            //{
+            //    _inventoryService.RemoveItems(CAT, "Key", 1);
+            //}
+
+            //if (Input.GetKeyDown(KeyCode.C))
+            //{
+            //    _inventoryService.RemoveItems(OCTI, "Hart", 1);
+            //}
+
+            //if (Input.GetKeyDown(KeyCode.V))
+            //{
+            //    _inventoryService.RemoveItems(CAT, "Knife", 1);
+            //}
+
+            //if (Input.GetKeyDown(KeyCode.B))
+            //{
+            //    _inventoryService.RemoveItems(OCTI, "Knife", 1);
+            //}
+
         }
 
         private CharacterData CreateTestCharacter(string name, string tag, int health)
