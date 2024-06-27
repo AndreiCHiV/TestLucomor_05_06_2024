@@ -22,11 +22,19 @@ namespace Assets.Project_S
 
         public float moveSpeed;
 
+        public int _dialogueId;// временно public  потом должно инициализироваться в начале игры лист с диалогами 
+        // и измениется через Model когда беруться или меняется задания
+
         private bool _isMoving;
 
 
         public string Name => _name;
 
+        public int DialogueId
+        {
+            get => _dialogueId;
+            set => _dialogueId = value;
+        }
         public string CharacterName
         {
             get => _textName.text;
@@ -108,17 +116,26 @@ namespace Assets.Project_S
             _isMoving = false;
         }
 
-        public void Interact()
+        public CharacterView Interact()
         {
+            CharacterView character;
+
             Vector3 facingDir = new Vector3(_animator.GetFloat("moveX"), _animator.GetFloat("moveY"));
             Vector3 interactPos = transform.position + facingDir;
 
             Debug.DrawLine(transform.position, interactPos, Color.red, 1f);
 
-            if (Physics2D.OverlapCircle(interactPos, 0.2f, _interactableLayer | _interactablePlayerLayer) != null)
+            Collider2D collider = Physics2D.OverlapCircle(interactPos, 0.2f, _interactableLayer | _interactablePlayerLayer);
+
+            if (collider != null)
             {
                 Debug.Log("there is an Object here!");
+
+                character = collider.GetComponent<CharacterView>();
+                return character;
             }
+
+            return null;
         }
 
         private bool IsWalkable(Vector3 targetPos)

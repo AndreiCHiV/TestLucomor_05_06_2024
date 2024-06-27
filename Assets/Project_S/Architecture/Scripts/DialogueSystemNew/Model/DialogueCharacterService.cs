@@ -13,6 +13,11 @@ namespace Assets.Project_S
             return dialoguesCharacter;
         }
 
+        public void AddDialogue(string owner, DialogueData dialogueData)
+        {
+            _dialogueCharacterMap[owner].AddDialogueStory(dialogueData);
+        }
+
         public IReadOnlyDialogueCharacter GetDialoguesCharacter(string owner)
         {
             return _dialogueCharacterMap[owner];

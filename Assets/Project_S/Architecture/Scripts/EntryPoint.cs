@@ -11,12 +11,15 @@ namespace Assets.Project_S
         [SerializeField] private ScreenInventoryView _screenInventoryView;
         [SerializeField] private ScreenDialogueCharacterView _screenDialogueCharacterView;
 
+        [SerializeField] private TextAsset _inkJSON;
+
+
         private const string CAT = "Lisa";
         private const string OCTI = "Wise";
 
         private ScreenCharacterController _screenCharacterController;
         private ScreenInventoryController _screenInventoryController;
-        private ScreenDialogueCharacterController _creenDialogueCharacterController;
+        private ScreenDialogueCharacterController _screenDialogueCharacterController;
 
         private string _activeCharacter;
         private Vector3 _input;
@@ -47,11 +50,26 @@ namespace Assets.Project_S
 
 
 
-            //DialogueData dialogueDataOcti = 
+            DialogueData dialogueDataOcti = new DialogueData()
+            {
+                inkJSON = _inkJSON,
+                dataDialogueID = 1
+            };
 
+            DialogueCharacterData dialogueCharacterDataOcti = new DialogueCharacterData()
+            {
+                owner = "Wise"
+            };
+
+
+            _dialogueCharacterService.RegistrationDialogueCharacter(dialogueCharacterDataOcti);
+            _dialogueCharacterService.AddDialogue("Wise", dialogueDataOcti);
 
             _screenCharacterController = new ScreenCharacterController(_charactersService, _screenCharacterView);
             _screenInventoryController = new ScreenInventoryController(_inventoryService, _screenInventoryView);
+            _screenDialogueCharacterController = new ScreenDialogueCharacterController(_dialogueCharacterService, _screenDialogueCharacterView);
+
+
 
             _activeCharacter = CAT;
             _screenCharacterController.ActiveCharacter(_activeCharacter);
@@ -88,7 +106,12 @@ namespace Assets.Project_S
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-                _screenCharacterView.GetCharacterView(_activeCharacter).Interact();
+                _screenCharacterView.GetCharacterView(_activeCharacter).IsMoving = true;
+
+                CharacterView character = _screenCharacterView.GetCharacterView(_activeCharacter).Interact();
+
+                _screenDialogueCharacterController.EnterDialogueCharacter(character, _screenCharacterView.GetCharacterView(_activeCharacter));
+
             }
 
 

@@ -16,11 +16,12 @@ namespace Assets.Project_S
 
         [SerializeField] private DialogueChoisesView _dialogueChoisesView;
 
-        private float _cooldownNewLetter;
+        private float _cooldownNewLetter = 0.02f;
 
         public bool IsStatusAnswer { get; set; }
         public bool IsPlaying { get; set; }
         public bool CanContinueToNextLine { get; set; }
+
 
         public float CoolDownNewLetter
         {
@@ -61,11 +62,11 @@ namespace Assets.Project_S
 
             bool isAddingRichText = false;
 
-            yield return new WaitForSeconds(0.001f);
+            yield return new WaitForSeconds(0.2f);
 
-            foreach (char letter in line)
+            foreach (char letter in line.ToCharArray())
             {
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetKey(KeyCode.Space))
                 {
                     SetText(line);
                     break;
@@ -84,6 +85,7 @@ namespace Assets.Project_S
                 {
                     yield return new WaitForSeconds(_cooldownNewLetter);
                 }
+
             }
 
             CanContinueToNextLine = true;

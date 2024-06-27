@@ -13,10 +13,24 @@ namespace Assets.Project_S
         private Coroutine _displayLineCoroutine;
 
         public Story CurrentStory { get; set; }
+        public CharacterView IsMovingCharacter { get; set; }
 
         public DialogueCharacterView DialogueCharacterView
         {
             get => _dialogueCharacterView;
+        }
+
+        private void Update()
+        {
+            if (_dialogueCharacterView.IsStatusAnswer == true || _dialogueCharacterView.IsPlaying == false || _dialogueCharacterView.CanContinueToNextLine == false)
+            {
+                return;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                ContinuesStory();
+            }
         }
 
         public void Init()
@@ -37,6 +51,7 @@ namespace Assets.Project_S
             yield return new WaitForSeconds(_dialogueCharacterView.CoolDownNewLetter);
             _dialogueCharacterView.SetActive(false);
             _dialogueCharacterView.ClearText();
+            IsMovingCharacter.IsMoving = false;
         }
 
         private void ContinuesStory()

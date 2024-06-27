@@ -1,4 +1,6 @@
-﻿namespace Assets.Project_S
+﻿using UnityEngine;
+
+namespace Assets.Project_S
 {
     public class ScreenDialogueCharacterController
     {
@@ -13,12 +15,12 @@
             _view = view;
         }
 
-        public void EnterDialogueCharacter(Character nameCharacter)
+        public void EnterDialogueCharacter(CharacterView nameCharacter, CharacterView nameCharacterIsMoving)
         {
             IReadOnlyDialogueCharacter dialogue = _service.GetDialoguesCharacter(nameCharacter.Name);
             ScreenDialogueCharacterView dialogueView = _view;
 
-            _dialogueCharacterController = new DialogueCharacterController(dialogue, dialogueView);
+            _dialogueCharacterController = new DialogueCharacterController(dialogue, dialogueView, nameCharacterIsMoving);
         }
 
     }

@@ -11,6 +11,8 @@ namespace Assets.Project_S
         public int maxHealth;
         public int currentHealth;
 
+        public int dialogueId;
+
         public float positionCharacter_X;
         public float positionCharacter_Y;
         public float positionCharacter_Z;

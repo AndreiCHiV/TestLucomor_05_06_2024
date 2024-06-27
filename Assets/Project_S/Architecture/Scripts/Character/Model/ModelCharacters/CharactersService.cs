@@ -47,6 +47,7 @@ namespace Assets.Project_S
         {
             return _charactersMap[characterName];
         }
+
         public Vector3 GetPositinoCharacter(string characterName)
         {
             Character character = _charactersMap[characterName];

@@ -8,5 +8,6 @@ namespace Assets.Project_S
     {
         public TextAsset inkJSON;
         public int dataDialogueID;
+
     }
 }

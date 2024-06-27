@@ -8,7 +8,7 @@ namespace Assets.Project_S
 
         public CharacterTags()
         {
-            _map.Add("speaker", new SpeakerCharacterTag());
+            //_map.Add("speaker", new SpeakerCharacterTag());
         }
 
         public IReadOnlyTag GetValue(string key)

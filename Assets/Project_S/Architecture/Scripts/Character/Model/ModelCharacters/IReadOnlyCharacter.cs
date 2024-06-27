@@ -11,6 +11,7 @@ namespace Assets.Project_S
 
         string Name { get; }
         string TagCharacter { get; }
+        int DialogueId { get; }
         int MaxHealth { get; }
         int CurrentHealth { get; }
         Vector3 PositionCharacter { get; }

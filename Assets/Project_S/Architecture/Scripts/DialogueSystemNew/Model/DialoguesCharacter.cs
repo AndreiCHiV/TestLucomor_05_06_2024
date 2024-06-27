@@ -36,10 +36,24 @@ namespace Assets.Project_S
         }
         private void InitializeDialogueCharacter()
         {
-            foreach (DialogueData dialogueData in _dialogueData.dialogueDatas)
+            if (_dialogueData.dialogueDatas != null)
             {
-                _dialogues.Add(new Dialogue(dialogueData));
+                foreach (DialogueData dialogueData in _dialogueData.dialogueDatas)
+                {
+                    _dialogues.Add(new Dialogue(dialogueData));
+                }
             }
+            else
+            {
+                _dialogueData.dialogueDatas = new List<DialogueData>();
+            }
+        }
+
+        public void AddDialogueStory(DialogueData dialogueData)
+        {
+            _dialogueData.dialogueDatas.Add(dialogueData);
+            Dialogue dialogue = new Dialogue(dialogueData);
+            _dialogues.Add(dialogue);
         }
 
         public IReadOnlyDialogue GetDialogueStory(int dataDialogueID)

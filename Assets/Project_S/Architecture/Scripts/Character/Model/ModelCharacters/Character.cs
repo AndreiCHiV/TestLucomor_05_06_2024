@@ -30,6 +30,11 @@ namespace Assets.Project_S
             set => _characterData.characterTag = value;
         }
 
+        public int DialogueId
+        {
+            get => _characterData.dialogueId;
+            set => _characterData.dialogueId = value;
+        }
         public Vector3 PositionCharacter
         {
             get => _positionCharacter;
@@ -87,6 +92,8 @@ namespace Assets.Project_S
                 }
             }
         }
+
+
 
         private void CharacterIsDead()
         {
