@@ -8,7 +8,7 @@ namespace Assets.Project_S
     public class ScreenDialogueCharacterView : MonoBehaviour
     {
         [SerializeField] private DialogueCharacterView _dialogueCharacterView;
-        private DialogueCharacterTag _tagCharacter = new DialogueCharacterTag();
+        [SerializeField] private DialogueCharacterTag _tagCharacter;
 
         private Coroutine _displayLineCoroutine;
 
@@ -20,6 +20,11 @@ namespace Assets.Project_S
             get => _dialogueCharacterView;
         }
 
+        private void Start()
+        {
+            _tagCharacter.InitializeTags();
+        }
+
         private void Update()
         {
             if (_dialogueCharacterView.IsStatusAnswer == true || _dialogueCharacterView.IsPlaying == false || _dialogueCharacterView.CanContinueToNextLine == false)
@@ -27,7 +32,7 @@ namespace Assets.Project_S
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 ContinuesStory();
             }
@@ -38,8 +43,14 @@ namespace Assets.Project_S
             _dialogueCharacterView.Init();
         }
 
+        public void SetImageCharacter(Sprite imageCharacterRigth, Sprite imageCharacterLeft)
+        {
+            _dialogueCharacterView.SetImageCharacter(imageCharacterRigth, imageCharacterLeft);
+        }
+
         public void EnterDialogueMode(TextAsset inkJSON)
         {
+
             CurrentStory = new Story(inkJSON.text);
 
             _dialogueCharacterView.SetActive(true);

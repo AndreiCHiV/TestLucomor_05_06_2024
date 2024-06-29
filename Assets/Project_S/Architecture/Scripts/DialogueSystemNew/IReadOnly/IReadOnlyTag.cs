@@ -2,6 +2,7 @@
 {
     public interface IReadOnlyTag
     {
+        string NameTag { get; }
         void Calling(string value);
     }
 }

@@ -15,12 +15,12 @@ namespace Assets.Project_S
             _view = view;
         }
 
-        public void EnterDialogueCharacter(CharacterView nameCharacter, CharacterView nameCharacterIsMoving)
+        public void EnterDialogueCharacter(CharacterView nameCharacterRigth, CharacterView nameCharacterLeft)
         {
-            IReadOnlyDialogueCharacter dialogue = _service.GetDialoguesCharacter(nameCharacter.Name);
+            IReadOnlyDialogueCharacter dialogue = _service.GetDialoguesCharacter(nameCharacterRigth.Name);
             ScreenDialogueCharacterView dialogueView = _view;
 
-            _dialogueCharacterController = new DialogueCharacterController(dialogue, dialogueView, nameCharacterIsMoving);
+            _dialogueCharacterController = new DialogueCharacterController(dialogue, dialogueView, nameCharacterRigth, nameCharacterLeft);
         }
 
     }

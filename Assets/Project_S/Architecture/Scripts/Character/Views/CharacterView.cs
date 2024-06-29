@@ -20,6 +20,8 @@ namespace Assets.Project_S
         [SerializeField] private LayerMask _interactableLayer;
         [SerializeField] private LayerMask _interactablePlayerLayer;
 
+        [SerializeField] private Sprite imegeCharacter;
+
         public float moveSpeed;
 
         public int _dialogueId;// временно public  потом должно инициализироваться в начале игры лист с диалогами 
@@ -69,6 +71,11 @@ namespace Assets.Project_S
         {
             get => _isMoving;
             set => _isMoving = value;
+        }
+
+        public Sprite ImageCharacter
+        {
+            get => imegeCharacter;
         }
 
         public Animator GetAnimation()

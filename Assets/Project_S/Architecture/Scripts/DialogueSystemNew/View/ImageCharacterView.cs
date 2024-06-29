@@ -7,10 +7,10 @@ namespace Assets.Project_S
     {
         [SerializeField] private Image _imageCharacter;
 
-        public Image ImageCharacter
+        public Sprite ImageCharacter
         {
-            get => _imageCharacter;
-            set => _imageCharacter = value;
+            get => _imageCharacter.sprite;
+            set => _imageCharacter.sprite = value;
         }
     }
 }

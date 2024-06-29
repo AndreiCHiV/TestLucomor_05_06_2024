@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Project_S
 {
-    public class DialogueCharacterTag
+    public class DialogueCharacterTag : MonoBehaviour
     {
-        private CharacterTags _tags = new CharacterTags();
+        [SerializeField] private CharacterTags _tags;
 
+        public void InitializeTags()
+        {
+            _tags.Initialize();
+        }
 
         public void HandleTags(List<string> tags)
         {
+
             if (tags.Count == 0)
             {
                 return;

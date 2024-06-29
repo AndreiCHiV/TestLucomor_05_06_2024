@@ -49,6 +49,12 @@ namespace Assets.Project_S
         {
             _dialogueView.NameCharacter = name;
         }
+        
+        public void SetImageCharacter(Sprite imageCharacterRigth,Sprite imageCharacterLeft)
+        {
+            _imageCharacterRight.ImageCharacter = imageCharacterRigth;
+            _imageCharacterLeft.ImageCharacter = imageCharacterLeft;
+        }
 
         public IEnumerator DisplayLine(Story story)
         {
@@ -66,7 +72,7 @@ namespace Assets.Project_S
 
             foreach (char letter in line.ToCharArray())
             {
-                if (Input.GetKey(KeyCode.Space))
+                if (Input.GetKey(KeyCode.F))
                 {
                     SetText(line);
                     break;

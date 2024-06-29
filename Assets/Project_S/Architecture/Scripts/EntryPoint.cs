@@ -34,7 +34,7 @@ namespace Assets.Project_S
             _inventoryService = new InventoryService();
             _dialogueCharacterService = new DialogueCharacterService();
 
-             
+
 
             CharacterData characterDataCat = CreateTestCharacter(CAT, "Player", 240);
             _charactersService.RegisterCharacters(characterDataCat);
@@ -102,17 +102,22 @@ namespace Assets.Project_S
                 }
 
                 _screenCharacterView.GetCharacterView(_activeCharacter).GetAnimation().SetBool("isMoving", _screenCharacterView.GetCharacterView(_activeCharacter).IsMoving);
+
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+
+                    CharacterView character = _screenCharacterView.GetCharacterView(_activeCharacter).Interact();
+
+                    if (character != null)
+                    {
+                        _screenCharacterView.GetCharacterView(_activeCharacter).IsMoving = true;
+                        _screenDialogueCharacterController.EnterDialogueCharacter(character, _screenCharacterView.GetCharacterView(_activeCharacter));
+                    }
+                    else
+                        Debug.Log("Not found character!");
+                }
             }
 
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                _screenCharacterView.GetCharacterView(_activeCharacter).IsMoving = true;
-
-                CharacterView character = _screenCharacterView.GetCharacterView(_activeCharacter).Interact();
-
-                _screenDialogueCharacterController.EnterDialogueCharacter(character, _screenCharacterView.GetCharacterView(_activeCharacter));
-
-            }
 
 
 

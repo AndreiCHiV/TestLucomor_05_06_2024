@@ -1,14 +1,18 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Project_S
 {
-    public class CharacterTags
+    public class CharacterTags : MonoBehaviour
     {
+        [SerializeField] private SpeakerCharacterTag _speakerCharacterTag;
+
+
         private readonly Dictionary<string, IReadOnlyTag> _map = new Dictionary<string, IReadOnlyTag>();
 
-        public CharacterTags()
+        public void Initialize()
         {
-            //_map.Add("speaker", new SpeakerCharacterTag());
+            _map.Add(_speakerCharacterTag.NameTag, _speakerCharacterTag);
         }
 
         public IReadOnlyTag GetValue(string key)

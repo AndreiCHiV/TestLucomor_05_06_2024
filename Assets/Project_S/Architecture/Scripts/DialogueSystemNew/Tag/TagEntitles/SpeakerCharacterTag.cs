@@ -4,10 +4,18 @@ namespace Assets.Project_S
 {
     public class SpeakerCharacterTag : MonoBehaviour, IReadOnlyTag
     {
+        [SerializeField] private DialogueCharacterView _dialogueCharcterView;
+
+        private const string NAMETAG = "speacker";
+        public string NameTag
+        {
+            get => NAMETAG;
+        }
+
         public void Calling(string value)
         {
-            var dialogueWindow = GetComponent<DialogueWindow>();
-            dialogueWindow.SetName(value);
+            _dialogueCharcterView.SetNameCharacter(value);
         }
+
     }
 }
