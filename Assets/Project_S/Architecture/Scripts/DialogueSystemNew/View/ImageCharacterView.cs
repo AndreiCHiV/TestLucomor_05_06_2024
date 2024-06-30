@@ -10,15 +10,8 @@ namespace Assets.Project_S
 
         public Sprite ImageCharacter
         {
-            get
-            {
-                return _imageCharacter.sprite;
-            }
-            set
-            {
-                Debug.Log("SDFASFD");
-                _imageCharacter.sprite = value;
-            } 
+            get=>_imageCharacter.sprite;
+            set=>_imageCharacter.sprite = value;
         }
 
         public void DisActiveImage()

@@ -80,9 +80,7 @@ namespace Assets.Project_S
 
         public void SetImageCharacter(Sprite imageCharacterRigth,Sprite imageCharacterLeft)
         {
-            Debug.Log("1");
             _imageCharacterRigth.ImageCharacter = imageCharacterRigth;
-            Debug.Log("2");
             _imageCharacterLeft.ImageCharacter = imageCharacterLeft;
         }
 

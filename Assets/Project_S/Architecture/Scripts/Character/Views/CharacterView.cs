@@ -2,6 +2,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Project_S
 {
@@ -66,7 +67,7 @@ namespace Assets.Project_S
                 }
             }
         }
-                
+
         public bool IsMoving
         {
             get => _isMoving;
