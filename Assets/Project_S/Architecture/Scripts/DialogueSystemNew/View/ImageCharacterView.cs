@@ -16,7 +16,7 @@ namespace Assets.Project_S
 
         public void DisActiveImage()
         {
-            _imageCharacter.color = new Color(1f, 1f, 1f, 0.5f);
+            _imageCharacter.color = new Color(0.5f, 0.5f, 0.5f, 1f);
         }
 
         public void ActiveImage()

@@ -19,7 +19,7 @@ namespace Assets.Project_S
         private string _nameLeft;
         private string _nameRigth;
 
-        private float _cooldownNewLetter = 0.02f;
+        private float _cooldownNewLetter = 0.05f;
 
         public bool IsStatusAnswer { get; set; }
         public bool IsPlaying { get; set; }
