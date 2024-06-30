@@ -20,6 +20,7 @@ namespace Assets.Project_S
             get => _dialogueCharacterView;
         }
 
+
         private void Start()
         {
             _tagCharacter.InitializeTags();
@@ -36,6 +37,12 @@ namespace Assets.Project_S
             {
                 ContinuesStory();
             }
+        }
+
+        public void SetName(string nameRigth, string nameLeft)
+        {
+            _dialogueCharacterView.NameRigth = nameRigth;
+            _dialogueCharacterView.NameLeft = nameLeft;
         }
 
         public void Init()

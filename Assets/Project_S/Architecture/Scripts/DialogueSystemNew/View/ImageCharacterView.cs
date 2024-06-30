@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Project_S
@@ -9,8 +10,25 @@ namespace Assets.Project_S
 
         public Sprite ImageCharacter
         {
-            get => _imageCharacter.sprite;
-            set => _imageCharacter.sprite = value;
+            get
+            {
+                return _imageCharacter.sprite;
+            }
+            set
+            {
+                Debug.Log("SDFASFD");
+                _imageCharacter.sprite = value;
+            } 
+        }
+
+        public void DisActiveImage()
+        {
+            _imageCharacter.color = new Color(1f, 1f, 1f, 0.5f);
+        }
+
+        public void ActiveImage()
+        {
+            _imageCharacter.color = new Color(1f, 1f, 1f, 1f);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Assets.Project_S
         [SerializeField] private LayerMask _interactableLayer;
         [SerializeField] private LayerMask _interactablePlayerLayer;
 
-        [SerializeField] private Sprite imegeCharacter;
+        [SerializeField] private Sprite _imegeCharacter;
 
         public float moveSpeed;
 
@@ -66,7 +66,7 @@ namespace Assets.Project_S
                 }
             }
         }
-
+                
         public bool IsMoving
         {
             get => _isMoving;
@@ -75,7 +75,7 @@ namespace Assets.Project_S
 
         public Sprite ImageCharacter
         {
-            get => imegeCharacter;
+            get => _imegeCharacter;
         }
 
         public Animator GetAnimation()

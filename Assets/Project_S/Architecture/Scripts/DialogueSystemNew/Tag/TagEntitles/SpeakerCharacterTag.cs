@@ -15,6 +15,7 @@ namespace Assets.Project_S
         public void Calling(string value)
         {
             _dialogueCharcterView.SetNameCharacter(value);
+            _dialogueCharcterView.ActiveDialogueCharacter(value);
         }
 
     }

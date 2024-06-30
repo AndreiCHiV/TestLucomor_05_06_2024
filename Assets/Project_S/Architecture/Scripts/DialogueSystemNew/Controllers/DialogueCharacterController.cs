@@ -12,6 +12,7 @@ namespace Assets.Project_S
             view.Init();
             view.IsMovingCharacter = characterViewLeft;
             view.SetImageCharacter(characterViewRight.ImageCharacter, characterViewLeft.ImageCharacter);
+            view.SetName(characterViewRight.Name, characterViewLeft.Name);
 
             IReadOnlyDialogue dialogue = data.GetDialogueStory(1);//получение ID диалога из Wise, должен плучать из списка заданий
 

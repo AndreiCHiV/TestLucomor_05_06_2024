@@ -11,10 +11,13 @@ namespace Assets.Project_S
         [SerializeField] private DialogueView _dialogueView;
         [SerializeField] private GameObject _dialogueWindowView;
 
-        [SerializeField] private ImageCharacterView _imageCharacterRight;
+        [SerializeField] private ImageCharacterView _imageCharacterRigth;
         [SerializeField] private ImageCharacterView _imageCharacterLeft;
 
         [SerializeField] private DialogueChoisesView _dialogueChoisesView;
+
+        private string _nameLeft;
+        private string _nameRigth;
 
         private float _cooldownNewLetter = 0.02f;
 
@@ -22,6 +25,18 @@ namespace Assets.Project_S
         public bool IsPlaying { get; set; }
         public bool CanContinueToNextLine { get; set; }
 
+
+        public string NameLeft
+        {
+            get => _nameLeft;
+            set => _nameLeft = value;
+        }
+
+        public string NameRigth
+        {
+            get => _nameRigth;
+            set => _nameRigth = value;
+        }
 
         public float CoolDownNewLetter
         {
@@ -49,10 +64,25 @@ namespace Assets.Project_S
         {
             _dialogueView.NameCharacter = name;
         }
-        
+        public void ActiveDialogueCharacter(string value)
+        {
+            if (NameRigth == value)
+            {
+                _imageCharacterLeft.DisActiveImage();
+                _imageCharacterRigth.ActiveImage();
+            }
+            else
+            {
+                _imageCharacterLeft.ActiveImage();
+                _imageCharacterRigth.DisActiveImage();
+            }
+        }
+
         public void SetImageCharacter(Sprite imageCharacterRigth,Sprite imageCharacterLeft)
         {
-            _imageCharacterRight.ImageCharacter = imageCharacterRigth;
+            Debug.Log("1");
+            _imageCharacterRigth.ImageCharacter = imageCharacterRigth;
+            Debug.Log("2");
             _imageCharacterLeft.ImageCharacter = imageCharacterLeft;
         }
 
