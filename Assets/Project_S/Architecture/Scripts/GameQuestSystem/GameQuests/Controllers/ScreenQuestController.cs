@@ -1,6 +1,6 @@
 ﻿namespace Assets.Project_S
 {
-    public class CharacterQuest
+    public class ScreenQuestController
     {
     }
 }

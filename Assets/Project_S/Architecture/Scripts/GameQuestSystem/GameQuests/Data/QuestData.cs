@@ -7,9 +7,10 @@ namespace Assets.Project_S
     public class QuestData
     {
         public int questID;
+        public string nameQuest;
         public List<string> questMessage;
 
-        public QuestData(int id,List<string> message)
+        public QuestData(int id, List<string> message)
         {
             questMessage = message;
             questID = id;

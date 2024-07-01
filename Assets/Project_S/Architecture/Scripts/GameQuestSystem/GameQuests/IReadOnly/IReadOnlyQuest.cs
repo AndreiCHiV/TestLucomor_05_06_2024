@@ -8,6 +8,7 @@ namespace Assets.Project_S
 
         int QuestID { get; }
         byte CurrentQuest { get; }
+        string NameQuest { get; }
 
         string GetMessages();
     }

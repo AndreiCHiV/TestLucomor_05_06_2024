@@ -22,6 +22,11 @@ namespace Assets.Project_S
             set => _questData.questID = value;
         }
 
+        public string NameQuest
+        {
+            get => _questData.nameQuest;
+        }
+
         public byte CurrentQuest
         {
             get => _currentQuest;
