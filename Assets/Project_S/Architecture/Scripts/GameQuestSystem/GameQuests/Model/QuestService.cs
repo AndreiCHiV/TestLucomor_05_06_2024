@@ -21,7 +21,7 @@ namespace Assets.Project_S
             foreach (QuestListData questListCharacterData in questsListCharacterData)
             {
                 QuestList questList = new QuestList(questListCharacterData);
-                _questsMap[questList.Owner] = questList;
+                _currentQuestsCharacterMap[questList.Owner] = questList;
             }
         }
         public void RegisterCompletedQuests(List<QuestListData> completedQuests)
@@ -29,7 +29,7 @@ namespace Assets.Project_S
             foreach (QuestListData completedQuestListData in completedQuests)
             {
                 QuestList questList = new QuestList(completedQuestListData);
-                _questsMap[questList.Owner] = questList;
+                _completedQuests[questList.Owner] = questList;
             }
         }
 

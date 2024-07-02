@@ -13,7 +13,7 @@ namespace Assets.Project_S
         public Quest(QuestData questData)
         {
             _questData = questData;
-            _currentQuest = 0;
+            _currentQuest = 1;
         }
 
         public int QuestID

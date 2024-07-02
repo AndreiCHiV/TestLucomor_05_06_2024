@@ -10,10 +10,11 @@ namespace Assets.Project_S
         public string nameQuest;
         public List<string> questMessage;
 
-        public QuestData(int id, List<string> message)
-        {
-            questMessage = message;
-            questID = id;
-        }
+        //public QuestData(int id, string name, List<string> message)
+        //{
+        //    questMessage = message;
+        //    questID = id;
+        //    nameQuest = name;
+        //}
     }
 }

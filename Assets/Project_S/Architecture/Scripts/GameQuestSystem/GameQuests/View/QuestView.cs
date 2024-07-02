@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Project_S
 {
@@ -7,6 +8,7 @@ namespace Assets.Project_S
     {
         [SerializeField] private TMP_Text _nameQuest;
         [SerializeField] private TMP_Text _ownerQuest;
+        [SerializeField] private Image _imageBackground;
 
         private int _questId;
         private byte _currnetQuest;
@@ -39,6 +41,15 @@ namespace Assets.Project_S
         {
             get => _currnetQuest;
             set => _currnetQuest = value;
+        }
+
+        public void SetActiveSlotQuest()
+        {
+            _imageBackground.color = new Color(0.5f, 0.5f, 0.5f, 1f);
+        }
+        public void SetNotActiveSlotQuest()
+        {
+            _imageBackground.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
         }
     }
 }

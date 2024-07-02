@@ -2,7 +2,7 @@
 
 namespace Assets.Project_S
 {
-    public class QuestViewService : MonoBehaviour
+    public class ScreenQuestView : MonoBehaviour
     {
         [SerializeField] private QuestListView _questListView;
 

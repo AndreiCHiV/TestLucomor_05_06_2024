@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Assets.Project_S
 {
@@ -8,7 +9,7 @@ namespace Assets.Project_S
 
         public QuestController(IReadOnlyQuest data, QuestView view, string ownerQuest)
         {
-            data.currentQuestChanged += ChangedCurrentQuest;
+            //data.currentQuestChanged += ChangedCurrentQuest;
 
             _view = view;
 

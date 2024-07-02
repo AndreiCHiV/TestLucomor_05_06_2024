@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -6,13 +7,13 @@ namespace Assets.Project_S
 {
     public class QuestListView : MonoBehaviour
     {
-        [SerializeField] private GameObject _quest;
+        [SerializeField] private GameObject _questPrefab;
 
         [SerializeField] private List<QuestView> _quests = new List<QuestView>();
 
         [SerializeField] private QuestDescriptionView _questDescriptionView;
 
-        private QuestView currentQuest;
+        private QuestView _currentQuest;
 
         public List<QuestView> Quests
         {
@@ -20,13 +21,31 @@ namespace Assets.Project_S
             set => _quests = value;
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                ChangeActiveQuestDown();
+            }
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                ChangeActiveQuestUp();
+            }
+        }
+
+        private void ShowQuests()
+        {
+            foreach (var quset in _quests)
+            {
+                Debug.Log(quset.ViewMessage);
+            }
+        }
 
         public QuestView AddQuestDisplayView()
         {
-            GameObject questObject = Instantiate(_quest);
+            GameObject questObject = Instantiate(_questPrefab);
             questObject.transform.SetParent(GameObject.FindGameObjectWithTag("Quest").transform, false);
             QuestView quest = questObject.GetComponent<QuestView>();
-
             return quest;
         }
 
@@ -37,7 +56,7 @@ namespace Assets.Project_S
                 if (quest.QuestId == id)
                 {
                     _questDescriptionView.DescriptionQuest = quest.ViewMessage;
-                    currentQuest = quest;
+                    _currentQuest = quest;
                 }
             }
         }
@@ -48,19 +67,78 @@ namespace Assets.Project_S
             {
                 if (Quests[0] != null)
                 {
-                    _questDescriptionView.DescriptionQuest = Quests[0].ViewMessage;
-                    _questDescriptionView.Owner = Quests[0].OwnerQuest;
-                    currentQuest = Quests[0];
+                    SetQuestDescriptionInDisplay(Quests[0]);
+                    Quests[0].SetActiveSlotQuest();
+                    _currentQuest = Quests[0];
                 }
                 else
                     return;
             }
             else
             {
-                _questDescriptionView.DescriptionQuest = currentQuest.ViewMessage;
-                _questDescriptionView.Owner = currentQuest.OwnerQuest;
+                SetQuestDescriptionInDisplay(_currentQuest);
+                _currentQuest.SetActiveSlotQuest();
             }
-
         }
+
+        public void ChangeActiveQuestDown()
+        {
+            for (int i = 0; i < Quests.Count; i++)
+            {
+                if (_currentQuest.NameQuest == Quests[i].NameQuest)
+                {
+                    _currentQuest.SetNotActiveSlotQuest();
+
+                    if (i < Quests.Count - 1)
+                    {
+                        _currentQuest = Quests[i + 1];
+                        _currentQuest.SetActiveSlotQuest();
+                        SetQuestDescriptionInDisplay(_currentQuest);
+                        return;
+                    }
+                    else
+                    {
+                        _currentQuest = Quests[0];
+                        _currentQuest.SetActiveSlotQuest();
+                        SetQuestDescriptionInDisplay(_currentQuest);
+                        return;
+                    }
+                }
+
+            }
+        }
+        private void ChangeActiveQuestUp()
+        {
+            for (int i = 0; i < Quests.Count; i++)
+            {
+                if (_currentQuest.NameQuest == Quests[i].NameQuest)
+                {
+                    _currentQuest.SetNotActiveSlotQuest();
+
+                    if (i >= 1)
+                    {
+                        _currentQuest = Quests[i - 1];
+                        _currentQuest.SetActiveSlotQuest();
+                        SetQuestDescriptionInDisplay(_currentQuest);
+                        return;
+                    }
+                    else
+                    {
+                        _currentQuest = Quests[^1];
+                        _currentQuest.SetActiveSlotQuest();
+                        SetQuestDescriptionInDisplay(_currentQuest);
+                        return;
+                    }
+                }
+
+            }
+        }
+
+        private void SetQuestDescriptionInDisplay(QuestView currentQuest)
+        {
+            _questDescriptionView.DescriptionQuest = currentQuest.ViewMessage;
+            _questDescriptionView.Owner = currentQuest.OwnerQuest;
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Project_S
 {
@@ -9,20 +10,21 @@ namespace Assets.Project_S
 
         public QuestListController(List<IReadOnlyQuestList> quests, QuestListView view, bool firstCallQuest)
         {
-
-
             _view = view;
-
             foreach (IReadOnlyQuestList questList in quests)
             {
                 string ownerQuest = questList.Owner;
-
                 foreach (IReadOnlyQuest quest in questList.GetQuestList())
                 {
                     QuestView questView = view.AddQuestDisplayView();
-                    _quests.Add(new QuestController(quest, questView, ownerQuest));
+                    QuestController questController = new QuestController(quest, questView, ownerQuest);
+
+                    _quests.Add(questController);
+
+                    view.Quests.Add(questView);
                 }
             }
+
 
             view.SetDefaultQuest(firstCallQuest);
         }
