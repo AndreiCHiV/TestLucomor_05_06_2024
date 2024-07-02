@@ -159,6 +159,8 @@ namespace Assets.Project_S
                     _screenCharacterView.GetCharacterView(_activeCharacter).Movement(_input);
                 }
 
+                _screenCharacterView.GetCharacterView(_activeCharacter).GetAnimation().SetBool("isMoving", _screenCharacterView.GetCharacterView(_activeCharacter).IsMoving);
+
                 if (Input.GetKeyDown(KeyCode.F))
                 {
 
@@ -173,7 +175,6 @@ namespace Assets.Project_S
                         Debug.Log("Not found character!");
                 }
 
-                _screenCharacterView.GetCharacterView(_activeCharacter).GetAnimation().SetBool("isMoving", _screenCharacterView.GetCharacterView(_activeCharacter).IsMoving);
             }
 
 

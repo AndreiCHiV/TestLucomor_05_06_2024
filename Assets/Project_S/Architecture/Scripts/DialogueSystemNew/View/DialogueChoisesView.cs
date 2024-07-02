@@ -142,23 +142,9 @@ namespace Assets.Project_S
         {
             foreach (ChoiceView choice in _choices)
             {
-                Debug.Log(choice.Index);
+                Destroy(choice.gameObject);
             }
-
-            for (int i = 0; i < _choices.Count; i++)
-            {
-                Debug.Log(i);
-                Destroy(_choices[i].gameObject);
-                _choices.Remove(_choices[i]);
-            }
-
-
-            //foreach (ChoiceView choice in _choices)
-            //{
-            //    Destroy(choice.gameObject);
-            //    _choices.Remove(choice);
-            //}
-
+                _choices.Clear();
         }
     }
 }
