@@ -7,7 +7,6 @@ namespace Assets.Project_S
     public class QuestListData
     {
         public string owner;
-        public bool isEmpty;
         public List<QuestData> questDatas;
     }
 }

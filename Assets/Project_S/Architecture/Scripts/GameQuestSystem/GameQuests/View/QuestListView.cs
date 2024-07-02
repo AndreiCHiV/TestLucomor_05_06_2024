@@ -21,6 +21,8 @@ namespace Assets.Project_S
             set => _quests = value;
         }
 
+        public QuestDescriptionView QuestDescription => _questDescriptionView;
+
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.S))
@@ -65,7 +67,7 @@ namespace Assets.Project_S
         {
             if (firstCall == true)
             {
-                if (Quests[0] != null)
+                if (Quests.Count != 0)
                 {
                     SetQuestDescriptionInDisplay(Quests[0]);
                     Quests[0].SetActiveSlotQuest();

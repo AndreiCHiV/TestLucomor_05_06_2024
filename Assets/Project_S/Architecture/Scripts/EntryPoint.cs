@@ -104,7 +104,6 @@ namespace Assets.Project_S
 
             QuestListData dataWise = new QuestListData()
             {
-                isEmpty = true,
                 owner = "Wise",
                 questDatas = new List<QuestData>()
                 {
@@ -153,19 +152,19 @@ namespace Assets.Project_S
             {
                 _input.x = Input.GetAxisRaw("Horizontal");
                 _input.y = Input.GetAxisRaw("Vertical");
+
+
                 if (_input != Vector3.zero)
                 {
                     _screenCharacterView.GetCharacterView(_activeCharacter).Movement(_input);
                 }
-
-                _screenCharacterView.GetCharacterView(_activeCharacter).GetAnimation().SetBool("isMoving", _screenCharacterView.GetCharacterView(_activeCharacter).IsMoving);
 
                 if (Input.GetKeyDown(KeyCode.F))
                 {
 
                     CharacterView character = _screenCharacterView.GetCharacterView(_activeCharacter).Interact();
 
-                    if (character != null)
+                    if (character != null && character.Name != "Lisa")
                     {
                         _screenCharacterView.GetCharacterView(_activeCharacter).IsMoving = true;
                         _screenDialogueCharacterController.EnterDialogueCharacter(character, _screenCharacterView.GetCharacterView(_activeCharacter));
@@ -173,6 +172,8 @@ namespace Assets.Project_S
                     else
                         Debug.Log("Not found character!");
                 }
+
+                _screenCharacterView.GetCharacterView(_activeCharacter).GetAnimation().SetBool("isMoving", _screenCharacterView.GetCharacterView(_activeCharacter).IsMoving);
             }
 
 

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Inventory
   - Quest
+  - Choises
   layers:
   - Default
   - TransparentFX

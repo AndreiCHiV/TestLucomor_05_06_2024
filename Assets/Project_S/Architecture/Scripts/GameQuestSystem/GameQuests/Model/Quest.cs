@@ -46,7 +46,12 @@ namespace Assets.Project_S
 
             for (int i = 0; i < CurrentQuest; i++)
             {
-                messages += _questData.questMessage[i] + "\n***\n";
+                if (i == CurrentQuest - 1)
+                {
+                    messages += _questData.questMessage[i] + "\n\n<align=\"center\"><b>Конец задния!</b>\n\n";
+                    return messages;
+                }
+                messages += _questData.questMessage[i] + "\n\n<align = \"center\"><b>***</b>\n\n";
             }
 
             return messages;

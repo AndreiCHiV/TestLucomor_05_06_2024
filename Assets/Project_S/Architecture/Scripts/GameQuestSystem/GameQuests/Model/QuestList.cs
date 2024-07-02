@@ -12,15 +12,7 @@ namespace Assets.Project_S
         public QuestList(QuestListData data)
         {
             _data = data;
-
-            if (!data.isEmpty)
-            {
-                data.questDatas = new List<QuestData>();
-            }
-            else
-            {
-                Initialize(data);
-            }
+            Initialize(data);
         }
 
         public string Owner => _data.owner;
@@ -54,7 +46,7 @@ namespace Assets.Project_S
                     return quest;
                 }
             }
-            
+
             return null;
         }
 

@@ -11,22 +11,30 @@ namespace Assets.Project_S
         public QuestListController(List<IReadOnlyQuestList> quests, QuestListView view, bool firstCallQuest)
         {
             _view = view;
-            foreach (IReadOnlyQuestList questList in quests)
+
+            if (quests.Count != 0)
             {
-                string ownerQuest = questList.Owner;
-                foreach (IReadOnlyQuest quest in questList.GetQuestList())
+                foreach (IReadOnlyQuestList questList in quests)
                 {
-                    QuestView questView = view.AddQuestDisplayView();
-                    QuestController questController = new QuestController(quest, questView, ownerQuest);
+                    string ownerQuest = questList.Owner;
 
-                    _quests.Add(questController);
+                    if (questList.GetQuestList().Count != 0)
+                    {
+                        foreach (IReadOnlyQuest quest in questList.GetQuestList())
+                        {
+                            QuestView questView = view.AddQuestDisplayView();
+                            QuestController questController = new QuestController(quest, questView, ownerQuest);
 
-                    view.Quests.Add(questView);
+                            _quests.Add(questController);
+
+                            view.Quests.Add(questView);
+                        }
+                    }
+                    view.SetDefaultQuest(firstCallQuest);
                 }
             }
-
-
-            view.SetDefaultQuest(firstCallQuest);
+            else
+                view.QuestDescription.DescriptionQuest = "\n\n<align=\"center\"><b>У вас нет заданий.</b>";
         }
     }
 }

@@ -86,7 +86,10 @@ namespace Assets.Project_S
 
         public IEnumerator DisplayLine(Story story)
         {
-            _dialogueChoisesView.HideChoices();
+            if (_dialogueChoisesView.ChoicesCount != 0)
+            {
+                _dialogueChoisesView.ClearChoises();
+            }
 
             string line = story.Continue();
 
@@ -124,8 +127,7 @@ namespace Assets.Project_S
 
             CanContinueToNextLine = true;
 
-
-            IsStatusAnswer = _dialogueChoisesView.DisplayChoices(story);
+            IsStatusAnswer = _dialogueChoisesView.AddChoises(story);
         }
 
         public void SetActive(bool active)
