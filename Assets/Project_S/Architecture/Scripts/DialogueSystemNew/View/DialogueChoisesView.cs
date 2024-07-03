@@ -37,7 +37,7 @@ namespace Assets.Project_S
             {
                 ChangeActiveChoiceUp();
             }
-            if (Input.GetKeyDown(KeyCode.J) && CreateChoisesDisplay)
+            if (Input.GetKeyDown(KeyCode.F) && CreateChoisesDisplay)
             {
                 EnterChoise(_currentChoice);
             }
@@ -123,8 +123,8 @@ namespace Assets.Project_S
 
             }
 
-            _choices[0].SetActiveChoise();
-            _currentChoice = _choices[0];
+            _choices[^1].SetActiveChoise();
+            _currentChoice = _choices[^1];
 
             CreateChoisesDisplay = true;
             return currentChoices.Length > 0;

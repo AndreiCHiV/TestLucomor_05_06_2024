@@ -7,10 +7,11 @@ namespace Assets.Project_S
     {
         private readonly Dictionary<string, DialoguesCharacter> _dialogueCharacterMap = new Dictionary<string, DialoguesCharacter>();
 
-        public DialoguesCharacter RegistrationDialogueCharacter(DialogueCharacterData dialoguesCharacterData)
+        public DialoguesCharacter RegistrationDialogueCharacter(DialogueCharacterData dialoguesCharacterData, DialogueData dialogueData)
         {
             DialoguesCharacter dialoguesCharacter = new DialoguesCharacter(dialoguesCharacterData);
             _dialogueCharacterMap[dialoguesCharacter.Owner] = dialoguesCharacter;
+            AddDialogue(dialoguesCharacterData.owner, dialogueData);
             return dialoguesCharacter;
         }
 

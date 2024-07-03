@@ -1,0 +1,34 @@
+﻿using System;
+using UnityEngine;
+
+namespace Assets.Project_S
+{
+    public class ChangeDialogueTag : MonoBehaviour, IReadOnlyTag
+    {
+        [SerializeField] private ScreenDialogueCharacterView _screenDialogueCharacterView;
+        [SerializeField] private EntryPoint _entryPoint;
+
+        private const string NAMETAG = "ChangeDialogue";
+        public string NameTag
+        {
+            get => NAMETAG;
+        }
+
+        public void Calling(string valueTag)
+        {
+            string[] keyTag = valueTag.Split("_");
+
+            if (keyTag.Length != 2)
+            {
+                throw new ArgumentException("Неправельное оформление тега! Срочно исправить!");
+            }
+
+            string name = keyTag[0].Trim();
+            int dialogueID = int.Parse(keyTag[1].Trim());
+
+            IReadOnlyDialogue dialogueNameID = _entryPoint.DialogueCharacterService.GetDialogueCharacterId(name, dialogueID);
+
+            _screenDialogueCharacterView.EnterDialogueMode(dialogueNameID.GetDialogue());
+        }
+    }
+}

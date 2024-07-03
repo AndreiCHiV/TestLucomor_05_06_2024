@@ -6,6 +6,7 @@ namespace Assets.Project_S
     public class CharacterTags : MonoBehaviour
     {
         [SerializeField] private SpeakerCharacterTag _speakerCharacterTag;
+        [SerializeField] private ChangeDialogueTag _changeDialogueTag;
 
 
         private readonly Dictionary<string, IReadOnlyTag> _map = new Dictionary<string, IReadOnlyTag>();
@@ -13,6 +14,7 @@ namespace Assets.Project_S
         public void Initialize()
         {
             _map.Add(_speakerCharacterTag.NameTag, _speakerCharacterTag);
+            _map.Add(_changeDialogueTag.NameTag, _changeDialogueTag);
         }
 
         public IReadOnlyTag GetValue(string key)

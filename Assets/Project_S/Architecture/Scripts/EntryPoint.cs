@@ -12,7 +12,8 @@ namespace Assets.Project_S
         [SerializeField] private ScreenDialogueCharacterView _screenDialogueCharacterView;
         [SerializeField] private ScreenQuestView _screenQuestView;
 
-        [SerializeField] private TextAsset _inkJSON;
+        [SerializeField] private TextAsset _inkJSON_1;
+        [SerializeField] private TextAsset _inkJSON_2;
 
 
         private const string CAT = "Lisa";
@@ -44,6 +45,11 @@ namespace Assets.Project_S
         private DialogueCharacterService _dialogueCharacterService;
         private QuestService _questService;
 
+        public DialogueCharacterService DialogueCharacterService
+        {
+            get => _dialogueCharacterService;
+        }
+
         private void Start()
         {
             _charactersService = new CharactersService();
@@ -67,10 +73,16 @@ namespace Assets.Project_S
 
 
 
-            DialogueData dialogueDataWise = new DialogueData()
+            DialogueData dialogueDataWise_1 = new DialogueData()
             {
-                inkJSON = _inkJSON,
+                inkJSON = _inkJSON_1,
                 dataDialogueID = 1
+            };
+
+            DialogueData dialogueDataWise_2 = new DialogueData()
+            {
+                inkJSON = _inkJSON_2,
+                dataDialogueID = 2
             };
 
             DialogueCharacterData dialogueCharacterDataWise = new DialogueCharacterData()
@@ -79,9 +91,8 @@ namespace Assets.Project_S
             };
 
 
-            _dialogueCharacterService.RegistrationDialogueCharacter(dialogueCharacterDataWise);
-            _dialogueCharacterService.AddDialogue("Wise", dialogueDataWise);
-
+            _dialogueCharacterService.RegistrationDialogueCharacter(dialogueCharacterDataWise, dialogueDataWise_1);
+            _dialogueCharacterService.AddDialogue(dialogueCharacterDataWise.owner, dialogueDataWise_2);
 
             QuestData questDataWise_0 = new QuestData()
             {
@@ -118,7 +129,7 @@ namespace Assets.Project_S
                 dataWise
             };
 
-            _questService.RegisterQuestsCharacter(allquestList);
+            _questService.RegisterQuests(allquestList);
 
             _screenCharacterController = new ScreenCharacterController(_charactersService, _screenCharacterView);
             _screenInventoryController = new ScreenInventoryController(_inventoryService, _screenInventoryView);
@@ -134,25 +145,10 @@ namespace Assets.Project_S
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                _activeCharacter = CAT;
-                _screenCharacterController.ActiveCharacter(_activeCharacter);
-                _screenInventoryController.OpenInventory(_activeCharacter);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                _activeCharacter = OCTI;
-                _screenCharacterController.ActiveCharacter(_activeCharacter);
-                _screenInventoryController.OpenInventory(_activeCharacter);
-            }
-
-
             if (!_screenCharacterView.GetCharacterView(_activeCharacter).IsMoving)
             {
                 _input.x = Input.GetAxisRaw("Horizontal");
                 _input.y = Input.GetAxisRaw("Vertical");
-
 
                 if (_input != Vector3.zero)
                 {
@@ -163,7 +159,6 @@ namespace Assets.Project_S
 
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-
                     CharacterView character = _screenCharacterView.GetCharacterView(_activeCharacter).Interact();
 
                     if (character != null && character.Name != "Lisa")
@@ -177,9 +172,18 @@ namespace Assets.Project_S
 
             }
 
-
-
-
+            //if (Input.GetKeyDown(KeyCode.Alpha1))
+            //{
+            //    _activeCharacter = CAT;
+            //    _screenCharacterController.ActiveCharacter(_activeCharacter);
+            //    _screenInventoryController.OpenInventory(_activeCharacter);
+            //}
+            //if (Input.GetKeyDown(KeyCode.Alpha2))
+            //{
+            //    _activeCharacter = OCTI;
+            //    _screenCharacterController.ActiveCharacter(_activeCharacter);
+            //    _screenInventoryController.OpenInventory(_activeCharacter);
+            //}
 
             //if (Input.GetKeyDown(KeyCode.Q))
             //{
@@ -220,8 +224,6 @@ namespace Assets.Project_S
             //    _inventoryService.AddItems(OCTI, "Hart", 1);
             //}
 
-
-
             //if (Input.GetKeyDown(KeyCode.X))
             //{
             //    _inventoryService.RemoveItems(CAT, "Key", 1);
@@ -241,7 +243,6 @@ namespace Assets.Project_S
             //{
             //    _inventoryService.RemoveItems(OCTI, "Knife", 1);
             //}
-
         }
 
         private CharacterData CreateTestCharacter(string name, string tag, int health)
