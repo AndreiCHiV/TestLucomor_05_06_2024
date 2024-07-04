@@ -5,6 +5,8 @@ namespace Assets.Project_S
 {
     public class QuestList : IReadOnlyQuestList
     {
+        public event Action<int> AddQuestChanged;
+
         private readonly QuestListData _data;
 
         private List<Quest> _quests = new List<Quest>();
@@ -46,14 +48,30 @@ namespace Assets.Project_S
                     return quest;
                 }
             }
-
             return null;
         }
 
         public void AddQuest(QuestData questData)
         {
             Quest quest = new Quest(questData);
+            AddQuest(quest);
+        }
+
+        public void AddQuest(Quest quest)
+        {
             _quests.Add(quest);
+            AddQuestChanged?.Invoke(quest.QuestID);
+        }
+
+        internal void RemoveQuest(int questId)
+        {
+            foreach (Quest quest in _quests)
+            {
+                if (quest.QuestID == questId)
+                {
+                    _quests.Remove(quest);
+                }
+            }
         }
     }
 }

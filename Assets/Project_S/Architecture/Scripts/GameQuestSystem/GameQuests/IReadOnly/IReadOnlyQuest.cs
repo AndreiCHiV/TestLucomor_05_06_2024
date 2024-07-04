@@ -7,7 +7,8 @@ namespace Assets.Project_S
         event Action<byte> currentQuestChanged;
 
         int QuestID { get; }
-        byte CurrentQuest { get; }
+        byte CurrentQuest { get; set; }
+        byte ComplitedQuest { get; }
         string NameQuest { get; }
 
         string GetMessages();

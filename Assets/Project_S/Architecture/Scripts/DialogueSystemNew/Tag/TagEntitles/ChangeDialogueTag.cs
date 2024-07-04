@@ -8,7 +8,7 @@ namespace Assets.Project_S
         [SerializeField] private ScreenDialogueCharacterView _screenDialogueCharacterView;
         [SerializeField] private EntryPoint _entryPoint;
 
-        private const string NAMETAG = "ChangeDialogue";
+        private const string NAMETAG = "changeDialogue";
         public string NameTag
         {
             get => NAMETAG;
@@ -24,11 +24,33 @@ namespace Assets.Project_S
             }
 
             string name = keyTag[0].Trim();
-            int dialogueID = int.Parse(keyTag[1].Trim());
+            int id = int.Parse(keyTag[1].Trim());
 
-            IReadOnlyDialogue dialogueNameID = _entryPoint.DialogueCharacterService.GetDialogueCharacterId(name, dialogueID);
+            IReadOnlyDialogue dialogueNameID = _entryPoint.DialogueCharacterService.GetDialogueCharacterId(name, id);
+            //IReadOnlyQuest questNameID = _entryPoint.QuestService.GetQuest(name, id);
 
-            _screenDialogueCharacterView.EnterDialogueMode(dialogueNameID.GetDialogue());
+            if (dialogueNameID != null)
+            {
+                _screenDialogueCharacterView.EnterDialogueMode(dialogueNameID.GetDialogue());
+
+                //if (questNameID.CurrentQuest == 0)
+                //{
+                //    _screenDialogueCharacterView.EnterDialogueMode(dialogueNameID.GetDialogue());
+                //    return;
+                //}
+                //if (questNameID.CurrentQuest == questNameID.ComplitedQuest)
+                //{
+                //    _screenDialogueCharacterView.EnterDialogueMode(dialogueNameID.GetDialogue());
+                //    return;
+                //}
+                //if (questNameID.CurrentQuest != 0 && questNameID.CurrentQuest != questNameID.ComplitedQuest)
+                //{
+                //    _screenDialogueCharacterView.EnterDialogueMode(dialogueNameID.GetDialogue());
+                //    return;
+                //}
+            }
+            else
+                Debug.LogError("Диалог не найден!");
         }
     }
 }

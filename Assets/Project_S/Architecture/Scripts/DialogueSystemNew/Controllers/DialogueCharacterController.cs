@@ -15,7 +15,7 @@ namespace Assets.Project_S
             view.SetName(characterViewRight.Name, characterViewLeft.Name);
 
             IReadOnlyDialogue dialogue = data.GetDialogueStory(1);//получение ID диалога из Wise, должен плучать из списка заданий
-
+            
             view.EnterDialogueMode(dialogue.GetDialogue());
 
         }

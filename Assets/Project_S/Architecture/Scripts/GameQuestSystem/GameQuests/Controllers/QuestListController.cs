@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Project_S
@@ -29,12 +30,47 @@ namespace Assets.Project_S
 
                             view.Quests.Add(questView);
                         }
+
+                        view.SetDefaultQuest(firstCallQuest);
                     }
-                    view.SetDefaultQuest(firstCallQuest);
                 }
             }
             else
-                view.QuestDescription.DescriptionQuest = "\n\n<align=\"center\"><b>У вас нет заданий.</b>";
+                view.QuestDescription.DescriptionQuest = "\n\n<align=\"center\"><b>Not Quests.</b>";
         }
+
+        public void ChangedAddQuest(string ownerQuest, IReadOnlyQuest quest)
+        {
+                QuestView questView = _view.AddQuestDisplayView();
+                QuestController questController = new QuestController(quest, questView, ownerQuest);
+
+                _quests.Add(questController);
+
+                _view.Quests.Add(questView);
+        }
+
+        //private void AddQuestSlot()
+        //{
+            //foreach (IReadOnlyQuestList questList in quests)
+            //{
+            //    string ownerQuest = questList.Owner;
+            //    questList.AddQuestChanged += ChangedAddQuest;
+
+            //    if (questList.GetQuestList().Count != 0)
+            //    {
+            //        foreach (IReadOnlyQuest quest in questList.GetQuestList())
+            //        {
+            //            QuestView questView = view.AddQuestDisplayView();
+            //            QuestController questController = new QuestController(quest, questView, ownerQuest);
+
+            //            _quests.Add(questController);
+
+            //            view.Quests.Add(questView);
+            //        }
+
+            //        view.SetDefaultQuest(firstCallQuest);
+            //    }
+            //}
+        //}
     }
 }

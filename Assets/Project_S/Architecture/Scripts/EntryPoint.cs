@@ -29,7 +29,9 @@ namespace Assets.Project_S
 
         private List<string> questMessageWise_0 = new List<string>()
         {
-            "Виз не сидится на попе и она опять сходит с ума! Ей нужно крыло фенекса для её безумных экспериментов."
+            "Виз не сидится на попе и она опять сходит с ума! Ей нужно две монеты для её безумных экспериментов.",
+            "Я пошарилась неподалёку и нашла одну монету.",
+            "Одна монета была у старого хрыча, как его там... Ааа, не важно вобщем она теперь у меня!"
         };
         private List<string> questMessageWise_1 = new List<string>()
         {
@@ -48,6 +50,10 @@ namespace Assets.Project_S
         public DialogueCharacterService DialogueCharacterService
         {
             get => _dialogueCharacterService;
+        }
+        public QuestService QuestService
+        {
+            get => _questService;
         }
 
         private void Start()
@@ -96,10 +102,13 @@ namespace Assets.Project_S
 
             QuestData questDataWise_0 = new QuestData()
             {
-                questID = 0,
+                questID = 12,
                 nameQuest = "Виз опять чё-то надо!",
                 questMessage = questMessageWise_0
             };
+
+            //ShowQuestMessage(questDataWise_0);
+
             QuestData questDataWise_1 = new QuestData()
             {
                 questID = 1,
@@ -137,10 +146,19 @@ namespace Assets.Project_S
             _screenQuestController = new ScreenQuestController(_questService, _screenQuestView);
 
 
+
             _activeCharacter = CAT;
             _screenCharacterController.ActiveCharacter(_activeCharacter);
             _screenInventoryController.OpenInventory(_activeCharacter);
-            _screenQuestController.OpenQuest();
+            _screenQuestController.OpenCharacterQuest();
+        }
+
+        private void ShowQuestMessage(QuestData questDataWise_0)
+        {
+            foreach (string message in questDataWise_0.questMessage)
+            {
+                Debug.Log(message);
+            }
         }
 
         private void Update()
