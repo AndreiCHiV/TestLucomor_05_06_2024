@@ -8,10 +8,12 @@ namespace Assets.Project_S
     {
         private readonly QuestListView _view;
         private List<QuestController> _quests = new List<QuestController>();
+        private bool _firstCallQuest;
 
         public QuestListController(List<IReadOnlyQuestList> quests, QuestListView view, bool firstCallQuest)
         {
             _view = view;
+            _firstCallQuest = firstCallQuest;
 
             if (quests.Count != 0)
             {
@@ -41,36 +43,38 @@ namespace Assets.Project_S
 
         public void ChangedAddQuest(string ownerQuest, IReadOnlyQuest quest)
         {
-                QuestView questView = _view.AddQuestDisplayView();
-                QuestController questController = new QuestController(quest, questView, ownerQuest);
+            QuestView questView = _view.AddQuestDisplayView();
+            QuestController questController = new QuestController(quest, questView, ownerQuest);
 
-                _quests.Add(questController);
+            _quests.Add(questController);
 
-                _view.Quests.Add(questView);
+            _view.Quests.Add(questView);
+
+            _view.SetDefaultQuest(_firstCallQuest);
         }
 
         //private void AddQuestSlot()
         //{
-            //foreach (IReadOnlyQuestList questList in quests)
-            //{
-            //    string ownerQuest = questList.Owner;
-            //    questList.AddQuestChanged += ChangedAddQuest;
+        //foreach (IReadOnlyQuestList questList in quests)
+        //{
+        //    string ownerQuest = questList.Owner;
+        //    questList.AddQuestChanged += ChangedAddQuest;
 
-            //    if (questList.GetQuestList().Count != 0)
-            //    {
-            //        foreach (IReadOnlyQuest quest in questList.GetQuestList())
-            //        {
-            //            QuestView questView = view.AddQuestDisplayView();
-            //            QuestController questController = new QuestController(quest, questView, ownerQuest);
+        //    if (questList.GetQuestList().Count != 0)
+        //    {
+        //        foreach (IReadOnlyQuest quest in questList.GetQuestList())
+        //        {
+        //            QuestView questView = view.AddQuestDisplayView();
+        //            QuestController questController = new QuestController(quest, questView, ownerQuest);
 
-            //            _quests.Add(questController);
+        //            _quests.Add(questController);
 
-            //            view.Quests.Add(questView);
-            //        }
+        //            view.Quests.Add(questView);
+        //        }
 
-            //        view.SetDefaultQuest(firstCallQuest);
-            //    }
-            //}
+        //        view.SetDefaultQuest(firstCallQuest);
+        //    }
+        //}
         //}
     }
 }

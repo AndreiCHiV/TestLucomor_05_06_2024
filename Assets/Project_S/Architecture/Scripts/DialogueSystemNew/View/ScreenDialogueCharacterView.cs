@@ -58,7 +58,6 @@ namespace Assets.Project_S
 
         public void EnterDialogueMode(TextAsset inkJSON)
         {
-            Debug.Log(inkJSON);
             CurrentStory = new Story(inkJSON.text);
 
             _dialogueCharacterView.SetActive(true);

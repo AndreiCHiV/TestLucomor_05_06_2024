@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Project_S
 {
@@ -15,6 +16,14 @@ namespace Assets.Project_S
         {
             _data = data;
             Initialize(data);
+        }
+        public QuestList(string owner, Quest quest)
+        {
+            _data = new QuestListData();
+            _data.owner = owner;
+            _data.questDatas = new List<QuestData>();
+            _data.questDatas.Add(quest.QuestData);
+            _quests.Add(quest);
         }
 
         public string Owner => _data.owner;
@@ -70,6 +79,7 @@ namespace Assets.Project_S
                 if (quest.QuestID == questId)
                 {
                     _quests.Remove(quest);
+                    return;
                 }
             }
         }

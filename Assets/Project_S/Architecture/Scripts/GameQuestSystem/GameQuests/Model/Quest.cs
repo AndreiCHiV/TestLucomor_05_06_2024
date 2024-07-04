@@ -14,9 +14,11 @@ namespace Assets.Project_S
         public Quest(QuestData questData)
         {
             _questData = questData;
-            _currentValueQuest = 1;
+            _currentValueQuest = 0;
             _completedValueQuest = Convert.ToByte(questData.questMessage.Count - 1);
         }
+
+        public QuestData QuestData => _questData;
 
         public int QuestID
         {
@@ -52,14 +54,14 @@ namespace Assets.Project_S
         {
             string messages = "";
 
-            for (int i = 0; i < CurrentQuest; i++)
+            for (int i = 0; i <= CurrentQuest; i++)
             {
-                if (i == CurrentQuest - 1)
+                if (i == _completedValueQuest)
                 {
                     messages += _questData.questMessage[i] + "\n\n<align=\"center\"><b>Конец задния!</b>\n\n";
                     return messages;
                 }
-                messages += _questData.questMessage[i] + "\n\n<align = \"center\"><b>***</b>\n\n";
+                messages += _questData.questMessage[i] + "\n\n<align=\"center\"><b>***</b>\n\n";
             }
 
             return messages;

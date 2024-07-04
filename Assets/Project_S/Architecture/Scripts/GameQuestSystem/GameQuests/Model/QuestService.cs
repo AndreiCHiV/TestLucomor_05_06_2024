@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Project_S
 {
@@ -50,16 +51,35 @@ namespace Assets.Project_S
 
         public void AddQuestCharacter(string owner, int questId)
         {
-            Quest questList = (Quest)_questsMap[owner].GetQuest(questId);
-            _currentQuestsCharacterMap[owner].AddQuest(questList);
-            AddCharacterQuestInViewChanged?.Invoke(owner, questList);
+            Quest quest = (Quest)_questsMap[owner].GetQuest(questId);
+
+            if (!_currentQuestsCharacterMap.ContainsKey(owner))
+            {
+                QuestList questList = new QuestList(owner, quest);
+                _currentQuestsCharacterMap.Add(owner, questList);
+                AddCharacterQuestInViewChanged?.Invoke(owner, quest);
+                return;
+            }
+
+            _currentQuestsCharacterMap[owner].AddQuest(quest);
+            AddCharacterQuestInViewChanged?.Invoke(owner, quest);
         }
 
         public void AddCompletedQuest(string owner, int questId)
         {
-            Quest questList = (Quest)_currentQuestsCharacterMap[owner].GetQuest(questId);
-            _currentQuestsCharacterMap[owner].AddQuest(questList);
-            AddComplitedQuestInViewChanged?.Invoke(owner, questList);
+            Quest quest = (Quest)_currentQuestsCharacterMap[owner].GetQuest(questId);
+
+
+            if (!_completedQuests.ContainsKey(owner))
+            {
+                QuestList questList = new QuestList(owner, quest);
+                _completedQuests.Add(owner, questList);
+                AddComplitedQuestInViewChanged?.Invoke(owner, quest);
+                return;
+            }
+
+            _completedQuests[owner].AddQuest(quest);
+            AddComplitedQuestInViewChanged?.Invoke(owner, quest);
         }
 
         public void RemoveQuest(string owner, int questId)
