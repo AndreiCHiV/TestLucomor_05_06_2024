@@ -5,7 +5,6 @@ namespace Assets.Project_S
 {
     public class ChangeDialogueTag : MonoBehaviour, IReadOnlyTag
     {
-        [SerializeField] private ScreenDialogueCharacterView _screenDialogueCharacterView;
         [SerializeField] private EntryPoint _entryPoint;
 
         private const string NAMETAG = "changeDialogue";
@@ -31,7 +30,7 @@ namespace Assets.Project_S
 
             if (dialogueNameID != null)
             {
-                _screenDialogueCharacterView.EnterDialogueMode(dialogueNameID.GetDialogue());
+                _entryPoint.ScreenDialogueCharacterView.EnterDialogueMode(dialogueNameID.GetDialogue());
 
                 //if (questNameID.CurrentQuest == 0)
                 //{

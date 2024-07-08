@@ -53,28 +53,5 @@ namespace Assets.Project_S
             _view.SetDefaultQuest(_firstCallQuest);
         }
 
-        //private void AddQuestSlot()
-        //{
-        //foreach (IReadOnlyQuestList questList in quests)
-        //{
-        //    string ownerQuest = questList.Owner;
-        //    questList.AddQuestChanged += ChangedAddQuest;
-
-        //    if (questList.GetQuestList().Count != 0)
-        //    {
-        //        foreach (IReadOnlyQuest quest in questList.GetQuestList())
-        //        {
-        //            QuestView questView = view.AddQuestDisplayView();
-        //            QuestController questController = new QuestController(quest, questView, ownerQuest);
-
-        //            _quests.Add(questController);
-
-        //            view.Quests.Add(questView);
-        //        }
-
-        //        view.SetDefaultQuest(firstCallQuest);
-        //    }
-        //}
-        //}
     }
 }

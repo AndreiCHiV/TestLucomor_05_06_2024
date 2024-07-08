@@ -13,13 +13,13 @@ namespace Assets.Project_S
             _inventoriesMap[inventoryGrid.Owner] = inventoryGrid;
         }
 
-        public void AddItems(string owner, string name, int amount)
+        public void AddItems(string owner, string name, int amount = 1)
         {
             InventoryGrid inventory = _inventoriesMap[owner];
             inventory.AddItems(name, amount);
         }
 
-        public void RemoveItems(string owner, string name, int amount)
+        public void RemoveItems(string owner, string name, int amount = 1)
         {
             InventoryGrid inventory = _inventoriesMap[owner];
             inventory.RemoveItems(name, amount);

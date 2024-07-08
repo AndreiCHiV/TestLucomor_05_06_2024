@@ -8,10 +8,11 @@ namespace Assets.Project_S
         event Action<int> MaxHealthChanged;
         event Action<int> CurrentHealthChanged;
         event Action<Vector3> PositionCharacterChanged;
+        event Action<int> CurrentDialogueIDChanged;
 
         string Name { get; }
         string TagCharacter { get; }
-        int DialogueId { get; }
+        int CurrentDialogueID { get; }
         int MaxHealth { get; }
         int CurrentHealth { get; }
         Vector3 PositionCharacter { get; }

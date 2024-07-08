@@ -9,6 +9,7 @@ namespace Assets.Project_S
         public event Action<int> MaxHealthChanged;
         public event Action<int> CurrentHealthChanged;
         public event Action<Vector3> PositionCharacterChanged;
+        public event Action<int> CurrentDialogueIDChanged;
 
         protected CharacterData _characterData;
         protected Vector3 _positionCharacter;
@@ -30,10 +31,19 @@ namespace Assets.Project_S
             set => _characterData.characterTag = value;
         }
 
-        public int DialogueId
+        public int CurrentDialogueID
         {
-            get => _characterData.dialogueId;
-            set => _characterData.dialogueId = value;
+            get => _characterData.currentDialogueID;
+            set
+            {
+                if (_characterData.currentDialogueID != value)
+                {
+                    _characterData.currentDialogueID = value;
+                    CurrentDialogueIDChanged?.Invoke(value);
+                }
+            }
+
+
         }
         public Vector3 PositionCharacter
         {
@@ -101,15 +111,10 @@ namespace Assets.Project_S
         }
 
 
-
         public void SetPositionCharacter(Vector3 positionCharacter)
         {
             PositionCharacter = positionCharacter;
         }
-
-
-
-
 
 
         public string TakeDamage(int damage)

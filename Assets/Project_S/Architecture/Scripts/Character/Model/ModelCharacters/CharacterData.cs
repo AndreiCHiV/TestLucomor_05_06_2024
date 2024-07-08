@@ -11,18 +11,19 @@ namespace Assets.Project_S
         public int maxHealth;
         public int currentHealth;
 
-        public int dialogueId;
+        public int currentDialogueID;
 
         public float positionCharacter_X;
         public float positionCharacter_Y;
         public float positionCharacter_Z;
 
-        public CharacterData(string name, string tag, int health)
+        public CharacterData(string name, string tag, int health, int currentDialogueId)
         {
             characterName = name;
             characterTag = tag;
             maxHealth = health;
             currentHealth = health;
+            currentDialogueID = currentDialogueId;
         }
 
         
@@ -31,12 +32,12 @@ namespace Assets.Project_S
     [Serializable]
     public class PlayerCharacterData : CharacterData
     {
-        public PlayerCharacterData(string name, string tag, int health) : base(name, tag, health) { }
+        public PlayerCharacterData(string name, string tag, int health, int currentDialogueId) : base(name, tag, health, currentDialogueId) { }
     }
 
     [Serializable]
     public class NPCCharacterData : CharacterData
     {
-        public NPCCharacterData(string name, string tag, int health) : base(name, tag, health) { }
+        public NPCCharacterData(string name, string tag, int health,int currentDialogueId) : base(name, tag, health, currentDialogueId) { }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Project_S
 {
@@ -13,13 +14,7 @@ namespace Assets.Project_S
         {
             _charactersService = charactersService;
             _view = view;
-
-            //foreach (CharacterView characterView in _view.CharacterViews)
-            //{
-            //    IReadOnlyCharacter character = _charactersService.GetCharacter(characterView.Name);
-            //    _currentCharacterController = new CharacterController(character, characterView);
-            //}
-
+            InitializationCharacter();
         }
 
         public void ActiveCharacter(string characterName)
@@ -36,5 +31,13 @@ namespace Assets.Project_S
             Debug.Log($"Active caracter: {characterView.CharacterName}");
         }
 
+        public void InitializationCharacter()
+        {
+            foreach (CharacterView characterView in _view.CharacterViews)
+            {
+                IReadOnlyCharacter character = _charactersService.GetCharacter(characterView.Name);
+                _currentCharacterController = new CharacterController(character, characterView);
+            }
+        }
     }
 }

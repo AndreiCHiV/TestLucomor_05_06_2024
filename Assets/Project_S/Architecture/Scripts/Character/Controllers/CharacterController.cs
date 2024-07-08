@@ -16,13 +16,20 @@ namespace Assets.Project_S
             character.MaxHealthChanged += ChangedMaxHealth;
             character.CurrentHealthChanged += ChangedCurrentHealth;
             character.PositionCharacterChanged += ChangedPositionCharacter;
+            character.CurrentDialogueIDChanged += ChangedCurrentDialogueID;
 
             view.PositionCharacterChanged += ChangedPositionCharacterView;
 
             view.CharacterName = character.Name;
             view.MaxHealth = character.MaxHealth;
             view.CurrentHealth = character.CurrentHealth;
+            view.DialogueId = character.CurrentDialogueID;
             character.SetPositionCharacter(view.CharacterPositionView);
+        }
+
+        private void ChangedCurrentDialogueID(int value)
+        {
+            _view.DialogueId = value;
         }
 
         private void ChangedPositionCharacterView(Vector3 value)

@@ -4,8 +4,7 @@ using UnityEngine;
 namespace Assets.Project_S
 {
     public class AddQuestTag : MonoBehaviour, IReadOnlyTag
-    {
-        [SerializeField] private ScreenDialogueCharacterView _screenDialogueCharacterView;
+    {        
         [SerializeField] private EntryPoint _entryPoint;
 
         private const string NAMETAG = "addQuest";

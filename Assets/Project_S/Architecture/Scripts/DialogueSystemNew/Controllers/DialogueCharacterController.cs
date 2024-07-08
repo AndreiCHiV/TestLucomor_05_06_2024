@@ -5,7 +5,13 @@ namespace Assets.Project_S
     public class DialogueCharacterController
     {
         private ScreenDialogueCharacterView _view;
-        public DialogueCharacterController(IReadOnlyDialogueCharacter data, ScreenDialogueCharacterView view, CharacterView characterViewRight, CharacterView characterViewLeft)
+        public DialogueCharacterController
+            (
+            IReadOnlyDialogueCharacter data, 
+            ScreenDialogueCharacterView view, 
+            CharacterView characterViewRight, 
+            CharacterView characterViewLeft
+            )
         {
             _view = view;
 
@@ -14,7 +20,7 @@ namespace Assets.Project_S
             view.SetImageCharacter(characterViewRight.ImageCharacter, characterViewLeft.ImageCharacter);
             view.SetName(characterViewRight.Name, characterViewLeft.Name);
 
-            IReadOnlyDialogue dialogue = data.GetDialogueStory(1);//получение ID диалога из Wise, должен плучать из списка заданий
+            IReadOnlyDialogue dialogue = data.GetDialogueStory(characterViewRight.DialogueId);//получение ID диалога из Wise, должен плучать из списка заданий
             
             view.EnterDialogueMode(dialogue.GetDialogue());
 

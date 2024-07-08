@@ -14,6 +14,17 @@ namespace Assets.Project_S
             AddDialogue(dialoguesCharacterData.owner, dialogueData);
             return dialoguesCharacter;
         }
+        public void RegistrationDialogueCharacter(DialogueCharacterData dialoguesCharacterData, DialogueData[] dialoguesData)
+        {
+            DialoguesCharacter dialoguesCharacter = new DialoguesCharacter(dialoguesCharacterData);
+            _dialogueCharacterMap[dialoguesCharacter.Owner] = dialoguesCharacter;
+
+            foreach (DialogueData dialogueData in dialoguesData)
+            {
+            AddDialogue(dialoguesCharacterData.owner, dialogueData);
+                Debug.Log($"Диалог {dialogueData.dataDialogueID} базу диалогов {dialoguesCharacterData.owner} добавлен!");
+            }
+        }
 
         public void AddDialogue(string owner, DialogueData dialogueData)
         {
