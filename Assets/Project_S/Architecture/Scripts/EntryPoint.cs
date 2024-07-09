@@ -12,54 +12,37 @@ namespace Assets.Project_S
         [SerializeField] private ScreenDialogueCharacterView _screenDialogueCharacterView;
         [SerializeField] private ScreenQuestView _screenQuestView;
 
-        [SerializeField] private TextAsset _inkJSON_101000;
-        [SerializeField] private TextAsset _inkJSON_101001;
-        [SerializeField] private TextAsset _inkJSON_102000;
-        [SerializeField] private TextAsset _inkJSON_102001;
-        [SerializeField] private TextAsset _inkJSON_102002;
-        [SerializeField] private TextAsset _inkJSON_103000;
-        [SerializeField] private TextAsset _inkJSON_103001;
+        [SerializeField] private WiseCharacter _wiseCharacter;
+        [SerializeField] private RicaCharacter _ricaCharacter;
+        [SerializeField] private WolfCharacter _wolfCharacter;
 
 
         private const string CAT = "Lisa";
-        private const string WISE = "Wise";
-        private const string RICA = "Rica";
-        private const string WOLF = "Wolf";
+
 
         private ScreenCharacterController _screenCharacterController;
         private ScreenInventoryController _screenInventoryController;
         private ScreenDialogueCharacterController _screenDialogueCharacterController;
         private ScreenQuestController _screenQuestController;
 
+
         private string _activeCharacter;
         private Vector3 _input;
 
-        private List<string> questMessageWise_0 = new List<string>()
-        {
-            "Виз не сидится на попе и она опять сходит с ума! Ей нужно две монеты для её безумных экспериментов.",
-            "Волчара сказал что одна монетка валяется где-то неподалёку, чтож надо порыться в траве.",
-            "Я пошарилась неподалёку и нашла одну монету.",
-            "Одна из монет была у мерзкой девчёнки, как её там... Ааа, не важно, вобщем она теперь у меня!"
-        };
-        private List<string> questMessageWise_1 = new List<string>()
-        {
-            "Виз просто спятила!"
-        };
-        private List<string> questMessageWise_2 = new List<string>()
-        {
-            "Эксперимент провалился, Виз в психушке!"
-        };
 
         private CharactersService _charactersService;
         private InventoryService _inventoryService;
         private DialogueCharacterService _dialogueCharacterService;
         private QuestService _questService;
 
+        public CharactersService CharactersService => _charactersService;
+        public InventoryService InventoryService => _inventoryService;
         public DialogueCharacterService DialogueCharacterService => _dialogueCharacterService;
         public QuestService QuestService => _questService;
-        public InventoryService InventoryService => _inventoryService;
+        
         public ScreenDialogueCharacterView ScreenDialogueCharacterView => _screenDialogueCharacterView;
         public string ActiveCharacter => _activeCharacter;
+
 
         private void Start()
         {
@@ -69,120 +52,35 @@ namespace Assets.Project_S
             _questService = new QuestService();
 
 
-
-            CharacterData characterDataCat = CreateTestCharacter(CAT, "Player", 240, 100000);
+            CharacterData characterDataCat = CreateTestCharacter(CAT, "Player", 100, 240, 100000);
             _charactersService.RegisterCharacters(characterDataCat);
 
-            CharacterData characterDataWise = CreateTestCharacter(WISE, "NPC", 90, 101000);
+            CharacterData characterDataWise = CreateTestCharacter(_wiseCharacter.GetName(), "NPC", 101, 90, 101000);
             _charactersService.RegisterCharacters(characterDataWise);
 
-            CharacterData characterDataRica = CreateTestCharacter(RICA, "NPC", 50, 102000);
+            CharacterData characterDataRica = CreateTestCharacter(_ricaCharacter.GetName(), "NPC", 102, 50, 102000);
             _charactersService.RegisterCharacters(characterDataRica);
 
-            CharacterData characterDataWolf = CreateTestCharacter(WOLF, "NPC", 50, 103000);
+            CharacterData characterDataWolf = CreateTestCharacter(_wolfCharacter.GetName(), "NPC", 103, 50, 103000);
             _charactersService.RegisterCharacters(characterDataWolf);
 
             InventoryGridData inventroyLisa = CreateTestInventory(CAT, 12);
             _inventoryService.RegisterInventory(inventroyLisa);
 
-            InventoryGridData inventoryOcti = CreateTestInventory(WISE, 10);
+            InventoryGridData inventoryOcti = CreateTestInventory(_wiseCharacter.GetName(), 10);
             _inventoryService.RegisterInventory(inventoryOcti);
 
 
+            _dialogueCharacterService.RegistrationDialogueCharacter(_wiseCharacter.InitializationDialogueCharacter(), _wiseCharacter.InitializationDialogueData());
+            _dialogueCharacterService.RegistrationDialogueCharacter(_ricaCharacter.InitializationDialogueCharacter(), _ricaCharacter.InitializationDialogueData());
+            _dialogueCharacterService.RegistrationDialogueCharacter(_wolfCharacter.InitializationDialogueCharacter(), _wolfCharacter.InitializationDialogueData());
 
-            DialogueData dialogueDataWise_0 = new DialogueData()
-            {
-                inkJSON = _inkJSON_101000,
-                dataDialogueID = 101000
-            };
-            DialogueData dialogueDataWise_1 = new DialogueData()
-            {
-                inkJSON = _inkJSON_101001,
-                dataDialogueID = 101001
-            };
-            DialogueCharacterData dialogueCharacterDataWise = new DialogueCharacterData()
-            {
-                owner = "Wise"
-            };
-
-            DialogueData dialogueDataRica_0 = new DialogueData()
-            {
-                inkJSON = _inkJSON_102000,
-                dataDialogueID = 102000
-            };
-            DialogueData dialogueDataRica_1 = new DialogueData()
-            {
-                inkJSON = _inkJSON_102001,
-                dataDialogueID = 102001
-            };
-            DialogueCharacterData dialogueCharacterDataRica = new DialogueCharacterData()
-            {
-                owner = "Rica"
-            };
-
-            DialogueData dialogueDataWolf_0 = new DialogueData()
-            {
-                inkJSON = _inkJSON_103000,
-                dataDialogueID = 103000
-            };
-            DialogueData dialogueDataWolf_1 = new DialogueData()
-            {
-                inkJSON = _inkJSON_103001,
-                dataDialogueID = 103001
-            };
-            DialogueCharacterData dialogueCharacterDataWolf = new DialogueCharacterData()
-            {
-                owner = "Wolf"
-            };
-
-
-            DialogueData[] dialoguesDataRica = new DialogueData[] { dialogueDataRica_0, dialogueDataRica_1 };
-            DialogueData[] dialoguesDataWise = new DialogueData[] { dialogueDataWise_0, dialogueDataWise_1 };
-            DialogueData[] dialoguesDataWolf = new DialogueData[] { dialogueDataWolf_0, dialogueDataWolf_1 };
-
-            _dialogueCharacterService.RegistrationDialogueCharacter(dialogueCharacterDataWise, dialoguesDataWise);
-            _dialogueCharacterService.RegistrationDialogueCharacter(dialogueCharacterDataRica, dialoguesDataRica);
-            _dialogueCharacterService.RegistrationDialogueCharacter(dialogueCharacterDataWolf, dialoguesDataWolf);
-
-
-
-            QuestData questDataWise_0 = new QuestData()
-            {
-                questID = 12,
-                nameQuest = "Виз опять чё-то надо!",
-                questMessage = questMessageWise_0
-            };
-
-            //ShowQuestMessage(questDataWise_0);
-
-            QuestData questDataWise_1 = new QuestData()
-            {
-                questID = 1,
-                nameQuest = "С Виз что-то не так!",
-                questMessage = questMessageWise_1
-            };
-            QuestData questDataWise_2 = new QuestData()
-            {
-                questID = 2,
-                nameQuest = "Эксперимент Виз.",
-                questMessage = questMessageWise_2
-            };
-
-            QuestListData dataWise = new QuestListData()
-            {
-                owner = "Wise",
-                questDatas = new List<QuestData>()
-                {
-                    questDataWise_0,
-                    questDataWise_1,
-                    questDataWise_2
-                }
-            };
 
             List<QuestListData> allquestList = new List<QuestListData>()
             {
-                dataWise
+                _wiseCharacter.InitializationQuests()
             };
+
 
             _questService.RegisterQuests(allquestList);
 
@@ -199,9 +97,9 @@ namespace Assets.Project_S
 
         private void ShowQuestMessage(QuestData questDataWise_0)
         {
-            foreach (string message in questDataWise_0.questMessage)
+            foreach (var message in questDataWise_0.questMessage)
             {
-                Debug.Log(message);
+                Debug.Log(message.message);
             }
         }
 
@@ -307,17 +205,17 @@ namespace Assets.Project_S
             //}
         }
 
-        private CharacterData CreateTestCharacter(string name, string tag, int health, int currentDialogueId)
+        private CharacterData CreateTestCharacter(string name, string tag, int id, int health, int currentDialogueId)
         {
             CharacterData characterData;
 
             if (tag == "Player")
             {
-                characterData = new PlayerCharacterData(name, tag, health, currentDialogueId);
+                characterData = new PlayerCharacterData(name, tag, id, health, currentDialogueId);
             }
             else if (tag == "NPC")
             {
-                characterData = new NPCCharacterData(name, tag, health, currentDialogueId);
+                characterData = new NPCCharacterData(name, tag, id, health, currentDialogueId);
             }
             else
             {

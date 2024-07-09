@@ -39,6 +39,22 @@ namespace Assets.Project_S
             }
         }
 
+        public int[] ContinueQuest(string owner, string id)
+        {
+            Debug.Log(owner);
+            Debug.Log(id);
+            string[] keyTag = id.Split("-");
+
+            if (keyTag.Length != 2)
+            {
+                throw new ArgumentException("Неправельное оформление тега! Срочно исправить!");
+            }
+            int questId = int.Parse(keyTag[0].Trim());
+            int messageId = int.Parse(keyTag[1].Trim());
+
+            return _currentQuestsCharacterMap[owner].ContiueQuset(questId, messageId);
+        }
+
         public void AddQuest(string owner, QuestData data)
         {
             _questsMap[owner].AddQuest(data);
@@ -49,26 +65,31 @@ namespace Assets.Project_S
             _questsMap[owner].AddQuest(data);
         }
 
-        public void AddQuestCharacter(string owner, int questId)
+        public int[] AddQuestCharacter(string owner, int questId)
         {
+            int[] changeDialogueCharacter;
             Quest quest = (Quest)_questsMap[owner].GetQuest(questId);
 
             if (!_currentQuestsCharacterMap.ContainsKey(owner))
             {
                 QuestList questList = new QuestList(owner, quest);
                 _currentQuestsCharacterMap.Add(owner, questList);
-                AddCharacterQuestInViewChanged?.Invoke(owner, quest);
-                return;
+
+                changeDialogueCharacter = questList.ContiueQuset(questId, 0);
+
+                AddCharacterQuestInViewChanged?.Invoke(owner, quest);//в последствии можно удалить это добавлене квеста в реальном времени
+                return changeDialogueCharacter;
             }
 
             _currentQuestsCharacterMap[owner].AddQuest(quest);
+            changeDialogueCharacter = _currentQuestsCharacterMap[owner].ContiueQuset(questId, 0);
             AddCharacterQuestInViewChanged?.Invoke(owner, quest);
+            return changeDialogueCharacter;
         }
 
         public void AddCompletedQuest(string owner, int questId)
         {
             Quest quest = (Quest)_currentQuestsCharacterMap[owner].GetQuest(questId);
-
 
             if (!_completedQuests.ContainsKey(owner))
             {

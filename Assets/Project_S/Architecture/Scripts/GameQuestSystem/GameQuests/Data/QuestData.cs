@@ -8,9 +8,9 @@ namespace Assets.Project_S
     {
         public int questID;
         public string nameQuest;
-        public List<string> questMessage;
+        public List<QuestMessageData> questMessage;
 
-        //public QuestData(int id, string name, List<string> message)
+        //public QuestData(int id, string name, List<QuestMessageData> message)
         //{
         //    questMessage = message;
         //    questID = id;

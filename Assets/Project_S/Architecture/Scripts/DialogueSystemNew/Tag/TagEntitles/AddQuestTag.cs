@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Assets.Project_S
 {
     public class AddQuestTag : MonoBehaviour, IReadOnlyTag
-    {        
+    {
         [SerializeField] private EntryPoint _entryPoint;
 
         private const string NAMETAG = "addQuest";
@@ -24,30 +24,17 @@ namespace Assets.Project_S
 
             string name = keyTag[0].Trim();
             int id = int.Parse(keyTag[1].Trim());
-            
+
             IReadOnlyQuest questNameID = _entryPoint.QuestService.GetQuest(name, id);
-            
+
             if (questNameID != null)
             {
-                if (questNameID.CurrentQuest == 0)
-                {
-                    _entryPoint.QuestService.AddQuestCharacter(name, id);
-                    _entryPoint.QuestService.RemoveQuest(name, id);
-                    return;
-                }
-                if (questNameID.CurrentQuest == questNameID.ComplitedQuest)
-                {
-                    _entryPoint.QuestService.RemoveCurrentQuest(name, id);
-                    _entryPoint.QuestService.AddCompletedQuest(name, id);
-                    return;
-                }
-                if (questNameID.CurrentQuest != 0 && questNameID.CurrentQuest != questNameID.ComplitedQuest)
-                {
-                    questNameID.CurrentQuest += 1;
-                    return;
-                }
-                Debug.LogError("Квест не найден!");
+                int[] changeDialogueCharacter = _entryPoint.QuestService.AddQuestCharacter(name, id);
+                _entryPoint.QuestService.RemoveQuest(name, id);
+                _entryPoint.CharactersService.ChangeDialogueIDCharacters(changeDialogueCharacter);
             }
+            else
+                Debug.LogError("Квест не найден!");
         }
     }
 }

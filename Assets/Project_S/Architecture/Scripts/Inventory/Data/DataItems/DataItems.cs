@@ -11,8 +11,9 @@ namespace Assets.Project_S
         {
             itemsData = new List<InventorySlotData>()
             {
-                new QuestInventorySlotData("Key", 0, 0.1f),
-                new QuestInventorySlotData("Hart", 0, 0.8f),
+                new QuestInventorySlotData("Key", 0, 0f),
+                new QuestInventorySlotData("Hart", 0, 0f),
+                new QuestInventorySlotData("Coin", 0, 0f),
                 new ArmorInventorySlotData("Sword", 0, 6f),
                 new ArmorInventorySlotData("Knife", 0, 0.7f),
                 new HealthInventorySlotData("Herb", 0, 0.1f),

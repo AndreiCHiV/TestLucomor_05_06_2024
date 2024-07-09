@@ -36,6 +36,18 @@ namespace Assets.Project_S
             }
         }
 
+        public int[] ContiueQuset(int questId, int messageId)
+        {
+            foreach (Quest quest in _quests)
+            {
+                if (quest.QuestID == questId)
+                {
+                    return quest.ContinueQuest(messageId);
+                }
+            }
+            return null;
+        }
+
         public List<IReadOnlyQuest> GetQuestList()
         {
             List<IReadOnlyQuest> list = new List<IReadOnlyQuest>();

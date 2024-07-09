@@ -1,24 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Project_S
 {
     public class Quest : IReadOnlyQuest
     {
-        public event Action<byte> currentQuestChanged;
 
         private readonly QuestData _questData;
-        private byte _currentValueQuest;
-        private byte _completedValueQuest;
+        private bool _completedQuest;
+        private List<string> _messages = new List<string>();
 
         public Quest(QuestData questData)
         {
             _questData = questData;
-            _currentValueQuest = 0;
-            _completedValueQuest = Convert.ToByte(questData.questMessage.Count - 1);
         }
 
         public QuestData QuestData => _questData;
+
+        public bool CompletedQuest
+        {
+            get => _completedQuest;
+            set => _completedQuest = value;
+        }
 
         public int QuestID
         {
@@ -31,40 +35,40 @@ namespace Assets.Project_S
             get => _questData.nameQuest;
         }
 
-        public byte ComplitedQuest
+        public int[] ContinueQuest(int messageId)
         {
-            get => _completedValueQuest;
-            set => _completedValueQuest = value;
-        }
-
-        public byte CurrentQuest
-        {
-            get => _currentValueQuest;
-            set
+            foreach (QuestMessageData quest in _questData.questMessage)
             {
-                if (_currentValueQuest != value)
+                if (messageId == quest.messageID)
                 {
-                    _currentValueQuest = value;
-                    currentQuestChanged?.Invoke(value);
+                    _messages.Add(quest.message);
+                    _completedQuest = quest.completedQuest;
+                    return quest.messageChangeDialogueID;
                 }
             }
+            
+            return null;
         }
 
         public string GetMessages()
         {
-            string messages = "";
+            string getMessage = "";
 
-            for (int i = 0; i <= CurrentQuest; i++)
+            if (CompletedQuest)
             {
-                if (i == _completedValueQuest)
+                foreach (string message in _messages)
                 {
-                    messages += _questData.questMessage[i] + "\n\n<align=\"center\"><b>Конец задния!</b>\n\n";
-                    return messages;
+                    getMessage += message + "\n\n<align=\"center\"><b>Конец задния!</b>\n\n";
                 }
-                messages += _questData.questMessage[i] + "\n\n<align=\"center\"><b>***</b>\n\n";
             }
-
-            return messages;
+            else
+            {
+                foreach (string message in _messages)
+                {
+                    getMessage += message + "\n\n<align=\"center\"><b>***</b>\n\n";
+                }
+            }
+            return getMessage;
         }
     }
 }

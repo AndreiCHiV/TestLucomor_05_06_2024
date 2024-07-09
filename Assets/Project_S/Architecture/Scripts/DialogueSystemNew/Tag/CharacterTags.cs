@@ -9,7 +9,7 @@ namespace Assets.Project_S
         [SerializeField] private ChangeDialogueTag _changeDialogueTag;
         [SerializeField] private AddQuestTag _addQuestTag;
         [SerializeField] private AddItemTag _addItemTag;
-
+        [SerializeField] private ContinueQuestTag _continueQuestTag;
 
         private readonly Dictionary<string, IReadOnlyTag> _map = new Dictionary<string, IReadOnlyTag>();
 
@@ -19,6 +19,7 @@ namespace Assets.Project_S
             _map.Add(_changeDialogueTag.NameTag, _changeDialogueTag);
             _map.Add(_addQuestTag.NameTag, _addQuestTag);
             _map.Add(_addItemTag.NameTag, _addItemTag);
+            _map.Add(_continueQuestTag.NameTag, _continueQuestTag);
         }
 
         public IReadOnlyTag GetValue(string key)

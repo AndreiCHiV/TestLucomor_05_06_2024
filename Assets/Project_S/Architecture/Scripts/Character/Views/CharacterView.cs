@@ -23,13 +23,11 @@ namespace Assets.Project_S
 
         [SerializeField] private Sprite _imegeCharacter;
 
-        public float moveSpeed;
-
-        public int _dialogueId;// временно public  потом должно инициализироваться в начале игры лист с диалогами 
-        // и измениется через Model когда беруться или меняется задания
-
         private bool _isMoving;
-
+        public int _dialogueId;// временно public  потом должно инициализироваться в начале игры лист с диалогами 
+                                // и измениется через Model когда беруться или меняется задания
+        public int _characterID;
+        public float moveSpeed;
 
         public string Name => _name;
 
@@ -42,6 +40,11 @@ namespace Assets.Project_S
         {
             get => _textName.text;
             set => _textName.text = value;
+        }
+        public int CharacterID
+        {
+            get => _characterID;
+            set => _characterID = value;
         }
 
         public int MaxHealth

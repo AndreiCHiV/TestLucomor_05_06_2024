@@ -7,8 +7,12 @@ namespace Assets.Project_S
 {
     public class CharactersService
     {
-
         private readonly Dictionary<string, Character> _charactersMap = new Dictionary<string, Character>();
+        // в будущем переделать string на int и искать по ID персонажа
+        // пока использовать Dictionary<int(ID персонажа),string(имя персонажа)>() 
+
+        private Dictionary<int, string> _charcterIDNameMap = new Dictionary<int, string>();
+              
 
         public Character RegisterCharacters(CharacterData characterData)
         {
@@ -28,6 +32,7 @@ namespace Assets.Project_S
             }
 
             _charactersMap[character.Name] = character;
+            _charcterIDNameMap[character.ID] = character.Name;
 
             return character;
         }
@@ -58,5 +63,16 @@ namespace Assets.Project_S
             Character character = _charactersMap[characterName];
             character.SetPositionCharacter(positionCharacter);
         }
+
+        public void ChangeDialogueIDCharacters(int[] dialogueIDCharacters)
+        {
+            foreach (int value in dialogueIDCharacters)
+            {                
+                int id = int.Parse(value.ToString().Substring(0, 3));
+                _charactersMap[_charcterIDNameMap[id]].CurrentDialogueID = value;
+            }
+        }
+
+
     }
 }

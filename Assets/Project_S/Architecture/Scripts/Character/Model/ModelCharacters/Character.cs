@@ -31,6 +31,12 @@ namespace Assets.Project_S
             set => _characterData.characterTag = value;
         }
 
+        public int ID
+        {
+            get => _characterData.characterID;
+            set => _characterData.characterID = value;
+        }
+
         public int CurrentDialogueID
         {
             get => _characterData.currentDialogueID;
