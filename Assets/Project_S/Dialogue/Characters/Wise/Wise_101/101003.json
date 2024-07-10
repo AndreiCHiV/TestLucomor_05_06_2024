@@ -1,0 +1,1 @@
+﻿{"inkVersion":21,"root":[["^Я принесла тебе две старые монеты!","#","^speacker:Lisa","/#","\n","^Молодец, молодец. И где они?","#","^speacker:Wise","/#","\n","#","^removeItem:OldCoin_2_Wise_101004","/#","end",["done",{"#f":5,"#n":"g-0"}],null],"done",{"#f":1}],"listDefs":{}}

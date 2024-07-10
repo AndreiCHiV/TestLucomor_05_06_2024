@@ -13,7 +13,7 @@ namespace Assets.Project_S
             {
                 new QuestInventorySlotData("Key", 0, 0f),
                 new QuestInventorySlotData("Hart", 0, 0f),
-                new QuestInventorySlotData("Coin", 0, 0f),
+                new QuestInventorySlotData("OldCoin", 0, 0f),
                 new ArmorInventorySlotData("Sword", 0, 6f),
                 new ArmorInventorySlotData("Knife", 0, 0.7f),
                 new HealthInventorySlotData("Herb", 0, 0.1f),

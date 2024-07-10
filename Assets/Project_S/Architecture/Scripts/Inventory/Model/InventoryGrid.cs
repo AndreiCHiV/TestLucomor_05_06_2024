@@ -207,7 +207,7 @@ namespace Assets.Project_S
             }
         }
 
-        public void RemoveItems(string itemName, int amount)
+        public bool RemoveItems(string itemName, int amount)
         {
             InventorySlot slotName = GetSlot(itemName);
 
@@ -227,21 +227,22 @@ namespace Assets.Project_S
                     Debug.Log($"Remove {slotName.Name} is {slotNameRemove}!");
                     IsEmpty = false;
 
-                    return;
+                    return true;
                 }
                 else if (currentAmount < 0)
                 {
                     Debug.Log("There ara not enough items!");
-                    return;
+                    return false;
                 }
 
                 slotName.Amount = currentAmount;
                 slotName.Weigth = currentWeigth;
+                return true;
             }
             else
             {
                 Debug.Log($"The Item {itemName} not found in Inventary");
-                return;
+                return false;
             }
         }
     }

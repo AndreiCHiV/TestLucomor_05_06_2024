@@ -11,7 +11,6 @@ namespace Assets.Project_S
         [SerializeField] private Image _imageBackground;
 
         private int _questId;
-        private byte _currnetQuest;
         private string _viewMessage;
 
         public string NameQuest
@@ -36,12 +35,7 @@ namespace Assets.Project_S
             get => _questId;
             set => _questId = value;
         }
-
-        public byte CurrentQuest
-        {
-            get => _currnetQuest;
-            set => _currnetQuest = value;
-        }
+        
 
         public void SetActiveSlotQuest()
         {

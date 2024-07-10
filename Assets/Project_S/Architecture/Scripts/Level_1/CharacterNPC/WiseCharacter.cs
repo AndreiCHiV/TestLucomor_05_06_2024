@@ -10,6 +10,7 @@ namespace Assets.Project_S
         [SerializeField] private TextAsset _inkJSON_101002;
         [SerializeField] private TextAsset _inkJSON_101003;
         [SerializeField] private TextAsset _inkJSON_101004;
+        [SerializeField] private TextAsset _inkJSON_101005;
 
         private const string WISE = "Wise";
 
@@ -32,13 +33,13 @@ namespace Assets.Project_S
         {
             messageID = 2,
             message = "Волчара сказал что одна монетка валяется где-то неподалёку, чтож надо порыться в траве.",
-            messageChangeDialogueID = new int[] { 103000 }
+            messageChangeDialogueID = new int[] { 103002, 500001 }
         };
         private QuestMessageData _questMessageDataWise_3 = new QuestMessageData()
         {
             messageID = 3,
             message = "Я пошарилась неподалёку и нашла одну монету.",
-            messageChangeDialogueID = new int[] { 101003 }
+            messageChangeDialogueID = new int[] { 101003, 500000 }
         };
         private QuestMessageData _questMessageDataWise_4 = new QuestMessageData()
         {
@@ -80,14 +81,20 @@ namespace Assets.Project_S
                 inkJSON = _inkJSON_101004,
                 dataDialogueID = 101004
             };
+            DialogueData dialogueDataWise_5 = new DialogueData()
+            {
+                inkJSON = _inkJSON_101005,
+                dataDialogueID = 101005
+            };
 
-            return new DialogueData[] 
-            { 
-                dialogueDataWise_0, 
+            return new DialogueData[]
+            {
+                dialogueDataWise_0,
                 dialogueDataWise_1,
                 dialogueDataWise_2,
                 dialogueDataWise_3,
-                dialogueDataWise_4
+                dialogueDataWise_4,
+                dialogueDataWise_5
             };
         }
 

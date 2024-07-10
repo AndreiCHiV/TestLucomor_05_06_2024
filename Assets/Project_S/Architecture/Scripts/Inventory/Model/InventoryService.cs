@@ -19,10 +19,10 @@ namespace Assets.Project_S
             inventory.AddItems(name, amount);
         }
 
-        public void RemoveItems(string owner, string name, int amount = 1)
+        public bool RemoveItems(string owner, string name, int amount = 1)
         {
             InventoryGrid inventory = _inventoriesMap[owner];
-            inventory.RemoveItems(name, amount);
+            return inventory.RemoveItems(name, amount);
         }
 
         public IReadOnlyInventoryGrid GetInventoy(string owner)

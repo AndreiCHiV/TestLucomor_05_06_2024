@@ -13,10 +13,23 @@ namespace Assets.Project_S
             _view = view;
             _data = data;
 
+            data.ChangedMessageQuest += MessageQuestChanged;
+
             view.NameQuest = data.NameQuest;
             view.OwnerQuest = ownerQuest;
             view.QuestId = data.QuestID;
             view.ViewMessage = data.GetMessages();
+        }
+
+        private void MessageQuestChanged()
+        {
+            _view.ViewMessage = _data.GetMessages();
+
+        }
+
+        public void Dispose()
+        {
+            _data.ChangedMessageQuest -= MessageQuestChanged;
         }
     }
 }

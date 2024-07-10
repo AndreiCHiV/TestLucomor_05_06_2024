@@ -52,7 +52,9 @@ namespace Assets.Project_S
             int questId = int.Parse(keyTag[0].Trim());
             int messageId = int.Parse(keyTag[1].Trim());
 
-            return _currentQuestsCharacterMap[owner].ContiueQuset(questId, messageId);
+            int[] addMessageQuestID = _currentQuestsCharacterMap[owner].ContiueQuset(questId, messageId);
+
+            return addMessageQuestID;
         }
 
         public void AddQuest(string owner, QuestData data)
@@ -89,18 +91,23 @@ namespace Assets.Project_S
 
         public void AddCompletedQuest(string owner, int questId)
         {
+            int[] changeDialogueCharacter;
             Quest quest = (Quest)_currentQuestsCharacterMap[owner].GetQuest(questId);
 
             if (!_completedQuests.ContainsKey(owner))
             {
                 QuestList questList = new QuestList(owner, quest);
                 _completedQuests.Add(owner, questList);
+
+                changeDialogueCharacter = questList.ContiueQuset(questId, 0);
+
                 AddComplitedQuestInViewChanged?.Invoke(owner, quest);
                 return;
             }
-
             _completedQuests[owner].AddQuest(quest);
-            AddComplitedQuestInViewChanged?.Invoke(owner, quest);
+            //changeDialogueCharacter = _completedQuests[owner].ContiueQuset(questId, quest);
+            AddCharacterQuestInViewChanged?.Invoke(owner, quest);
+            return;
         }
 
         public void RemoveQuest(string owner, int questId)
@@ -118,6 +125,10 @@ namespace Assets.Project_S
         public IReadOnlyQuest GetQuest(string owner, int id)
         {
             return _questsMap[owner].GetQuest(id);
+        }
+        public IReadOnlyQuest GetCharacterQuest(string owner, int id)
+        {
+            return _currentQuestsCharacterMap[owner].GetQuest(id);
         }
 
         public List<IReadOnlyQuestList> GetAllQuestsCharacters()

@@ -6,6 +6,7 @@ namespace Assets.Project_S
     {
         [SerializeField] private TextAsset _inkJSON_103000;
         [SerializeField] private TextAsset _inkJSON_103001;
+        [SerializeField] private TextAsset _inkJSON_103002;
 
         private const string WOLF = "Wolf";
 
@@ -26,8 +27,13 @@ namespace Assets.Project_S
                 inkJSON = _inkJSON_103001,
                 dataDialogueID = 103001
             };
+            DialogueData dialogueDataWolf_2 = new DialogueData()
+            {
+                inkJSON = _inkJSON_103002,
+                dataDialogueID = 103002
+            };
 
-            return new DialogueData[] { dialogueDataWolf_0, dialogueDataWolf_1 };
+            return new DialogueData[] { dialogueDataWolf_0, dialogueDataWolf_1, dialogueDataWolf_2 };
         }
 
         public DialogueCharacterData InitializationDialogueCharacter()

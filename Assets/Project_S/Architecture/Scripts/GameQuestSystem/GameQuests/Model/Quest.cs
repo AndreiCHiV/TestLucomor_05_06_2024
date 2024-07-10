@@ -6,6 +6,7 @@ namespace Assets.Project_S
 {
     public class Quest : IReadOnlyQuest
     {
+        public event Action ChangedMessageQuest;
 
         private readonly QuestData _questData;
         private bool _completedQuest;
@@ -43,6 +44,9 @@ namespace Assets.Project_S
                 {
                     _messages.Add(quest.message);
                     _completedQuest = quest.completedQuest;
+
+                    ChangedMessageQuest?.Invoke();
+
                     return quest.messageChangeDialogueID;
                 }
             }
@@ -58,14 +62,14 @@ namespace Assets.Project_S
             {
                 foreach (string message in _messages)
                 {
-                    getMessage += message + "\n\n<align=\"center\"><b>Конец задния!</b>\n\n";
+                    getMessage += message + "\n<align=\"center\"><b>Конец задния!</b>\n";
                 }
             }
             else
             {
                 foreach (string message in _messages)
                 {
-                    getMessage += message + "\n\n<align=\"center\"><b>***</b>\n\n";
+                    getMessage += message + "\n<align=\"center\"><b>***</b>\n";
                 }
             }
             return getMessage;

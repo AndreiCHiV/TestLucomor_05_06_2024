@@ -12,13 +12,14 @@ namespace Assets.Project_S
         [SerializeField] private ScreenDialogueCharacterView _screenDialogueCharacterView;
         [SerializeField] private ScreenQuestView _screenQuestView;
 
+        //Character Data
         [SerializeField] private WiseCharacter _wiseCharacter;
         [SerializeField] private RicaCharacter _ricaCharacter;
         [SerializeField] private WolfCharacter _wolfCharacter;
+        [SerializeField] private PlayerCharacter _playerCharacter;
 
-
-        private const string CAT = "Lisa";
-
+        //Item Data on the Field
+        [SerializeField] private OldCoinItem _oldCoinItem;
 
         private ScreenCharacterController _screenCharacterController;
         private ScreenInventoryController _screenInventoryController;
@@ -52,7 +53,7 @@ namespace Assets.Project_S
             _questService = new QuestService();
 
 
-            CharacterData characterDataCat = CreateTestCharacter(CAT, "Player", 100, 240, 100000);
+            CharacterData characterDataCat = CreateTestCharacter(_playerCharacter.GetName(), "Player", 100, 240, 100000);
             _charactersService.RegisterCharacters(characterDataCat);
 
             CharacterData characterDataWise = CreateTestCharacter(_wiseCharacter.GetName(), "NPC", 101, 90, 101000);
@@ -64,7 +65,10 @@ namespace Assets.Project_S
             CharacterData characterDataWolf = CreateTestCharacter(_wolfCharacter.GetName(), "NPC", 103, 50, 103000);
             _charactersService.RegisterCharacters(characterDataWolf);
 
-            InventoryGridData inventroyLisa = CreateTestInventory(CAT, 12);
+            CharacterData characterDataOldCoin = CreateTestCharacter(_oldCoinItem.GetName(), "NPC", 500, 50, 500000);
+            _charactersService.RegisterCharacters(characterDataOldCoin);
+
+            InventoryGridData inventroyLisa = CreateTestInventory(_playerCharacter.GetName(), 12);
             _inventoryService.RegisterInventory(inventroyLisa);
 
             InventoryGridData inventoryOcti = CreateTestInventory(_wiseCharacter.GetName(), 10);
@@ -74,13 +78,14 @@ namespace Assets.Project_S
             _dialogueCharacterService.RegistrationDialogueCharacter(_wiseCharacter.InitializationDialogueCharacter(), _wiseCharacter.InitializationDialogueData());
             _dialogueCharacterService.RegistrationDialogueCharacter(_ricaCharacter.InitializationDialogueCharacter(), _ricaCharacter.InitializationDialogueData());
             _dialogueCharacterService.RegistrationDialogueCharacter(_wolfCharacter.InitializationDialogueCharacter(), _wolfCharacter.InitializationDialogueData());
+            _dialogueCharacterService.RegistrationDialogueCharacter(_oldCoinItem.InitializationDialogueCharacter(), _oldCoinItem.InitializationDialogueData());
+            _dialogueCharacterService.RegistrationDialogueCharacter(_playerCharacter.InitializationDialogueCharacter(), _playerCharacter.InitializationDialogueData());
 
 
             List<QuestListData> allquestList = new List<QuestListData>()
             {
                 _wiseCharacter.InitializationQuests()
             };
-
 
             _questService.RegisterQuests(allquestList);
 
@@ -89,7 +94,7 @@ namespace Assets.Project_S
             _screenDialogueCharacterController = new ScreenDialogueCharacterController(_dialogueCharacterService, _screenDialogueCharacterView);
             _screenQuestController = new ScreenQuestController(_questService, _screenQuestView);
 
-            _activeCharacter = CAT;
+            _activeCharacter = _playerCharacter.GetName();
             _screenCharacterController.ActiveCharacter(_activeCharacter);
             _screenInventoryController.OpenInventory(_activeCharacter);
             _screenQuestController.OpenCharacterQuest();
@@ -234,6 +239,11 @@ namespace Assets.Project_S
             };
 
             return inventoryData;
+        }
+
+        public string GetPlayerNameCharacter()
+        {
+            return _playerCharacter.GetName();
         }
 
     }
