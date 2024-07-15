@@ -12,6 +12,9 @@ namespace Assets.Project_S
         [SerializeField] private ScreenDialogueCharacterView _screenDialogueCharacterView;
         [SerializeField] private ScreenQuestView _screenQuestView;
 
+        //Контроль кнопок QuestList
+        [SerializeField] private OpenCurrentAndFinishQuests _openCurrentAndFinishQuests;
+
         //Character Data
         [SerializeField] private WiseCharacter _wiseCharacter;
         [SerializeField] private RicaCharacter _ricaCharacter;
@@ -98,7 +101,6 @@ namespace Assets.Project_S
             _activeCharacter = _playerCharacter.GetName();
             _screenCharacterController.ActiveCharacter(_activeCharacter);
             _screenInventoryController.OpenInventory(_activeCharacter);
-            _screenQuestController.OpenCharacterQuest();
         }
 
         private void ShowQuestMessage(QuestData questDataWise_0)
@@ -128,17 +130,21 @@ namespace Assets.Project_S
                 {
                     if (_screenCharacterView.GetCharacterView(_activeCharacter).IsPause == false)
                     {
+                        _screenQuestView.gameObject.SetActive(true);
+                        _screenQuestController.OpenCharacterQuest();
+                        _openCurrentAndFinishQuests.ActiveDefaultListQuests();
                         _screenCharacterView.GetCharacterView(_activeCharacter).IsPause = true;
                         return;
                     }
                     if (_screenCharacterView.GetCharacterView(_activeCharacter).IsPause == true)
                     {
+                        _screenQuestView.gameObject.SetActive(false);
                         _screenCharacterView.GetCharacterView(_activeCharacter).IsPause = false;
                         return;
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.F))
+                if (Input.GetKeyDown(KeyCode.F) && !_screenCharacterView.GetCharacterView(_activeCharacter).IsPause)
                 {
                     CharacterView character = _screenCharacterView.GetCharacterView(_activeCharacter).Interact();
 
@@ -150,17 +156,16 @@ namespace Assets.Project_S
                     else
                         Debug.Log("Not found character!");
                 }
-
             }
 
 
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.D) && _screenCharacterView.GetCharacterView(_activeCharacter).IsPause)
             {
-                _screenQuestController.OpenCompletedQuest();
+                OpenCurrentAndFinishQuests();
             }
-            if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKeyDown(KeyCode.A) && _screenCharacterView.GetCharacterView(_activeCharacter).IsPause)
             {
-                _screenQuestController.OpenCharacterQuest();
+                OpenCurrentAndFinishQuests();
             }
 
 
@@ -268,6 +273,22 @@ namespace Assets.Project_S
             };
 
             return inventoryData;
+        }
+        private void OpenCurrentAndFinishQuests()
+        {
+            //Можно перенесети в OpenCurrentAndFinishQuests
+            if (_openCurrentAndFinishQuests.ActiveListQuest)
+            {
+                Debug.Log("OpenCompletedQuest");
+                _screenQuestController.OpenCompletedQuest();
+                _openCurrentAndFinishQuests.ChangeActiveListQuests();
+            }
+            else
+            {
+                Debug.Log("OpenCharacterQuest");
+                _screenQuestController.OpenCharacterQuest();
+                _openCurrentAndFinishQuests.ChangeActiveListQuests();
+            }
         }
 
         public string GetPlayerNameCharacter()

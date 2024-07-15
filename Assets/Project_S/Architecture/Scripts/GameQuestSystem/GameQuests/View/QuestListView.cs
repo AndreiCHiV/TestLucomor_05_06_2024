@@ -43,6 +43,33 @@ namespace Assets.Project_S
             }
         }
 
+        private void ChangeActiveQuestDown()
+        {
+            for (int i = 0; i < Quests.Count; i++)
+            {
+                if (_currentQuest.NameQuest == Quests[i].NameQuest)
+                {
+                    _currentQuest.SetNotActiveSlotQuest();
+
+                    if (i < Quests.Count - 1)
+                    {
+                        _currentQuest = Quests[i + 1];
+                        _currentQuest.SetActiveSlotQuest();
+                        SetQuestDescriptionInDisplay(_currentQuest);
+                        return;
+                    }
+                    else
+                    {
+                        _currentQuest = Quests[0];
+                        _currentQuest.SetActiveSlotQuest();
+                        SetQuestDescriptionInDisplay(_currentQuest);
+                        return;
+                    }
+                }
+
+            }
+        }
+
         private void ChangeActiveQuestUp()
         {
             for (int i = 0; i < Quests.Count; i++)
@@ -139,32 +166,7 @@ namespace Assets.Project_S
             }
         }
 
-        public void ChangeActiveQuestDown()
-        {
-            for (int i = 0; i < Quests.Count; i++)
-            {
-                if (_currentQuest.NameQuest == Quests[i].NameQuest)
-                {
-                    _currentQuest.SetNotActiveSlotQuest();
-
-                    if (i < Quests.Count - 1)
-                    {
-                        _currentQuest = Quests[i + 1];
-                        _currentQuest.SetActiveSlotQuest();
-                        SetQuestDescriptionInDisplay(_currentQuest);
-                        return;
-                    }
-                    else
-                    {
-                        _currentQuest = Quests[0];
-                        _currentQuest.SetActiveSlotQuest();
-                        SetQuestDescriptionInDisplay(_currentQuest);
-                        return;
-                    }
-                }
-
-            }
-        }
+        
 
     }
 }

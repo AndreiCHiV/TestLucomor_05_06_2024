@@ -38,8 +38,6 @@ namespace Assets.Project_S
 
         public int[] ContinueQuest(string owner, string id)
         {
-            Debug.Log(owner);
-            Debug.Log(id);
             string[] keyTag = id.Split("-");
 
             if (keyTag.Length != 2)

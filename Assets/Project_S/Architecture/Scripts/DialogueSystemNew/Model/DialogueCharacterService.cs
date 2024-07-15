@@ -21,8 +21,8 @@ namespace Assets.Project_S
 
             foreach (DialogueData dialogueData in dialoguesData)
             {
-            AddDialogue(dialoguesCharacterData.owner, dialogueData);
-                Debug.Log($"Диалог {dialogueData.dataDialogueID} базу диалогов {dialoguesCharacterData.owner} добавлен!");
+                AddDialogue(dialoguesCharacterData.owner, dialogueData);
+                //Debug.Log($"Диалог {dialogueData.dataDialogueID} базу диалогов {dialoguesCharacterData.owner} добавлен!");
             }
         }
 

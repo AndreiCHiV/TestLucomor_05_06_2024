@@ -59,9 +59,6 @@ namespace Assets.Project_S
         {
             string getMessage = "";
 
-            Debug.Log(CompletedQuest);
-            Debug.Log(FailedQuest);
-
             if (CompletedQuest)
             {
                 for (int i = 0; i < _messages.Count; i++)
