@@ -19,12 +19,21 @@ namespace Assets.Project_S
             view.OwnerQuest = ownerQuest;
             view.QuestId = data.QuestID;
             view.ViewMessage = data.GetMessages();
+
+            if (data.CompletedQuest || data.FailedQuest)
+            {
+                data.ChangedMessageQuest -= MessageQuestChanged;
+            }
         }
 
         private void MessageQuestChanged()
         {
             _view.ViewMessage = _data.GetMessages();
+        }
 
+        public int GetQuestID()
+        {
+            return _data.QuestID;
         }
 
         public void Dispose()

@@ -9,5 +9,6 @@ namespace Assets.Project_S
         public int[] messageChangeDialogueID;
         public string message;
         public bool completedQuest;
+        public bool failedQuest;
     }
 }

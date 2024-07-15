@@ -20,15 +20,24 @@ namespace Assets.Project_S
             }
 
             string name = keyTag[0].Trim();
-            int id = int.Parse(keyTag[1].Trim());
+            string id = keyTag[1].Trim();
 
-            IReadOnlyQuest questNameID = _entryPoint.QuestService.GetCharacterQuest(name, id);
+            string[] keyTagID = id.Split("-");
+
+            if (keyTag.Length != 2)
+            {
+                throw new ArgumentException("Неправельное оформление тега! Срочно исправить!");
+            }
+            int questId = int.Parse(keyTagID[0].Trim());
+            int messageId = int.Parse(keyTagID[1].Trim());
+
+            IReadOnlyQuest questNameID = _entryPoint.QuestService.GetCharacterQuest(name, questId);
 
             if (questNameID != null)
             {
-                //int[] changeDialogueCharacter = _entryPoint.QuestService.AddCompletedQuest(name, id);
-                _entryPoint.QuestService.RemoveCurrentQuest(name, id);
-                //_entryPoint.CharactersService.ChangeDialogueIDCharacters(changeDialogueCharacter);
+                int[] changeDialogueCharacter = _entryPoint.QuestService.AddCompletedQuest(name, questId, messageId);
+                _entryPoint.QuestService.RemoveCurrentQuest(name, questId);
+                _entryPoint.CharactersService.ChangeDialogueIDCharacters(changeDialogueCharacter);
             }
             else
                 Debug.LogError("Квест не найден!");

@@ -51,6 +51,20 @@ namespace Assets.Project_S
             return quest;
         }
 
+        public void RemoveQuestDisplayView(int questID)
+        {
+            foreach (QuestView quest in _quests)
+            {
+                if (quest.QuestId == questID)
+                {
+                    Destroy(quest.gameObject);
+                    _quests.Remove(quest);
+                    SetDefaultQuest(true);
+                    return;
+                }
+            }
+        }
+
         public void SetSelectedQuest(int id)
         {
             foreach (QuestView quest in Quests)
@@ -74,7 +88,10 @@ namespace Assets.Project_S
                     _currentQuest = Quests[0];
                 }
                 else
-                    return;
+                {
+                    _questDescriptionView.DescriptionQuest = "\n\n<align=\"center\"><b>Not Quests.</b>";
+                    _questDescriptionView.Owner ="";
+                }
             }
             else
             {
@@ -140,6 +157,5 @@ namespace Assets.Project_S
             _questDescriptionView.DescriptionQuest = currentQuest.ViewMessage;
             _questDescriptionView.Owner = currentQuest.OwnerQuest;
         }
-
     }
 }

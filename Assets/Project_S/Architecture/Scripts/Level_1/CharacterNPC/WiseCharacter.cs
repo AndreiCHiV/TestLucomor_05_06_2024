@@ -45,7 +45,7 @@ namespace Assets.Project_S
         {
             messageID = 4,
             message = "Задание выполнено, я молодец, награда - говно! Ну вобщем всё как обычно.",
-            messageChangeDialogueID = new int[] { 101004 },
+            messageChangeDialogueID = new int[] { 101005 },
             completedQuest = true
         };
 

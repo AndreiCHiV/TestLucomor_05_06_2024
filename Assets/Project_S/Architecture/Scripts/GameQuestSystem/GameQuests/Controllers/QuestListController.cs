@@ -38,7 +38,10 @@ namespace Assets.Project_S
                 }
             }
             else
+            {
                 view.QuestDescription.DescriptionQuest = "\n\n<align=\"center\"><b>Not Quests.</b>";
+                view.QuestDescription.Owner = "";
+            }
         }
 
         public void ChangedAddQuest(string ownerQuest, IReadOnlyQuest quest)
@@ -51,6 +54,19 @@ namespace Assets.Project_S
             _view.Quests.Add(questView);
 
             _view.SetDefaultQuest(_firstCallQuest);
+        }
+        public void ChangedRemoveQuest(int questID)
+        {
+            foreach (QuestController questController in _quests)
+            {
+                if (questController.GetQuestID() == questID)
+                {
+                    Debug.Log($"Remove Quest {questController.GetQuestID()}");
+                    _quests.Remove(questController);
+                    _view.RemoveQuestDisplayView(questID);
+                    return;
+                }
+            }
         }
 
     }

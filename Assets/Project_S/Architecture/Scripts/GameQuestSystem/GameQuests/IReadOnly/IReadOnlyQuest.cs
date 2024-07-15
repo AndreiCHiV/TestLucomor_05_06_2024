@@ -8,6 +8,7 @@ namespace Assets.Project_S
         int QuestID { get; }
         string NameQuest { get; }
         bool CompletedQuest { get; }
+        bool FailedQuest { get; }
         string GetMessages();
     }
 }

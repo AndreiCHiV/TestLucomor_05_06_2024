@@ -89,9 +89,10 @@ namespace Assets.Project_S
             return changeDialogueCharacter;
         }
 
-        public void AddCompletedQuest(string owner, int questId)
+        public int[] AddCompletedQuest(string owner, int questId, int messageId)
         {
             int[] changeDialogueCharacter;
+                        
             Quest quest = (Quest)_currentQuestsCharacterMap[owner].GetQuest(questId);
 
             if (!_completedQuests.ContainsKey(owner))
@@ -99,15 +100,15 @@ namespace Assets.Project_S
                 QuestList questList = new QuestList(owner, quest);
                 _completedQuests.Add(owner, questList);
 
-                changeDialogueCharacter = questList.ContiueQuset(questId, 0);
+                changeDialogueCharacter = questList.ContiueQuset(questId, messageId);
 
                 AddComplitedQuestInViewChanged?.Invoke(owner, quest);
-                return;
+                return changeDialogueCharacter;
             }
             _completedQuests[owner].AddQuest(quest);
-            //changeDialogueCharacter = _completedQuests[owner].ContiueQuset(questId, quest);
-            AddCharacterQuestInViewChanged?.Invoke(owner, quest);
-            return;
+            changeDialogueCharacter = _completedQuests[owner].ContiueQuset(questId, messageId);
+            AddComplitedQuestInViewChanged?.Invoke(owner, quest);
+            return changeDialogueCharacter;
         }
 
         public void RemoveQuest(string owner, int questId)

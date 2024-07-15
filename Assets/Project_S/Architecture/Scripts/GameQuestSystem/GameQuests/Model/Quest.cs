@@ -10,6 +10,7 @@ namespace Assets.Project_S
 
         private readonly QuestData _questData;
         private bool _completedQuest;
+        private bool _failedQuest;
         private List<string> _messages = new List<string>();
 
         public Quest(QuestData questData)
@@ -19,11 +20,9 @@ namespace Assets.Project_S
 
         public QuestData QuestData => _questData;
 
-        public bool CompletedQuest
-        {
-            get => _completedQuest;
-            set => _completedQuest = value;
-        }
+        public bool CompletedQuest => _completedQuest;
+
+        public bool FailedQuest => _failedQuest;
 
         public int QuestID
         {
@@ -43,14 +42,16 @@ namespace Assets.Project_S
                 if (messageId == quest.messageID)
                 {
                     _messages.Add(quest.message);
+
                     _completedQuest = quest.completedQuest;
+                    _failedQuest = quest.failedQuest;
 
                     ChangedMessageQuest?.Invoke();
 
                     return quest.messageChangeDialogueID;
                 }
             }
-            
+
             return null;
         }
 
@@ -60,9 +61,25 @@ namespace Assets.Project_S
 
             if (CompletedQuest)
             {
-                foreach (string message in _messages)
+                for (int i = 0; i < _messages.Count; i++)
                 {
-                    getMessage += message + "\n<align=\"center\"><b>Конец задния!</b>\n";
+                    getMessage += getMessage + "\n<align=\"center\"><b>***</b>\n";
+
+                    if (i == _messages.Count - 1)
+                    {
+                        getMessage += getMessage + "\n<align=\"center\"><color=green><b>Задание выполнено!</b>\n";
+                    }
+                }
+            }
+            if (FailedQuest)
+            {
+                for (int i = 0; i < _messages.Count; i++)
+                {
+                    getMessage += getMessage + "\n<align=\"center\"><b>***</b>\n";
+                    if (i == _messages.Count - 1)
+                    {
+                        getMessage += getMessage + "\n<align=\"center\"><color=red><b>Задание провалено!</b>\n";
+                    }
                 }
             }
             else

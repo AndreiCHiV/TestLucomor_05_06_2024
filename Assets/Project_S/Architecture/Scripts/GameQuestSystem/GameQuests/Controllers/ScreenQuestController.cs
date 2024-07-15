@@ -37,6 +37,8 @@ namespace Assets.Project_S
         }
         private void ChangedAddComplitedQuestInView(string owner, IReadOnlyQuest quest)
         {
+            _questListCharacterController.ChangedRemoveQuest(quest.QuestID);
+
             if (_questListCompletedController != null)
             {
                 _questListCompletedController.ChangedAddQuest(owner, quest);
