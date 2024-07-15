@@ -24,8 +24,9 @@ namespace Assets.Project_S
         [SerializeField] private Sprite _imegeCharacter;
 
         private bool _isMoving;
+        private bool _isPause;
         public int _dialogueId;// временно public  потом должно инициализироваться в начале игры лист с диалогами 
-                                // и измениется через Model когда беруться или меняется задания
+                               // и измениется через Model когда беруться или меняется задания
         public int _characterID;
         public float moveSpeed;
 
@@ -77,6 +78,11 @@ namespace Assets.Project_S
             set => _isMoving = value;
         }
 
+        public bool IsPause
+        {
+            get => _isPause;
+            set => _isPause = value;
+        }
         public Sprite ImageCharacter
         {
             get => _imegeCharacter;
@@ -93,7 +99,7 @@ namespace Assets.Project_S
             if (input.x != 0)
                 input.y = 0;
 
-            if (input != Vector2.zero)
+            if (input != Vector2.zero && !IsPause)
             {
 
                 _animator.SetFloat("moveX", input.x);

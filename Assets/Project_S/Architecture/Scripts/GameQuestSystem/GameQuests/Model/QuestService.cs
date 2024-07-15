@@ -6,9 +6,6 @@ namespace Assets.Project_S
 {
     public class QuestService
     {
-        public event Action<string, IReadOnlyQuest> AddCharacterQuestInViewChanged;
-        public event Action<string, IReadOnlyQuest> AddComplitedQuestInViewChanged;
-
         private readonly Dictionary<string, QuestList> _questsMap = new Dictionary<string, QuestList>();
         private readonly Dictionary<string, QuestList> _currentQuestsCharacterMap = new Dictionary<string, QuestList>();
         private readonly Dictionary<string, QuestList> _completedQuests = new Dictionary<string, QuestList>();
@@ -79,13 +76,11 @@ namespace Assets.Project_S
 
                 changeDialogueCharacter = questList.ContiueQuset(questId, 0);
 
-                AddCharacterQuestInViewChanged?.Invoke(owner, quest);//в последствии можно удалить это добавлене квеста в реальном времени
                 return changeDialogueCharacter;
             }
 
             _currentQuestsCharacterMap[owner].AddQuest(quest);
             changeDialogueCharacter = _currentQuestsCharacterMap[owner].ContiueQuset(questId, 0);
-            AddCharacterQuestInViewChanged?.Invoke(owner, quest);
             return changeDialogueCharacter;
         }
 
@@ -98,16 +93,29 @@ namespace Assets.Project_S
             if (!_completedQuests.ContainsKey(owner))
             {
                 QuestList questList = new QuestList(owner, quest);
+
                 _completedQuests.Add(owner, questList);
 
-                changeDialogueCharacter = questList.ContiueQuset(questId, messageId);
 
-                AddComplitedQuestInViewChanged?.Invoke(owner, quest);
+                changeDialogueCharacter = _completedQuests[owner].ContiueQuset(questId, messageId);
+
+
+                //Debug.Log(questList.Owner);
+
+                //foreach (Quest questCharacter in _completedQuests[owner].GetQuestList())
+                //{
+                //    Debug.Log(questCharacter.GetMessages());
+                //}
+                //foreach (Quest questCharacter in questList.GetQuestList())
+                //{
+                //    Debug.Log(questCharacter.GetMessages());
+                //}
+
+
                 return changeDialogueCharacter;
             }
             _completedQuests[owner].AddQuest(quest);
             changeDialogueCharacter = _completedQuests[owner].ContiueQuset(questId, messageId);
-            AddComplitedQuestInViewChanged?.Invoke(owner, quest);
             return changeDialogueCharacter;
         }
 
@@ -152,7 +160,6 @@ namespace Assets.Project_S
             {
                 questList.Add(quest.Value);
             }
-
             return questList;
         }
 

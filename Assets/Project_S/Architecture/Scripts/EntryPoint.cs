@@ -29,6 +29,7 @@ namespace Assets.Project_S
 
         private string _activeCharacter;
         private Vector3 _input;
+        private bool isEndMove;
 
 
         private CharactersService _charactersService;
@@ -40,7 +41,7 @@ namespace Assets.Project_S
         public InventoryService InventoryService => _inventoryService;
         public DialogueCharacterService DialogueCharacterService => _dialogueCharacterService;
         public QuestService QuestService => _questService;
-        
+
         public ScreenDialogueCharacterView ScreenDialogueCharacterView => _screenDialogueCharacterView;
         public string ActiveCharacter => _activeCharacter;
 
@@ -112,6 +113,7 @@ namespace Assets.Project_S
         {
             if (!_screenCharacterView.GetCharacterView(_activeCharacter).IsMoving)
             {
+
                 _input.x = Input.GetAxisRaw("Horizontal");
                 _input.y = Input.GetAxisRaw("Vertical");
 
@@ -121,6 +123,20 @@ namespace Assets.Project_S
                 }
 
                 _screenCharacterView.GetCharacterView(_activeCharacter).GetAnimation().SetBool("isMoving", _screenCharacterView.GetCharacterView(_activeCharacter).IsMoving);
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    if (_screenCharacterView.GetCharacterView(_activeCharacter).IsPause == false)
+                    {
+                        _screenCharacterView.GetCharacterView(_activeCharacter).IsPause = true;
+                        return;
+                    }
+                    if (_screenCharacterView.GetCharacterView(_activeCharacter).IsPause == true)
+                    {
+                        _screenCharacterView.GetCharacterView(_activeCharacter).IsPause = false;
+                        return;
+                    }
+                }
 
                 if (Input.GetKeyDown(KeyCode.F))
                 {
@@ -136,6 +152,19 @@ namespace Assets.Project_S
                 }
 
             }
+
+
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                _screenQuestController.OpenCompletedQuest();
+            }
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                _screenQuestController.OpenCharacterQuest();
+            }
+
+
+
 
             //if (Input.GetKeyDown(KeyCode.Alpha1))
             //{

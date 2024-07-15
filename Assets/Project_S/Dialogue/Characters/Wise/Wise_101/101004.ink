@@ -5,5 +5,5 @@
 Да ты просто сплавила его мне, потому что он нахрен тебе не сдался!#speacker:Lisa
 Я надеюсь но принесёт тебе удачу!#speacker:Wise
 А тебе принёс?#speacker:Lisa
-Пока, пока!#speacker:Wise#completedQuest:Wise_101-4
+Пока, пока!#speacker:Wise#completedQuest:Wise_101_4
 ->END

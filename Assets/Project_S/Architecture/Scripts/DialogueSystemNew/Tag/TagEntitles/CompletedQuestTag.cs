@@ -14,22 +14,14 @@ namespace Assets.Project_S
         {
             string[] keyTag = valueTag.Split("_");
 
-            if (keyTag.Length != 2)
+            if (keyTag.Length != 3)
             {
                 throw new ArgumentException("Неправельное оформление тега! Срочно исправить!");
             }
 
             string name = keyTag[0].Trim();
-            string id = keyTag[1].Trim();
-
-            string[] keyTagID = id.Split("-");
-
-            if (keyTag.Length != 2)
-            {
-                throw new ArgumentException("Неправельное оформление тега! Срочно исправить!");
-            }
-            int questId = int.Parse(keyTagID[0].Trim());
-            int messageId = int.Parse(keyTagID[1].Trim());
+            int questId = int.Parse(keyTag[1].Trim());
+            int messageId = int.Parse(keyTag[2].Trim());
 
             IReadOnlyQuest questNameID = _entryPoint.QuestService.GetCharacterQuest(name, questId);
 

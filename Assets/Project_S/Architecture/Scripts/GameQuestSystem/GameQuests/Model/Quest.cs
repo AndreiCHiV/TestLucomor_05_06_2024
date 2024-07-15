@@ -59,27 +59,33 @@ namespace Assets.Project_S
         {
             string getMessage = "";
 
+            Debug.Log(CompletedQuest);
+            Debug.Log(FailedQuest);
+
             if (CompletedQuest)
             {
                 for (int i = 0; i < _messages.Count; i++)
                 {
-                    getMessage += getMessage + "\n<align=\"center\"><b>***</b>\n";
-
                     if (i == _messages.Count - 1)
                     {
-                        getMessage += getMessage + "\n<align=\"center\"><color=green><b>Задание выполнено!</b>\n";
+                        getMessage += _messages[i] + "\n\n<align=\"center\"><color=green><b>Задание выполнено!</b></color>";
+                        return getMessage;
                     }
+
+                    getMessage += _messages[i] + "\n<align=\"center\"><b>***</b>\n";
                 }
             }
-            if (FailedQuest)
+            else if (FailedQuest)
             {
                 for (int i = 0; i < _messages.Count; i++)
                 {
-                    getMessage += getMessage + "\n<align=\"center\"><b>***</b>\n";
                     if (i == _messages.Count - 1)
                     {
-                        getMessage += getMessage + "\n<align=\"center\"><color=red><b>Задание провалено!</b>\n";
+                        getMessage += _messages[i] + "\n\n<align=\"center\"><color=red><b>Задание провалено!</b></color>";
+                        return getMessage;
                     }
+
+                    getMessage += _messages[i] + "\n<align=\"center\"><b>***</b>\n";
                 }
             }
             else
@@ -89,6 +95,7 @@ namespace Assets.Project_S
                     getMessage += message + "\n<align=\"center\"><b>***</b>\n";
                 }
             }
+
             return getMessage;
         }
     }

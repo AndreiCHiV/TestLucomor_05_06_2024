@@ -8,12 +8,11 @@ namespace Assets.Project_S
     {
         private readonly QuestListView _view;
         private List<QuestController> _quests = new List<QuestController>();
-        private bool _firstCallQuest;
 
-        public QuestListController(List<IReadOnlyQuestList> quests, QuestListView view, bool firstCallQuest)
+        public QuestListController(List<IReadOnlyQuestList> quests, QuestListView view)
         {
+            view.RemoveAllQuestsDisplayView();
             _view = view;
-            _firstCallQuest = firstCallQuest;
 
             if (quests.Count != 0)
             {
@@ -32,8 +31,7 @@ namespace Assets.Project_S
 
                             view.Quests.Add(questView);
                         }
-
-                        view.SetDefaultQuest(firstCallQuest);
+                        view.SetDefaultQuest();
                     }
                 }
             }
@@ -53,7 +51,7 @@ namespace Assets.Project_S
 
             _view.Quests.Add(questView);
 
-            _view.SetDefaultQuest(_firstCallQuest);
+            _view.SetDefaultQuest();
         }
         public void ChangedRemoveQuest(int questID)
         {
@@ -68,6 +66,5 @@ namespace Assets.Project_S
                 }
             }
         }
-
     }
 }
