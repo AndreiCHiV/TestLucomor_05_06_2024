@@ -279,13 +279,11 @@ namespace Assets.Project_S
             //Можно перенесети в OpenCurrentAndFinishQuests
             if (_openCurrentAndFinishQuests.ActiveListQuest)
             {
-                Debug.Log("OpenCompletedQuest");
                 _screenQuestController.OpenCompletedQuest();
                 _openCurrentAndFinishQuests.ChangeActiveListQuests();
             }
             else
             {
-                Debug.Log("OpenCharacterQuest");
                 _screenQuestController.OpenCharacterQuest();
                 _openCurrentAndFinishQuests.ChangeActiveListQuests();
             }
